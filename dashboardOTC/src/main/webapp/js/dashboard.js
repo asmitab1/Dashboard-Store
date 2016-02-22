@@ -328,13 +328,16 @@
      var storyProgressDataDynamic = monthlyTicketDataTemplate;
 	 var openTicketArray = new Array();
 	 var closedTicketArray = new Array();
+	 var categories = new Array();
 	  for (c in dynamicData) {
 		 openTicketArray.push(dynamicData[c].openTickets);
 		 closedTicketArray.push(dynamicData[c].closedTickets);
+		 categories.push(dynamicData[c].month);
 	 }
 
      storyProgressDataDynamic.series[0].data = openTicketArray;
 	 storyProgressDataDynamic.series[1].data = closedTicketArray;
+	 sprintProgressnChartOptions.xAxis.categories =  categories;
 
      $(projectContainer).find('#chart-01').highcharts($.extend(sprintProgressnChartOptions, storyProgressDataDynamic));
  }
