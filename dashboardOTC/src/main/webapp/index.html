@@ -1,0 +1,344 @@
+
+
+<!DOCTYPE html>
+<html class="no-js">
+   <head>
+      <title>Dashboard</title>
+      <link rel="stylesheet" type="text/css" href="js/bootstrap/dist/css/bootstrap.min.css" />
+      <link rel="stylesheet" type="text/css" href="css/bookblock.css" />
+      <link rel="stylesheet" type="text/css" href="css/custom.css" />
+      <link rel="stylesheet" type="text/css" href="css/dashboard.css" />
+      <link rel="stylesheet" type="text/css" href="css/keen-dashboards.css" />
+      <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+      <script src="js/modernizr.custom.79639.js"></script>
+      <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+      <script type="text/javascript" src="js/dashboard.js"></script>
+      <script type="text/javascript" src="js/jquery.vticker-min.js"></script>
+      <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ubuntu">
+      <style>
+         .cls-second {
+         color: #000;
+         font-size: 24px;
+         padding-left: 95px;
+         }
+         .cls-first {
+         color: blue;
+         font-size: 24px;
+         }
+         .demo3 {
+         border:1px solid #d7d7d7
+         border-radius: 3px;
+         box-shadow: 0 2px 5px -3px #000;
+         margin: 0;
+         padding: 0 0 0 80px;
+         font-size: 20px;
+         width: 100%;
+         }
+         .demo3::before {
+         background: linear-gradient(#2389DC, #509EDF, #509EDF, #509EDF, #509EDF, #2389DC);
+         color: #fff;
+         content: "Story Assignment";
+         display: inline-block;
+         left: 0;
+         padding: 6px 10px;
+         position: absolute;
+         top: 0;
+         text-shadow: 0px 3px 8px #2a2a2a;
+         font-weight: 500;
+         }
+         *, *::before, *::after {
+         box-sizing: border-box;
+         }
+         .demo3::after {
+         background: rgba(0, 0, 0, 0) linear-gradient(#fff, rgba(255, 255, 255, 0)) repeat scroll 0 0;
+         content: "";
+         display: block;
+         height: 20px;
+         left: 80px;
+         top: 0;
+         }
+         *, *::before, *::after {
+         box-sizing: border-box;
+         }
+         .story-desc {
+         font-size: 18px;
+         }
+      </style>
+      <style type="text/css">
+         body{
+         font-family: 'Ubuntu', serif;
+         font-size: 12px;
+         }
+         .news-container{
+         position: relative;
+         width: 100%; /*marquee width */
+         height: 400px; /*marquee height */
+         background-color: white;
+         overflow: hidden;							
+         }
+         #outstanding_defect_list{
+         width:100%;
+         }
+         ul#outstanding_defect_list li{
+         padding:5px 10px 5px 10px !important;
+         border-bottom: 1px dashed #ccc;
+         }
+         ul.outstanding-defect-list-header li{
+         padding:0 10px;
+         font-weight:bold;
+         background: #D5D5D5;
+         font-size:14px;
+         height: 43px;
+         }
+         ul#outstanding_defect_list li{
+         font-size:16px;
+         }
+         ul#outstanding_defect_list li .col1, ul.outstanding-defect-list-header li .col1 {
+         float: left;
+         width: 30%;
+         }
+         ul#outstanding_defect_list li .col2, ul.outstanding-defect-list-header li .col2 {
+         float: left;
+         width: 17.5%;
+         }		
+         ul#outstanding_defect_list li .col3, ul.outstanding-defect-list-header li .col3 {
+         float: left;
+         width: 14%;
+         }
+         ul.outstanding-defect-list-header li span, ul#outstanding_defect_list li span{
+         text-align:center;
+         }
+         ul#outstanding_defect_list li span:first-of-type{
+         text-align:left;
+         }
+         #outstanding_defect_list .odd{
+         background: #ffffff;
+         }
+         #outstanding_defect_list .even {
+         background: #ffffff;
+         }
+         .chart-wrapper {
+         border: none; 
+         }
+         .chart-wrapper .chart-stage {
+         padding: 0px;
+         position: relative;
+         }
+         .chart-wrapper .chart-title{
+         padding:10px;
+         }
+         .chart-title-segment{
+         height:50px !important;
+         }
+         span#projectName{
+         display: block;
+         text-decoration: none;
+         font-size: 30px;
+         letter-spacing: 5px;
+         text-align: center;
+         color: #fff;
+         text-shadow: 0px 3px 8px #2a2a2a;
+         font-weight: 500;
+         }
+         .chart-wrapper .chart-title {
+         border-bottom: 1px solid #d7d7d7;
+         color: #fff !important;
+         font-size: 20px;
+         font-weight: 500;
+         padding: 7px 10px 4px;
+         }
+         #keyFeatures .chart-title{
+         background:none;
+         color: #000 !important;
+         font-weight:700;
+         text-shadow:none;
+         font-size:15px !important;
+         }
+		 
+         .chart-wrapper{
+         padding-left:0px !important;
+         }
+      
+         #keyFeatures ul li span {
+         color: black;
+         text-shadow: none;
+         font-weight: 500;
+         font-size: 15px;
+         }
+        
+         .highcharts-button {
+         display: none;
+         }
+         .releaseview-legend { list-style: none; }
+         .releaseview-legend li { float: left; margin-right: 10px; }
+         .releaseview-legend span { border: 1px solid #ccc; float: left; width: 12px; height: 12px; margin: 2px; }
+         .releaseview-legend .releaseview-legend-completed { background-color: green; }
+         .releaseview-legend .releaseview-legend-current { background-color: #3ADC3A; }
+         .releaseview-legend .releaseview-legend-future { background-color: #C0C0C0; }
+      </style>
+   </head>
+   <body class="application">
+      <div class="bb-custom-wrapper">
+         <div id="bb-bookblock" class="bb-bookblock">
+         </div>
+      </div>
+      <nav>
+         <span id="bb-nav-next"></span>
+         <span id="bb-nav-prev"></span>
+      </nav>
+      <div class="bb-item" id="project-template">
+	  <input type="hidden" id="ticker-flag" value="N"/>
+         <div class="first content">
+            <div class="container-fluid">
+               <div class="row">
+                  <div class="col-sm-8"  style="width:100%">
+                     <div class="chart-wrapper">
+                        <div class="chart-title custom_title_bar chart-title-segment">
+                           <div style="float:left;">
+                              <h2><span id="projectName"></span></h2>
+                           </div>                         
+                           <div style="clear:both;"></div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="container-fluid">
+               <div id="myCarousel" class="carousel slide" data-ride="carousel" style="width:100%">
+                  <!-- Wrapper for slides -->
+                  <div class="carousel-inner" role="listbox">
+                     <div class="item active releaseContainer">
+                        <div class="row">
+                           <div class="row col-sm-7" style="padding-left: 0px;padding-right: 0px;">
+                              <div class="row">
+                                 <div class="col-sm-12">
+                                    <div class="chart-wrapper">
+                                       <div class="chart-title custom_title_bar"><span id="projectID"> </span> <span id="releaseName"> </span> Release Milestone</div>
+                                       <div class="chart-stage" style="min-height:140px;padding-right:0px;">
+                                          <div class="col-sm-6" id="release" style="padding-right:0;">
+                                             <div class="releaseView" style="width:100%">
+                                                <div style="display:none;">
+                                                   <img id="currentSprint" src="images/bottomArrow.jpg"/>
+                                                </div>
+                                                <div class="chart-stage">
+                                                   <canvas id="myCanvas" height="130">
+                                                      Your browser does not support the HTML5 canvas tag.
+                                                   </canvas>
+                                                   <ul class="releaseview-legend">
+                                                      <li><span class="releaseview-legend-completed"></span>Completed</li>
+                                                      <li><span class="releaseview-legend-current"></span>In Progress</li>
+                                                      <li><span class="releaseview-legend-future"></span>Not Started</li>
+                                                   </ul>
+                                                </div>
+                                             </div>
+                                          </div>
+                                          <div class="col-sm-6" id="keyFeatures" style="padding:0;">
+                                             <div>
+                                                <div class="chart-title" style="color:black;font-size:13px;height: 30px;">Key Features</div>
+                                                <div class="chart-stage" style="min-height:110px; height: 150px;">
+                                                </div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                       <div class="chart-notes custom_chart_notes">
+                                          <div style="float:left;"><span id="sprint-name">Sprint 9</span></div>
+                                          <div style="float:right;">Start date - <span id="sprint-start-date"></span>&nbsp;&nbsp;&nbsp;&nbsp; End date - <span id="sprint-end-date"></span></div>
+                                          <div  style="clear:both;"></div>
+                                       </div>
+                                       <div class="chart-notes custom_chart_notes">
+                                          <div style="float:left;">Total no of stories - <span id="sprint-total-story-count"></span></div>
+                                          <div style="float:right;">Total Story Points - <span id="sprint-total-story-points"></span></div>
+                                          <div style="clear:both;"></div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="row">
+                                 <div class="col-sm-12">
+                                    <div class="chart-wrapper custom_wrapper">
+                                       <div class="chart-title custom_title_bar">
+                                          Resolution/Severity Wise Defects
+                                       </div>
+                                       <div class="row">
+                                          <div class="chart-stage col-sm-6">
+                                             <div  id="defectChart" style="min-height:225px;margin-top: -50px;"></div>
+                                          </div>
+                                          <div class="chart-stage col-sm-6">
+                                             <div  id="defectSeverityChart" style="min-height:225px;margin-top: -50px;"></div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="col-sm-5">
+                              <div class="chart-wrapper">
+                                 <div class="chart-title custom_title_bar">
+                                    Burndown Charts
+                                 </div>
+                                 <div class="chart-stage">
+                                    <div id="chart-02">
+                                       <div id="burndowncontainer" style="min-width: 310px; min-height: 470px; margin: 0 auto"></div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="second">
+            <div class="container-fluid">
+               <div class="row">
+                  <div class="col-sm-7">
+                     <div class="chart-wrapper">
+                        <div class="chart-title custom_title_bar">
+                           Outstanding Defects (<span id="outstanding-defect-count">0</span>)
+                        </div>
+                        <div class="chart-stage" style="min-height: 210px;height:325px; padding-left: 0px; padding-right: 0px;">
+                           <div class="no-defects-msg" style="margin: 0 auto; width: 250px;">There is no outstanding defects.</div>
+                           <ul class="outstanding-defect-list-header" style="display:none;">
+                              <li><span class='col1'> Name</span> <span class='col2'> Resolve Immediately</span> <span class='col2'> High </span> <span class='col2'> Normal </span>  <span class='col2'> Low </span></li>
+                           </ul>
+                           <div class="news-container">
+                              <ul id="outstanding_defect_list"></ul>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-sm-5">
+                     <div class="chart-wrapper">
+                        <div class="chart-title custom_title_bar">
+                           Sprint Progress
+                        </div>
+                        <div class="chart-stage">
+                           <div id="chart-01" style="min-height: 370px;margin-top: -45px;"></div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="demo3" style="position: relative; height: 40px; overflow: hidden; margin: 0 -5px 0 5px;">
+            <marquee id="story-assignment" behavior="scroll" scrollamount="7" direction="left" width="99%" height="100%" style="margin-left: 80px; padding-top: 0px;background-color: #E4E4E4;"> 
+            </marquee>
+         </div>
+		 <div class="casourel-button-group">
+			<div class="toggle-button toggle-button-selected">
+				<button action="pause"></button>
+			</div>
+		</div>
+      </div>
+      <script src="js/jquerypp.custom.js"></script>
+      <script src="js/jquery.bookblock.js"></script>
+      <script src="js/page.js"></script>	
+      <script type="text/javascript" src="js/highcharts.js"></script>
+      <script src="js/highcharts-more.js"></script>
+      <script src="js/highcharts-3d.js"></script>
+      <script src="js/exporting.js"></script>
+      <script type="text/javascript" src="js/bootstrap/dist/js/bootstrap.min.js"></script>
+   </body>
+</html>
+
