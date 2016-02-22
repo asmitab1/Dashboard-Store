@@ -1,0 +1,159 @@
+html, body, .container {
+	height: 100%;
+	min-height: 100%;
+}
+
+body.application {
+	background-color: #fff;
+	width: 98%;
+	margin: 0 auto;
+}
+h2 {
+margin: 0 auto;
+}
+
+ul#outstanding_defect_list, ul.outstanding-defect-list-header {
+	list-style: none;
+}
+
+ul#outstanding_defect_list, ul.outstanding-defect-list-header {
+	padding: 0 0;
+}
+
+ul#outstanding_defect_list li {
+	overflow: hidden;
+	border-bottom: 1px solid #ccc;
+	padding: 5px 5px;
+}
+
+ul#outstanding_defect_list li .col1, ul.outstanding-defect-list-header li .col1
+	{
+	float: left;
+	width: 40%;
+}
+
+ul#outstanding_defect_list li .col2, ul.outstanding-defect-list-header li .col2
+	{
+	float: left;
+	width: 15%;
+}
+
+#chart-01:first-child table {
+	margin: 0 auto !important;
+}
+
+text[text-anchor=middle] {
+	font-size: 25px;
+}
+
+.row {
+	margin: 0px;
+}
+.chart-title1{
+	color: black;
+}
+
+ .custom_title_bar , .chart-title{
+         background: linear-gradient(#2389DC, #509EDF, #509EDF, #509EDF, #509EDF, #509EDF, #2389DC);
+         background-position: left top;
+         height: 40px;
+         border: none !important;
+         color: #fff;
+         text-shadow: 0px 3px 1px #4d4d4d;
+         letter-spacing: 1px;
+ }		 
+
+.chart-wrapper {
+	border-radius: 0px !important;
+}
+
+.container-fluid {
+	padding: 0px !important;
+}
+
+.custom_wrapper {
+	margin-bottom: 0px !important;
+	border: none;
+}
+
+.chart-wrapper .custom_chart_notes {
+	background: transparent;
+	border-top: 0px solid #e2e2e2;
+}
+
+.chart-wrapper{
+	box-shadow: 0 10px 6px -6px #777;
+}
+
+.healthState{
+	border-radius: 50%;
+	height: 25px;
+	width: 25px;
+	margin-right: 10px;
+}
+.healthState.activegreen{
+	background: green;/*#19B62E;*/
+	background: radial-gradient(at 50% 50%,#00cc00, #00b300, #008000);
+}
+.healthState.activered{
+	background: red;
+}
+.healthState.activeamber{
+	background: yellow;
+}
+.healthState.disabledgreen{
+	background: #0B3B0B;
+	opacity: 0.35;
+}
+.healthState.disabledred{
+	background: #610B0B;
+	opacity: 0.35;
+}
+.healthState.disabledamber{
+	background: #868A08;
+	opacity: 0.35;
+}
+#keyFeatures ul li {
+   color: green;
+}
+#keyFeatures ul li span{
+   color: black;
+   text-shadow: 0px 1px 1px #4d4d4d;
+}
+
+#keyFeatures ul li:before {
+	/*content: "\2611";*/
+	content: "\25A0";
+	font-size: 150%;
+}
+
+#keyFeatures ul {
+    list-style-type: none;
+	padding-left: 10px;
+}
+
+#outstanding_defect_list .odd{
+	background: #A7D5FF; /*#D8F6CE*/
+}
+
+#outstanding_defect_list .even {
+	background: #ffffff;
+}
+
+ul.outstanding-defect-list-header li {
+	background: #BDBDBD;
+	padding: 5px 5px;
+	height: 43px;
+}
+
+.chart-title-segment {
+    height: 50px !important;
+}
+
+div.casourel-button-group {
+	float: right;
+}
+.toggle-button { background-color: white; margin: 5px 0; border-radius: 20px; border: 2px solid #D0D0D0; height: 24px; cursor: pointer; width: 50px; position: relative; display: inline-block; user-select: none; -webkit-user-select: none; -ms-user-select: none; -moz-user-select: none; }
+.toggle-button button { cursor: pointer; outline: 0; display:block; position: absolute; left: 0; top: 0; border-radius: 100%; width: 30px; height: 30px; background-color: white; float: left; margin: -3px 0 0 -3px; border: 2px solid #D0D0D0; transition: left 0.3s; }
+.toggle-button-selected { background-color: #83B152; border: 2px solid #7DA652; }
+.toggle-button-selected button { left: 26px; top: 0; margin: 0; border: none; width: 24px; height: 24px; box-shadow: 0 0 4px rgba(0,0,0,0.1); }

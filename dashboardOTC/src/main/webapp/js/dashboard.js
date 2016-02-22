@@ -50,13 +50,13 @@
          height: 360,
          width: 500
      },
-     colors: ['#74FF74', '#82D5FF', '#E4E4E4'],
+     colors: ['#74FF74', '#82D5FF'],
      title: {
          text: ''
      },
 
      xAxis: {
-         categories: ['Development', 'QA']
+         categories: ['Resolved', 'Open']
      },
 
      yAxis: {
@@ -154,19 +154,15 @@
 
  /************* Hard Coded Data sections ************/
 
- var storyProgressDataTemplate = {
+ var monthlyTicketDataTemplate = {
      series: [{
-         name: 'Completed',
+         name: 'Open',
          data: [5, 2],
-         stack: 'Story'
+         stack: 'Ticket'
      }, {
-         name: 'In Progress',
+         name: 'Resolved',
          data: [4, 6],
-         stack: 'Story'
-     }, {
-         name: 'Not Started',
-         data: [1, 2],
-         stack: 'Story'
+         stack: 'Ticket'
      }]
  }
 
@@ -212,7 +208,7 @@
                  currentProjectID = allProjectList[currentProjectIndex].projectId;
 
                  totalProjects = response.length;
-                 for (pjt in response.projectList) {
+                 for (pjt in response) {
                      $("div#bb-bookblock").append(
                          '<div class="bb-item" id="item' + pjt + '"></div>'
                      );
@@ -259,9 +255,7 @@
              async: false,
              dataType: "json",
              success: function(response) {
-                 allDefectAssignments = response;
-                 if (allDefectAssignments)
-                     populateDefectAssignment(allDefectAssignments);
+                 
              },
              error: function(request, status, error) {
                  console.log(error);
@@ -279,13 +273,7 @@
              async: false,
              dataType: "json",
              success: function(response) {
-                 if (response) {
-                     var chartDataArray = createDefectChartData(response);
-                     var customCodePos = getCustomCodePosition(response);
-                     drawDefectChart(chartDataArray, customCodePos);
-                 } else {
-                     $(projectContainer).find('#defectChart').html("Category wise defect information is not available for this project.");
-                 }
+                 drawMonthlyChart(response);
              },
              error: function(request, status, error) {
                  console.log(error);
@@ -327,79 +315,27 @@
      }
      currentProjectID = allProjectList[currentProjectIndex].projectId;
      selectProjectContainer(currentProjectIndex);
-     populateReleaseView(allProjectReleases[currentProjectIndex]);
-     services.getSprintDetailsData(currentProjectID);
-     services.getAllDefectAssignments(currentProjectID);
-     services.getSprintProgressChartData(currentProjectID);
-     services.getStoryAssignment(currentProjectID);
+
+     services.getdefectResolutions(currentProjectID);
+	services.getProgramStatistics(currentProjectID);
+	services.getMonthlyTicketCount(currentProjectID);
      $('#bb-nav-next').click();
 
  }
 
 
- function drawBurnDownChart(dynamicData) {
-     var dayArray = [],
-         idealEffortArray = [],
-         effortArray = [];
-	if (currentProjectID == "Create") {	 
-		 //effortArray = [84, 84, 84, 84, 84, 84, 84, 76, 110, 136, 136, 136, 136, 136, 136, 136, 123, 110, 110, 110, 110, 110, 110, 110, 123, 123];
-		 effortArray = [110, 110, 106, 100, 100, 94, 88, 76, 76, 72, 70, 70, 66, 62, 58, 54, 50, 46, 46, 42, 42, 38, 34, 30, 26, 26];
-	}else if(currentProjectID == "EZTool"){
-		//effortArray = [ 13, 13, 13, 13, 31, 18, 18, 18, 18, 18, 45, 45, 45];
-		effortArray = [ 63, 63, 52, 52, 48, 45, 31,31, 25, 25, 25, 18, 18];
-	} else if(currentProjectID == "Connect"){
-		//effortArray = [129, 129, 129, 116, 122, 88, 109, 109, 109, 110, 110, 76, 24, 12];
-		effortArray = [122, 122, 116, 110, 109, 109, 109, 88, 88, 76, 70, 45, 24, 12];
-	} 
-		 
-	if (currentProjectID == "Create" || currentProjectID == "Connect" || currentProjectID == "EZTool") {
-         burnDownChartOptions.yAxis.title.text = 'Story Points';
-		 //dynamicData[0].totalTimeEstimatedInDay = effortArray[0];
-		 effortArray[0] = dynamicData[0].totalTimeEstimatedInDay;
-	}
-     else {
-         burnDownChartOptions.yAxis.title.text = 'Person Days';
-	 }
-
-	 if(dynamicData[0].sprintSpanInDay < dynamicData[0].day) {
-		dynamicData[0].sprintSpanInDay = dynamicData[0].day + 1;
-	 }
-
-     burnDownChartOptions.xAxis.categories = dayArray;
-     for (c = 0; c < dynamicData[0].sprintSpanInDay; c++) {
-         dayArray.push(c + 1);
-         idealEffortArray.push(dynamicData[0].totalTimeEstimatedInDay - (dynamicData[0].totalTimeEstimatedInDay /( dynamicData[0].sprintSpanInDay -1)) * c);
-     }
-	if (currentProjectID != "Create" && currentProjectID != "Connect" && currentProjectID != "EZTool") {
-	 effortArray.push(dynamicData[0].totalTimeEstimatedInDay);
-     for (c = 1; c < dynamicData[0].day - 1; c++) {
-         effortArray.push(dynamicData[0].totalTimeEstimatedInDay - ((dynamicData[0].totalTimeEstimatedInDay - dynamicData[0].remainingEffort) / dynamicData[0].day) * c + 2);
-     }
+ function drawMonthlyChart(dynamicData) {
+     var storyProgressDataDynamic = monthlyTicketDataTemplate;
+	 var openTicketArray = new Array();
+	 var closedTicketArray = new Array();
 	  for (c in dynamicData) {
-         effortArray.push(dynamicData[c].remainingEffort);
-     }
-	}
+		 openTicketArray.push(dynamicData[c].openTickets);
+		 closedTicketArray.push(dynamicData[c].closedTickets);
+	 }
 
-    /*if (currentProjectID == "Acuity"){
-		effortArray = [];
-	for (c = 0; c < idealEffortArray.length; c++) {
-         effortArray.push(idealEffortArray[c]*1.1 );
-     }
-	 effortArray.push(0);
-	}*/
+     storyProgressDataDynamic.series[0].data = openTicketArray;
+	 storyProgressDataDynamic.series[1].data = closedTicketArray;
 
-     burnDownChartDataTemplate.series[0].data = idealEffortArray;
-     burnDownChartDataTemplate.series[1].data = effortArray;
-     burnDownChartDataTemplate.subtitle.text = currSprintName;
-
-     $(projectContainer).find('#burndowncontainer').highcharts($.extend(burnDownChartOptions, burnDownChartDataTemplate));
- }
-
- function drawSPChart(dynamicData) {
-     var storyProgressDataDynamic = storyProgressDataTemplate;
-     storyProgressDataDynamic.series[0].data = [dynamicData.storyCompleteCountDEV, dynamicData.storyCompleteCountQA];
-     storyProgressDataDynamic.series[1].data = [dynamicData.storyWIPCountDEV, dynamicData.storyWIPCountQA];
-     storyProgressDataDynamic.series[2].data = [dynamicData.storyNotStartedCountDEV, dynamicData.storyNotStartedCountQA];
      $(projectContainer).find('#chart-01').highcharts($.extend(sprintProgressnChartOptions, storyProgressDataDynamic));
  }
 
@@ -495,14 +431,22 @@
              classNme = "odd";
          }
          if (currentProjectID == "Acuity") {
-             defectListHTML += "<li class=" + classNme + "> <span class='col1'>" + outstandingDefectData[d].name + "</span> <span class='col2'>" + getDefectCountForPriority(outstandingDefectData[d].priority, "1- Resolve Immediately") + "</span> <span class='col2'>" + getDefectCountForPriority(outstandingDefectData[d].priority, "2- High") + "</span> <span class='col2'>" + getDefectCountForPriority(outstandingDefectData[d].priority, "3- Normal") + "</span> <span class='col2'>" + getDefectCountForPriority(outstandingDefectData[d].priority, "4- Low") + "</span> </li>";
+             defectListHTML += "<li class=" + classNme + "> <span class='col1'>" + outstandingDefectData[d].name + 
+"</span> <span class='col2'>" + getDefectCountForPriority(outstandingDefectData[d].priority, "1- Resolve Immediately") + "</span> <span class='col2'>" + getDefectCountForPriority(outstandingDefectData[d].priority, 
+"2- High") + "</span> <span class='col2'>" + getDefectCountForPriority(outstandingDefectData[d].priority, "3- Normal") + "</span> <span class='col2'>" + getDefectCountForPriority(outstandingDefectData[d].priority, "4- Low") + "</span> </li>";
          } else if (currentProjectID == "Connect" || currentProjectID == "Create" || currentProjectID == "EZTool") {
-             defectListHTML += "<li class=" + classNme + "> <span class='col1'>" + outstandingDefectData[d].name + "</span> <span class='col3'>" + getDefectCountForPriority(outstandingDefectData[d].priority, "1-Urgent") + "</span> <span class='col3'>" + getDefectCountForPriority(outstandingDefectData[d].priority, "2-Very High") + "</span> <span class='col3'>" + getDefectCountForPriority(outstandingDefectData[d].priority, "3-High") + "</span> <span class='col3'>" + getDefectCountForPriority(outstandingDefectData[d].priority, "4-Medium") + "</span> <span class='col3'>" + getDefectCountForPriority(outstandingDefectData[d].priority, "5-Low") + "</span> </li>";
+             defectListHTML += "<li class=" + classNme + "> <span class='col1'>" + outstandingDefectData[d].name + 
+"</span> <span class='col3'>" + getDefectCountForPriority(outstandingDefectData[d].priority, "1-Urgent") + 
+"</span> <span class='col3'>" + getDefectCountForPriority(outstandingDefectData[d].priority, "2-Very High") + 
+"</span> <span class='col3'>" + getDefectCountForPriority(outstandingDefectData[d].priority, "3-High") + 
+"</span> <span class='col3'>" + getDefectCountForPriority(outstandingDefectData[d].priority, "4-Medium") + 
+"</span> <span class='col3'>" + getDefectCountForPriority(outstandingDefectData[d].priority, "5-Low") + 
+"</span> </li>";
          }
      }
 	 
      if (currentProjectID == "Acuity" || currentProjectID == "OAS") {
-         $(projectContainer).find(".outstanding-defect-list-header").html("<li><span class='col1'> Name</span> <span class='col2'> Resolve Immediately ("+ getCategoryWiseTotalCount(outstandingDefectData, "1- Resolve Immediately")+")</span> <span class='col2'> High ("+ getCategoryWiseTotalCount(outstandingDefectData, "2- High")+")</span> <span class='col2'> Normal ("+ getCategoryWiseTotalCount(outstandingDefectData, "3- Normal")+")</span>  <span class='col2'> Low ("+ getCategoryWiseTotalCount(outstandingDefectData, "4- Low")+")</span></li>");
+         $(projectContainer).find(".outstanding-defect-list-header").html("<li><span class='col1'> Name</span> <span class='col2'> Resolve Immediately ("+ getCategoryWiseTotalCount(outstandingDefectData, "1- Resolve Immediately")+")</span> <span class='col2'> High ("+ getCategoryWiseTotalCount(outstandingDefectData, "2- High")+")</span> <span class='col2'> Normal ("+ getCategoryWiseTotalCount(outstandingDefectData, "3- Normal")+")</span>  <span class='col2'> Low ("+ getCategoryWiseTotalCount(outstandingDefectData, "4-Low")+")</span></li>");
      } else {
          $(projectContainer).find(".outstanding-defect-list-header").html("<li><span class='col1'> Name</span> <span class='col3'>Urgent ("+ getCategoryWiseTotalCount(outstandingDefectData, "1-Urgent")+")</span> <span class='col3'> Very High ("+ getCategoryWiseTotalCount(outstandingDefectData, "2-Very High")+")</span>  <span class='col3'> High ("+ getCategoryWiseTotalCount(outstandingDefectData, "3-High")+")</span> <span class='col3'> Medium ("+ getCategoryWiseTotalCount(outstandingDefectData, "4-Medium")+")</span>  <span class='col3'> Low ("+ getCategoryWiseTotalCount(outstandingDefectData, "5-Low")+")</span></li>");
      }
