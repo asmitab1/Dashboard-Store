@@ -56,4 +56,12 @@ public class DataServices {
 		return Response.status(200).entity(output).build();
 	}
 	
+	@GET
+	@Path("resourceWorkload")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getResourceWorkload(@QueryParam("appID") String applicationID) {	
+		String output = Utility.getObjetToJson(dHelper.getResourceWorkload(applicationID));
+		return Response.status(200).entity(output).build();
+	}
+	
 }
