@@ -7,6 +7,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.dashboard.Utility;
 import com.dashboard.javabean.DefectResolutionVO;
 import com.dashboard.javabean.ProjectConfig;
 import com.google.gson.Gson;
@@ -37,6 +38,22 @@ public class DataServices {
 		return Response.status(200).entity(output).build();
 	}
 	
-
-
+	
+	@GET
+	@Path("programStatistics")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getProgramStatistics(@QueryParam("appID") String applicationID) {	
+		String output = Utility.getObjetToJson(dHelper.getProgramStatistics(applicationID));
+		return Response.status(200).entity(output).build();
+	}
+	
+	
+	@GET
+	@Path("monthlyTicketCount")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getMonthlyTicketCount(@QueryParam("appID") String applicationID) {	
+		String output = Utility.getObjetToJson(dHelper.getMonthlyTicketCount(applicationID));
+		return Response.status(200).entity(output).build();
+	}
+	
 }

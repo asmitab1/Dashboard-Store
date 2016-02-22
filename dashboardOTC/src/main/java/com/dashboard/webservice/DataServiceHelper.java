@@ -12,7 +12,10 @@ import org.apache.commons.io.IOUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.dashboard.ProcessCSV;
 import com.dashboard.javabean.DefectResolutionVO;
+import com.dashboard.javabean.MonthlyTicketCount;
+import com.dashboard.javabean.ProgramStatistics;
 import com.dashboard.javabean.ProjectConfig;
 import com.dashboard.resourcemanager.PropertiesCache;
 import com.google.gson.Gson;
@@ -58,6 +61,36 @@ public class DataServiceHelper {
 
 		PropertiesCache.getInstance()
 				.getProperty("DEFECTS_RESOLUTION_FILENAME");
+		
 		return null;
+	}
+	
+	public Object getProgramStatistics(String applicationID) {
+		Object programStatisticsList = null;
+
+		ProgramStatistics programStatistics = new ProgramStatistics();
+		try {
+			programStatisticsList = ProcessCSV.execute(PropertiesCache.getInstance()
+					.getProperty("PROGRAM_STATISTICS"), programStatistics);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return programStatisticsList;
+	}
+	
+	
+	public Object getMonthlyTicketCount(String applicationID) {
+		Object monthlyTicketCountList = null;
+
+		MonthlyTicketCount monthlyTicketCount = new MonthlyTicketCount();
+		try {
+			monthlyTicketCountList = ProcessCSV.execute(PropertiesCache.getInstance()
+					.getProperty("BACKLOG_MANAGEMENT_INDEX"), monthlyTicketCount);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return monthlyTicketCountList;
 	}
 }

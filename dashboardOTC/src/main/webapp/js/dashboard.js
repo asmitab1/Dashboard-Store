@@ -34,54 +34,6 @@
      min: 0
  };
 
- var burnDownChartOptions = {
-     chart: {
-         marginRight: 40
-     },
-     title: {
-         text: ''
-     },
-     colors: ['#707070', '#3385FF'],
-     plotOptions: {
-         line: {
-             lineWidth: 3
-         },
-         tooltip: {
-             hideDelay: 200
-         }
-     },
-     xAxis: {
-         title: {
-             text: 'Days',
-             style: {
-                 fontSize: '15px'
-             }
-         },
-         categories: ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6',
-             'Day 7', 'Day 8', 'Day 9', 'Day 10', 'Day 11', 'Day 12', 'Day 13', 'Day 14', 'Day 15'
-         ]
-     },
-     yAxis: {
-         title: {
-             text: 'Person Days',
-             style: {
-                 fontSize: '15px'
-             }
-         },
-         plotLines: [{
-             value: 0,
-             width: 1
-         }]
-     },
-     tooltip: {
-         enabled: false
-     },
-     legend: {
-         layout: 'vertical',
-         verticalAlign: 'bottom',
-         borderWidth: 0
-     }
- };
 
  var sprintProgressnChartOptions = {
      chart: {
@@ -243,27 +195,7 @@
      }
  ];
 
- var burnDownChartDataTemplate = {
-     subtitle: {
-         text: 'Sprint #13',
-         x: 0,
-         style: {
-             fontSize: '18px'
-         }
-     },
-     series: [{
-         name: 'Guideline',
-         lineWidth: 2,
 
-         data: []
-     }, {
-         name: 'Remaining Values',
-         marker: {
-             radius: 6
-         },
-         data: []
-     }]
- };
 
  /************* Hard Coded Data sections ************/
 
@@ -277,9 +209,9 @@
              success: function(response) {
                  allProjectList = response;
                  currentProjectIndex = 0;
-                 currentProjectID = allProjectList.projectList[currentProjectIndex].projectId;
+                 currentProjectID = allProjectList[currentProjectIndex].projectId;
 
-                 totalProjects = response.projectList.length;
+                 totalProjects = response.length;
                  for (pjt in response.projectList) {
                      $("div#bb-bookblock").append(
                          '<div class="bb-item" id="item' + pjt + '"></div>'
@@ -288,14 +220,10 @@
                  }
                  Page.init();
                  selectProjectContainer(currentProjectIndex);
-                 services.getAllReleases();
-                 services.getSprintDetailsData(currentProjectID);
-                 services.getAllDefectAssignments(currentProjectID);
-                 services.getCategoryWiseDefects(currentProjectID);
-                 services.getSeverityWiseDefects(currentProjectID);
-                 services.getBurnDownChartData(currentProjectID);
-                 services.getSprintProgressChartData(currentProjectID);
-                 services.getStoryAssignment(currentProjectID);
+                 services.getdefectResolutions(currentProjectID);
+				 services.getProgramStatistics(currentProjectID);
+				 services.getMonthlyTicketCount(currentProjectID);
+                
              },
              error: function(request, status, error) {
                  console.log(error);
@@ -305,10 +233,10 @@
              }
          });
      },
-     getAllReleases: function() {
+     getdefectResolutions: function() {
          $.ajax({
              type: "GET",
-             url: "/dashboard/rest/services/allReleases",
+             url: "/dashboard/rest/services/defectResolutions",
              async: false,
              dataType: "json",
              success: function(response) {
@@ -324,10 +252,10 @@
              }
          });
      },
-     getAllDefectAssignments: function(projectID) {
+     getProgramStatistics: function(projectID) {
          $.ajax({
              type: "GET",
-             url: "/dashboard/rest/services/allOpenDefects?appID=" + projectID,
+             url: "/dashboard/rest/services/programStatistics?appID=" + projectID,
              async: false,
              dataType: "json",
              success: function(response) {
@@ -344,10 +272,10 @@
          });
 
      },
-     getCategoryWiseDefects: function(projectID) {
+     getMonthlyTicketCount: function(projectID) {
          $.ajax({
              type: "GET",
-             url: "/dashboard/rest/services/defectsWithCategory?appID=" + projectID,
+             url: "/dashboard/rest/services/monthlyTicketCount?appID=" + projectID,
              async: false,
              dataType: "json",
              success: function(response) {
@@ -366,101 +294,7 @@
                  console.log(status);
              }
          });
-     },
-     getBurnDownChartData: function(projectID) {
-         $.ajax({
-             type: "GET",
-             url: "/dashboard/rest/services/burnDownChart?appID=" + projectID,
-             async: false,
-             dataType: "json",
-             success: function(response) {
-                 drawBurnDownChart(response);
-
-             },
-             error: function(request, status, error) {
-                 console.log(error);
-             },
-             failure: function(status) {
-                 console.log(status);
-             }
-         });
-     },
-     getSprintProgressChartData: function(projectID) {
-         $.ajax({
-             type: "GET",
-             url: "/dashboard/rest/services/sprintProgress?appID=" + projectID,
-             async: false,
-             dataType: "json",
-             success: function(response) {
-                 drawSPChart(response);
-             },
-             error: function(request, status, error) {
-                 console.log(error);
-             },
-             failure: function(status) {
-                 console.log(status);
-             }
-         });
-     },
-     getSprintDetailsData: function(projectID) {
-         $.ajax({
-             type: "GET",
-             url: "/dashboard/rest/services/sprintDetails?appID=" + projectID,
-             async: false,
-             dataType: "json",
-             success: function(response) {
-                 if (response) {
-                     updateSprintDetails(response);
-                 }
-             },
-             error: function(request, status, error) {
-                 console.log(error);
-             },
-             failure: function(status) {
-                 console.log(status);
-             }
-         });
-     },
-     getStoryAssignment: function(projectID) {
-         $.ajax({
-             type: "GET",
-             url: "/dashboard/rest/services/storyAssignment?appID=" + projectID,
-             async: false,
-             dataType: "json",
-             success: function(response) {
-                 if (response) {
-                     showStoryAssignment(response);
-                 }
-             },
-             error: function(request, status, error) {
-                 console.log(error);
-             },
-             failure: function(status) {
-                 console.log(status);
-             }
-         });
-     },
-     getSeverityWiseDefects: function(projectID) {
-         $.ajax({
-             type: "GET",
-             url: "/dashboard/rest/services/defectsWithSeverity?appID=" + projectID,
-             async: false,
-             dataType: "json",
-             success: function(response) {
-                 if (response) {
-                     drawSeverityWiseDefectChart(response);
-                 }
-             },
-             error: function(request, status, error) {
-                 console.log(error);
-             },
-             failure: function(status) {
-                 console.log(status);
-             }
-         });
      }
-
-
  };
 
  $(function() {
@@ -491,7 +325,7 @@
      } else {
          currentProjectIndex = 0;
      }
-     currentProjectID = allProjectList.projectList[currentProjectIndex].projectId;
+     currentProjectID = allProjectList[currentProjectIndex].projectId;
      selectProjectContainer(currentProjectIndex);
      populateReleaseView(allProjectReleases[currentProjectIndex]);
      services.getSprintDetailsData(currentProjectID);
