@@ -17,6 +17,7 @@ import com.dashboard.javabean.DefectResolutionVO;
 import com.dashboard.javabean.MonthlyTicketCount;
 import com.dashboard.javabean.ProgramStatistics;
 import com.dashboard.javabean.ProjectConfig;
+import com.dashboard.javabean.ResourceWorkload;
 import com.dashboard.resourcemanager.PropertiesCache;
 import com.google.gson.Gson;
 
@@ -92,5 +93,19 @@ public class DataServiceHelper {
 		}
 
 		return monthlyTicketCountList;
+	}
+	
+	public Object getResourceWorkload(String applicationID) {
+		Object resourceWorkloadList = null;
+
+		ResourceWorkload resourceWorkload = new ResourceWorkload();
+		try {
+			resourceWorkloadList = ProcessCSV.execute(PropertiesCache.getInstance()
+					.getProperty("RESOURCE_WORKLOAD_FILENAME"), resourceWorkload);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return resourceWorkloadList;
 	}
 }
