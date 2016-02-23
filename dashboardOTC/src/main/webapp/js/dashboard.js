@@ -230,16 +230,16 @@
              }
          });
      },
-     getdefectResolutions: function() {
+     getdefectResolutions: function(projectID) {
          $.ajax({
              type: "GET",
              url: "/dashboard/rest/services/defectResolutions",
              async: false,
              dataType: "json",
              success: function(response) {
-                 allProjectReleases = response;
-                 if (allProjectReleases)
-                     populateReleaseView(allProjectReleases[currentProjectIndex]);
+                 defectDetails = response;
+                 if (defectDetails)
+                     populatedefectDetails(defectDetails);
              },
              error: function(request, status, error) {
                  console.log(error);
@@ -473,6 +473,23 @@
          }
      } */
      }
+ }
+ 
+ 
+ function populatedefectDetails(defectDetails){
+	 var defectListHTML = "";
+     $(projectContainer).find(".no-defects-msg").hide();
+     if (outstandingDefectData.length == 0) {
+         $(projectContainer).find(".no-defects-msg").show();
+     }
+
+         defectListHTML += "<li class='odd'><span class='col1'> Ticket Number </span> <span class='col3'>" + defectDetails[1].ticketNumber + "</span> </li>";
+         defectListHTML += "<li class='even'><span class='col1'> Ticket Number </span> <span class='col3'>" + defectDetails[1].issueDescription + "</span> </li>";
+         defectListHTML += "<li class='odd'><span class='col1'> Ticket Number </span> <span class='col3'>" + defectDetails[1].resolution + "</span> </li>";
+         defectListHTML += "<li class='even'><span class='col1'> Ticket Number </span> <span class='col3'>" + defectDetails[1].mitigatedRiskOpportunity + "</span> </li>";
+
+     $(projectContainer).find("#outstanding_defect_list").html(defectListHTML);
+
  }
 
  function selectProjectContainer(projectIndex) {
