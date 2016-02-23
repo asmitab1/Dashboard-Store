@@ -64,7 +64,7 @@ public class DataServiceHelper {
 		DefectResolution defectResolution = new DefectResolution();
 		try {
 			defectResolutionsList = ProcessCSV.execute(PropertiesCache.getInstance()
-					.getProperty("PROGRAM_STATISTICS"), defectResolution);
+					.getProperty("DEFECTS_RESOLUTION_FILENAME"), defectResolution);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
