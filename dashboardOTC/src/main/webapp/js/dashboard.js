@@ -165,6 +165,10 @@
          stack: 'Ticket'
      }]
  }
+ 
+ var runBookDataTemplate = {
+     series: [ {data: [5] }, {data: [5] }]
+ }
 
  var storyProgressData = [{
          series: [{
@@ -256,7 +260,7 @@
              async: false,
              dataType: "json",
              success: function(response) {
-                 
+                 drawProgramStatisticsChart(response);
              },
              error: function(request, status, error) {
                  console.log(error);
@@ -361,7 +365,37 @@
 	 storyProgressDataDynamic.series[1].data = closedTicketArray;
 	 sprintProgressnChartOptions.xAxis.categories =  categories;
 
-     $(projectContainer).find('#chart-01').highcharts($.extend(sprintProgressnChartOptions, storyProgressDataDynamic));
+     $(projectContainer).find('#chart-04').highcharts($.extend(sprintProgressnChartOptions, storyProgressDataDynamic));
+ }
+ 
+ function drawProgramStatisticsChart(dynamicData) {
+	 
+	 var drawProgramStatisticsChartOption = jQuery.extend(true, {}, sprintProgressnChartOptions);
+	 drawProgramStatisticsChartOption.chart.type = 'bar';
+	 var seriesArray = [];
+	 var categories = new Array();
+
+	  for (c in dynamicData) {
+		 var dataObj = new Object();
+		 dataObj.name = dynamicData[c].TargetTime;
+		 var dataArray = new Array();
+		 for(d in dynamicData) {
+			 if(c==d){
+				dataArray.push(parseInt(dynamicData[c].Weight));
+			 } else {
+				dataArray.push(null);
+			 }
+		 }
+		 dataObj.data = dataArray;
+		 seriesArray.push(dataObj);
+		 categories.push(dynamicData[c].ProgramName);
+	 }
+
+     runBookDataTemplate.series = seriesArray;
+	 drawProgramStatisticsChartOption.xAxis.categories =  categories;
+
+     $(projectContainer).find('#chart-02"').highcharts($.extend(drawProgramStatisticsChartOption, runBookDataTemplate));
+	 
  }
 
  function createDefectChartData(defectData) {
