@@ -14,7 +14,6 @@ import org.json.JSONObject;
 
 import com.dashboard.ProcessCSV;
 import com.dashboard.javabean.DefectResolution;
-import com.dashboard.javabean.DefectResolutionVO;
 import com.dashboard.javabean.MonthlyTicketCount;
 import com.dashboard.javabean.ProgramStatistics;
 import com.dashboard.javabean.ProjectConfig;

@@ -8,7 +8,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.dashboard.Utility;
-import com.dashboard.javabean.DefectResolutionVO;
 import com.dashboard.javabean.ProjectConfig;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
