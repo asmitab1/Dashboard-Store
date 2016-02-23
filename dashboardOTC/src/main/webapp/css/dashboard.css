@@ -12,15 +12,15 @@ h2 {
 margin: 0 auto;
 }
 
-ul#outstanding_defect_list, ul.outstanding-defect-list-header {
+ul#outstanding_defect_list, ul.outstanding-defect-list-header, ul#defect_list {
 	list-style: none;
 }
 
-ul#outstanding_defect_list, ul.outstanding-defect-list-header {
+ul#outstanding_defect_list, ul.outstanding-defect-list-header, ul#defect_list {
 	padding: 0 0;
 }
 
-ul#outstanding_defect_list li {
+ul#outstanding_defect_list li , ul#defect_list li {
 	overflow: hidden;
 	border-bottom: 1px solid #ccc;
 	padding: 5px 5px;
@@ -144,11 +144,11 @@ text[text-anchor=middle] {
 	padding-left: 10px;
 }
 
-#outstanding_defect_list .odd{
+#outstanding_defect_list .odd, ul#defect_list .odd {
 	background: #A7D5FF; /*#D8F6CE*/
 }
 
-#outstanding_defect_list .even {
+#outstanding_defect_list .even , ul#defect_list even{
 	background: #ffffff;
 }
 
