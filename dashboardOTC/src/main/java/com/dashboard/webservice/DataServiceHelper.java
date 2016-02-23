@@ -59,11 +59,19 @@ public class DataServiceHelper {
 
 	public Object getdefectResolutions(String applicationID) {
 		Object defectResolutionsList = null;
-		
+		List<DefectResolution> defectResolutionsListFinal = new ArrayList<DefectResolution>();
 		DefectResolution defectResolution = new DefectResolution();
 		try {
 			defectResolutionsList = ProcessCSV.execute(PropertiesCache.getInstance()
-					.getProperty("DEFECTS_RESOLUTION_FILENAME"), defectResolution);
+					.getProperty("PROGRAM_STATISTICS"), defectResolution);
+			for (DefectResolution p: (List<DefectResolution>) defectResolutionsList){
+				if(applicationID.equalsIgnoreCase(p.getTeam())) {
+					defectResolutionsListFinal.add(p);
+				}
+			}
+			defectResolutionsList = defectResolutionsListFinal;
+			
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -98,11 +106,17 @@ public class DataServiceHelper {
 	
 	public Object getMonthlyTicketCount(String applicationID) {
 		Object monthlyTicketCountList = null;
-
+		List<MonthlyTicketCount> monthlyTicketCountFinal = new ArrayList<MonthlyTicketCount>();
 		MonthlyTicketCount monthlyTicketCount = new MonthlyTicketCount();
 		try {
 			monthlyTicketCountList = ProcessCSV.execute(PropertiesCache.getInstance()
 					.getProperty("BACKLOG_MANAGEMENT_INDEX"), monthlyTicketCount);
+			for (MonthlyTicketCount p: (List<MonthlyTicketCount>) monthlyTicketCountList){
+				if(applicationID.equalsIgnoreCase(p.getTeam())) {
+					monthlyTicketCountFinal.add(p);
+				}
+			}
+			monthlyTicketCountList = monthlyTicketCountFinal;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -112,11 +126,18 @@ public class DataServiceHelper {
 	
 	public Object getResourceWorkload(String applicationID) {
 		Object resourceWorkloadList = null;
-
+		List<ResourceWorkload> resWorkloadListFinal = new ArrayList<ResourceWorkload>();
 		ResourceWorkload resourceWorkload = new ResourceWorkload();
 		try {
 			resourceWorkloadList = ProcessCSV.execute(PropertiesCache.getInstance()
 					.getProperty("RESOURCE_WORKLOAD_FILENAME"), resourceWorkload);
+			for (ResourceWorkload p: (List<ResourceWorkload>) resourceWorkloadList){
+				if(applicationID.equalsIgnoreCase(p.getTeam())) {
+					resWorkloadListFinal.add(p);
+				}
+			}
+			resourceWorkloadList = resWorkloadListFinal;
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

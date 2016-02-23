@@ -2,9 +2,17 @@ package com.dashboard.javabean;
 
 
 public class MonthlyTicketCount {
-	public String month;
-	public int openTickets;
-	public int closedTickets;
+	private String team;
+	private String month;
+	private int openTickets;
+	private int closedTickets;
+	
+	public String getTeam() {
+		return team;
+	}
+	public void setTeam(String team) {
+		this.team = team;
+	}
 	public String getMonth() {
 		return month;
 	}
