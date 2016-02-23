@@ -69,8 +69,6 @@ public class DataServiceHelper {
 		}
 
 		return defectResolutionsList;
-		 
-		return null;
 	}
 	
 	public Object getProgramStatistics(String applicationID) {
