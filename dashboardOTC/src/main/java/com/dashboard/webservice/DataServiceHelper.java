@@ -13,6 +13,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.dashboard.ProcessCSV;
+import com.dashboard.javabean.DefectResolution;
 import com.dashboard.javabean.DefectResolutionVO;
 import com.dashboard.javabean.MonthlyTicketCount;
 import com.dashboard.javabean.ProgramStatistics;
@@ -60,7 +61,7 @@ public class DataServiceHelper {
 	public Object getdefectResolutions(String applicationID) {
 		Object defectResolutionsList = null;
 		
-		DefectResolutionVO defectResolution = new DefectResolutionVO();
+		DefectResolution defectResolution = new DefectResolution();
 		try {
 			defectResolutionsList = ProcessCSV.execute(PropertiesCache.getInstance()
 					.getProperty("PROGRAM_STATISTICS"), defectResolution);
