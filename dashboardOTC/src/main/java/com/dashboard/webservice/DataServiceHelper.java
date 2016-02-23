@@ -74,11 +74,21 @@ public class DataServiceHelper {
 	
 	public Object getProgramStatistics(String applicationID) {
 		Object programStatisticsList = null;
+		List<ProgramStatistics> pStatisticsFinal = new ArrayList<ProgramStatistics>();
 
 		ProgramStatistics programStatistics = new ProgramStatistics();
 		try {
 			programStatisticsList = ProcessCSV.execute(PropertiesCache.getInstance()
 					.getProperty("PROGRAM_STATISTICS"), programStatistics);
+			List<ProgramStatistics> pStatistics = (List<ProgramStatistics>) programStatisticsList;
+			
+			for (ProgramStatistics p: pStatistics){
+				if(applicationID.equalsIgnoreCase(p.getTeam())) {
+					pStatisticsFinal.add(p);
+				}
+			}
+			programStatisticsList = pStatisticsFinal;
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
