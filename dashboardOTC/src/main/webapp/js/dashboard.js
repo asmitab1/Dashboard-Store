@@ -219,6 +219,7 @@
                  services.getdefectResolutions(currentProjectID);
 				 services.getProgramStatistics(currentProjectID);
 				 services.getMonthlyTicketCount(currentProjectID);
+				 services.getResourceWorkload(currentProjectID);
                 
              },
              error: function(request, status, error) {
@@ -282,6 +283,26 @@
                  console.log(status);
              }
          });
+     },
+     getResourceWorkload: function(projectID) {
+         $.ajax({
+             type: "GET",
+             url: "/dashboard/rest/services/resourceWorkload?appID=" + projectID,
+             async: false,
+             dataType: "json",
+             success: function(response) {
+            	 allDefectAssignments = response;
+                 if (allDefectAssignments)
+                     populateDefectAssignment(allDefectAssignments);
+             },
+             error: function(request, status, error) {
+                 console.log(error);
+             },
+             failure: function(status) {
+                 console.log(status);
+             }
+         });
+
      }
  };
 
@@ -413,9 +434,6 @@
 
 
  function populateDefectAssignment(outstandingDefectData) {
-     //$(projectContainer).find('.news-container').vTicker('stop');
-     var outstandingDefectCount = getOutstandingDefectCount(outstandingDefectData);
-     $(projectContainer).find("#outstanding-defect-count").html(outstandingDefectCount);
      var defectListHTML = "";
      $(projectContainer).find(".outstanding-defect-list-header").show();
      $(projectContainer).find(".no-defects-msg").hide();
@@ -433,29 +451,14 @@
          } else {
              classNme = "odd";
          }
-         if (currentProjectID == "Acuity") {
-             defectListHTML += "<li class=" + classNme + "> <span class='col1'>" + outstandingDefectData[d].name + 
-"</span> <span class='col2'>" + getDefectCountForPriority(outstandingDefectData[d].priority, "1- Resolve Immediately") + "</span> <span class='col2'>" + getDefectCountForPriority(outstandingDefectData[d].priority, 
-"2- High") + "</span> <span class='col2'>" + getDefectCountForPriority(outstandingDefectData[d].priority, "3- Normal") + "</span> <span class='col2'>" + getDefectCountForPriority(outstandingDefectData[d].priority, "4- Low") + "</span> </li>";
-         } else if (currentProjectID == "Connect" || currentProjectID == "Create" || currentProjectID == "EZTool") {
-             defectListHTML += "<li class=" + classNme + "> <span class='col1'>" + outstandingDefectData[d].name + 
-"</span> <span class='col3'>" + getDefectCountForPriority(outstandingDefectData[d].priority, "1-Urgent") + 
-"</span> <span class='col3'>" + getDefectCountForPriority(outstandingDefectData[d].priority, "2-Very High") + 
-"</span> <span class='col3'>" + getDefectCountForPriority(outstandingDefectData[d].priority, "3-High") + 
-"</span> <span class='col3'>" + getDefectCountForPriority(outstandingDefectData[d].priority, "4-Medium") + 
-"</span> <span class='col3'>" + getDefectCountForPriority(outstandingDefectData[d].priority, "5-Low") + 
-"</span> </li>";
-         }
-     }
-	 
-     if (currentProjectID == "Acuity" || currentProjectID == "OAS") {
-         $(projectContainer).find(".outstanding-defect-list-header").html("<li><span class='col1'> Name</span> <span class='col2'> Resolve Immediately ("+ getCategoryWiseTotalCount(outstandingDefectData, "1- Resolve Immediately")+")</span> <span class='col2'> High ("+ getCategoryWiseTotalCount(outstandingDefectData, "2- High")+")</span> <span class='col2'> Normal ("+ getCategoryWiseTotalCount(outstandingDefectData, "3- Normal")+")</span>  <span class='col2'> Low ("+ getCategoryWiseTotalCount(outstandingDefectData, "4-Low")+")</span></li>");
-     } else {
-         $(projectContainer).find(".outstanding-defect-list-header").html("<li><span class='col1'> Name</span> <span class='col3'>Urgent ("+ getCategoryWiseTotalCount(outstandingDefectData, "1-Urgent")+")</span> <span class='col3'> Very High ("+ getCategoryWiseTotalCount(outstandingDefectData, "2-Very High")+")</span>  <span class='col3'> High ("+ getCategoryWiseTotalCount(outstandingDefectData, "3-High")+")</span> <span class='col3'> Medium ("+ getCategoryWiseTotalCount(outstandingDefectData, "4-Medium")+")</span>  <span class='col3'> Low ("+ getCategoryWiseTotalCount(outstandingDefectData, "5-Low")+")</span></li>");
-     }
+         defectListHTML += "<li class=" + classNme + "> <span class='col1'>" + outstandingDefectData[d].Team + 
+"</span> <span class='col2'>" + outstandingDefectData[d].Analyst + "</span> <span class='col2'>" + outstandingDefectData[d].Urgent + "</span> <span class='col2'>" + outstandingDefectData[d].High + "</span> <span class='col2'>" + outstandingDefectData[d].Medium + "</span> <span class='col2'>" + outstandingDefectData[d].Low + "</span> </li>";
+
+         $(projectContainer).find(".outstanding-defect-list-header").html("<li><span class='col1'> Team</span> <span class='col2'> Analyst </span> <span class='col2'> Urgent </span> <span class='col2'> High </span>  <span class='col2'> Medium </span> <span class='col2'> Low </span></li>");
+     
      $(projectContainer).find("#outstanding_defect_list").html(defectListHTML);
 
-     if (rowCounter > noOfAssignedDefectsToShow) {
+     /*if (rowCounter > noOfAssignedDefectsToShow) {
          if ($(projectContainer).find('#ticker-flag').val() == "N") {
              $(projectContainer).find('#ticker-flag').val("Y");
              $(projectContainer).find('.news-container').vTicker({
@@ -468,6 +471,7 @@
                  direction: 'up'
              });
          }
+     } */
      }
  }
 
