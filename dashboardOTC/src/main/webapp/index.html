@@ -204,98 +204,46 @@
                </div>
             </div>
             <div class="container-fluid">
-               <div id="myCarousel" class="carousel slide" data-ride="carousel" style="width:100%">
                   <!-- Wrapper for slides -->
                   <div class="carousel-inner" role="listbox">
                      <div class="item active releaseContainer">
                         <div class="row">
-                           <div class="row col-sm-7" style="padding-left: 0px;padding-right: 0px;">
-                              <div class="row">
-                                 <div class="col-sm-12">
-                                    <div class="chart-wrapper">
-                                       <div class="chart-title custom_title_bar"><span id="projectID"> </span> <span id="releaseName"> </span> Release Milestone</div>
-                                       <div class="chart-stage" style="min-height:140px;padding-right:0px;">
-                                          <div class="col-sm-6" id="release" style="padding-right:0;">
-                                             <div class="releaseView" style="width:100%">
-                                                <div style="display:none;">
-                                                   <img id="currentSprint" src="images/bottomArrow.jpg"/>
-                                                </div>
-                                                <div class="chart-stage">
-                                                   <canvas id="myCanvas" height="130">
-                                                      Your browser does not support the HTML5 canvas tag.
-                                                   </canvas>
-                                                   <ul class="releaseview-legend">
-                                                      <li><span class="releaseview-legend-completed"></span>Completed</li>
-                                                      <li><span class="releaseview-legend-current"></span>In Progress</li>
-                                                      <li><span class="releaseview-legend-future"></span>Not Started</li>
-                                                   </ul>
-                                                </div>
-                                             </div>
-                                          </div>
-                                          <div class="col-sm-6" id="keyFeatures" style="padding:0;">
-                                             <div>
-                                                <div class="chart-title" style="color:black;font-size:13px;height: 30px;">Key Features</div>
-                                                <div class="chart-stage" style="min-height:110px; height: 150px;">
-                                                </div>
-                                             </div>
-                                          </div>
-                                       </div>
-                                       <div class="chart-notes custom_chart_notes">
-                                          <div style="float:left;"><span id="sprint-name">Sprint 9</span></div>
-                                          <div style="float:right;">Start date - <span id="sprint-start-date"></span>&nbsp;&nbsp;&nbsp;&nbsp; End date - <span id="sprint-end-date"></span></div>
-                                          <div  style="clear:both;"></div>
-                                       </div>
-                                       <div class="chart-notes custom_chart_notes">
-                                          <div style="float:left;">Total no of stories - <span id="sprint-total-story-count"></span></div>
-                                          <div style="float:right;">Total Story Points - <span id="sprint-total-story-points"></span></div>
-                                          <div style="clear:both;"></div>
-                                       </div>
-                                    </div>
+                           <div class="row col-sm-6" style="padding-left: 0px;padding-right: 0px;">
+                              <div class="chart-wrapper">
+                                 <div class="chart-title custom_title_bar">
+                                    Current Major RCA
                                  </div>
-                              </div>
-                              <div class="row">
-                                 <div class="col-sm-12">
-                                    <div class="chart-wrapper custom_wrapper">
-                                       <div class="chart-title custom_title_bar">
-                                          Resolution/Severity Wise Defects
-                                       </div>
-                                       <div class="row">
-                                          <div class="chart-stage col-sm-6">
-                                             <div  id="defectChart" style="min-height:225px;margin-top: -50px;"></div>
-                                          </div>
-                                          <div class="chart-stage col-sm-6">
-                                             <div  id="defectSeverityChart" style="min-height:225px;margin-top: -50px;"></div>
-                                          </div>
-                                       </div>
+                                 <div class="chart-stage">
+                                    <div id="chart-02">
+                                       <div id="defect-rca" style="min-width: 310px; min-height: 470px; margin: 0 auto"></div>
                                     </div>
                                  </div>
                               </div>
                            </div>
-                           <div class="col-sm-5">
+                           <div class="col-sm-6">
                               <div class="chart-wrapper">
                                  <div class="chart-title custom_title_bar">
-                                    Burndown Charts
+                                    Runbook
                                  </div>
                                  <div class="chart-stage">
                                     <div id="chart-02">
-                                       <div id="burndowncontainer" style="min-width: 310px; min-height: 470px; margin: 0 auto"></div>
+                                       <div id="runbook-chart" style="min-width: 310px; min-height: 470px; margin: 0 auto"></div>
                                     </div>
                                  </div>
                               </div>
                            </div>
                         </div>
                      </div>
-                  </div>
-               </div>
+                  </div>   
             </div>
          </div>
          <div class="second">
             <div class="container-fluid">
                <div class="row">
-                  <div class="col-sm-7">
+                  <div class="col-sm-6" style="padding-left: 0px;padding-right: 0px;">
                      <div class="chart-wrapper">
                         <div class="chart-title custom_title_bar">
-                           Outstanding Defects (<span id="outstanding-defect-count">0</span>)
+                           Resource Workload (<span id="outstanding-defect-count">0</span>)
                         </div>
                         <div class="chart-stage" style="min-height: 210px;height:325px; padding-left: 0px; padding-right: 0px;">
                            <div class="no-defects-msg" style="margin: 0 auto; width: 250px;">There is no outstanding defects.</div>
@@ -308,7 +256,7 @@
                         </div>
                      </div>
                   </div>
-                  <div class="col-sm-5">
+                  <div class="col-sm-6" >
                      <div class="chart-wrapper">
                         <div class="chart-title custom_title_bar">
                            Backlog Management Index
