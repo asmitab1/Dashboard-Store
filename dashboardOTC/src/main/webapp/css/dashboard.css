@@ -38,6 +38,12 @@ ul#outstanding_defect_list li .col2, ul.outstanding-defect-list-header li .col2
 	width: 15%;
 }
 
+ul#outstanding_defect_list li .col3
+	{
+	float: left;
+	width: 60%;
+}
+
 #chart-01:first-child table {
 	margin: 0 auto !important;
 }
