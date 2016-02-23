@@ -38,7 +38,13 @@ ul#outstanding_defect_list li .col2, ul.outstanding-defect-list-header li .col2
 	width: 15%;
 }
 
-ul#outstanding_defect_list li .col3
+ul#defect_list li .col1
+{
+	float: left;
+	width: 40%;
+}
+
+ul#defect_list li .col3
 	{
 	float: left;
 	width: 60%;
