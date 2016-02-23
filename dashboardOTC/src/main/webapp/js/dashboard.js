@@ -372,6 +372,8 @@
 	 
 	 var drawProgramStatisticsChartOption = jQuery.extend(true, {}, sprintProgressnChartOptions);
 	 drawProgramStatisticsChartOption.chart.type = 'bar';
+	 drawProgramStatisticsChartOption.colors = ['#7cb5ec', '#90ed7d', '#f7a35c', '#8085e9', 
+   '#f15c80', '#e4d354', '#2b908f', '#f45b5b', '#91e8e1'];
 	 var seriesArray = [];
 	 var categories = new Array();
 
@@ -513,7 +515,7 @@
  function populatedefectDetails(defectDetails){
 	 var defectListHTML = "";
      $(projectContainer).find(".no-defects-msg").hide();
-     if (outstandingDefectData.length == 0) {
+     if (defectDetails.length == 0) {
          $(projectContainer).find(".no-defects-msg").show();
      }
 
