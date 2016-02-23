@@ -33,8 +33,7 @@ public class DataServices {
 	@Path("defectResolutions")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getdefectResolutions(@QueryParam("appID") String applicationID) {
-		DefectResolutionVO[] resolutionVOs =  dHelper.getdefectResolutions(applicationID);
-		String output = "";//Utility.getObjetToJson(cacheObject);
+		String output = Utility.getObjetToJson(dHelper.getdefectResolutions(applicationID));
 		return Response.status(200).entity(output).build();
 	}
 	
