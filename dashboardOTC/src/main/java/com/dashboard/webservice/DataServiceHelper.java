@@ -69,7 +69,7 @@ public class DataServiceHelper {
 		}
 
 		return defectResolutionsList;
-		
+		 
 		return null;
 	}
 	
