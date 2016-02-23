@@ -57,11 +57,18 @@ public class DataServiceHelper {
 		return projects;
 	}
 
-	public DefectResolutionVO[] getdefectResolutions(String applicationID) {
-		DefectResolutionVO[] dList = null;
+	public Object getdefectResolutions(String applicationID) {
+		Object defectResolutionsList = null;
+		
+		DefectResolutionVO defectResolution = new DefectResolutionVO();
+		try {
+			defectResolutionsList = ProcessCSV.execute(PropertiesCache.getInstance()
+					.getProperty("PROGRAM_STATISTICS"), defectResolution);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
-		PropertiesCache.getInstance()
-				.getProperty("DEFECTS_RESOLUTION_FILENAME");
+		return defectResolutionsList;
 		
 		return null;
 	}
