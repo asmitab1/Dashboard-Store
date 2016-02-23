@@ -190,7 +190,7 @@
          }]
      }
  ];
-
+ 
 
 
  /************* Hard Coded Data sections ************/
@@ -320,6 +320,7 @@
      pageRefreshInterval = setInterval(function() {
          refreshProject();
      }, intervalDuration);
+     
  });
 
 
@@ -451,10 +452,9 @@
          } else {
              classNme = "odd";
          }
-         defectListHTML += "<li class=" + classNme + "> <span class='col1'>" + outstandingDefectData[d].Team + 
-"</span> <span class='col2'>" + outstandingDefectData[d].Analyst + "</span> <span class='col2'>" + outstandingDefectData[d].Urgent + "</span> <span class='col2'>" + outstandingDefectData[d].High + "</span> <span class='col2'>" + outstandingDefectData[d].Medium + "</span> <span class='col2'>" + outstandingDefectData[d].Low + "</span> </li>";
+         defectListHTML += "<li class=" + classNme + "><span class='col1'>" + outstandingDefectData[d].Analyst + "</span> <span class='col2'>" + outstandingDefectData[d].Urgent + "</span> <span class='col2'>" + outstandingDefectData[d].High + "</span> <span class='col2'>" + outstandingDefectData[d].Medium + "</span> <span class='col2'>" + outstandingDefectData[d].Low + "</span> </li>";
 
-         $(projectContainer).find(".outstanding-defect-list-header").html("<li><span class='col1'> Team</span> <span class='col2'> Analyst </span> <span class='col2'> Urgent </span> <span class='col2'> High </span>  <span class='col2'> Medium </span> <span class='col2'> Low </span></li>");
+         $(projectContainer).find(".outstanding-defect-list-header").html("<li> <span class='col1'> Analyst </span> <span class='col2'> Urgent </span> <span class='col2'> High </span>  <span class='col2'> Medium </span> <span class='col2'> Low </span></li>");
      
      $(projectContainer).find("#outstanding_defect_list").html(defectListHTML);
 
