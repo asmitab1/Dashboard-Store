@@ -282,7 +282,7 @@
              success: function(response) {
 				 programStatisticsResponse = response;
 				 google.charts.load('current', {'packages':['gantt']});
-				google.charts.setOnLoadCallback(drawProgramStatisticsChart);
+				 google.charts.setOnLoadCallback(drawProgramStatisticsChart);
 
              },
              error: function(request, status, error) {
@@ -437,7 +437,7 @@
 		 
 		 var chart = new google.visualization.Gantt(document.getElementById('chart-02'));
 
-		 chart.draw(runProgressData, { height: 275});
+		 chart.draw(runProgressData, { });
 	 
 	 /*
 	 
