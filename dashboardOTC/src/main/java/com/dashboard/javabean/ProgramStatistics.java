@@ -9,41 +9,83 @@ package com.dashboard.javabean;
  *
  */
 public class ProgramStatistics {
-	String Team;
-	String ProgramName;
-	String Weight;
-	String TargetTime;
-	String ActualTime;
+	String team;
+	String programName;
+	String weight;
+	String targetTime;
+	String actualStartTime;
+	String actualEndTime;
+	/**
+	 * @return the team
+	 */
 	public String getTeam() {
-		return Team;
+		return team;
 	}
+	/**
+	 * @param team the team to set
+	 */
 	public void setTeam(String team) {
-		Team = team;
+		this.team = team;
 	}
+	/**
+	 * @return the programName
+	 */
 	public String getProgramName() {
-		return ProgramName;
+		return programName;
 	}
+	/**
+	 * @param programName the programName to set
+	 */
 	public void setProgramName(String programName) {
-		ProgramName = programName;
+		this.programName = programName;
 	}
+	/**
+	 * @return the weight
+	 */
 	public String getWeight() {
-		return Weight;
+		return weight;
 	}
+	/**
+	 * @param weight the weight to set
+	 */
 	public void setWeight(String weight) {
-		Weight = weight;
+		this.weight = weight;
 	}
+	/**
+	 * @return the targetTime
+	 */
 	public String getTargetTime() {
-		return TargetTime;
+		return targetTime;
 	}
+	/**
+	 * @param targetTime the targetTime to set
+	 */
 	public void setTargetTime(String targetTime) {
-		TargetTime = targetTime;
+		this.targetTime = targetTime;
 	}
-	public String getActualTime() {
-		return ActualTime;
+	/**
+	 * @return the actualStartTime
+	 */
+	public String getActualStartTime() {
+		return actualStartTime;
 	}
-	public void setActualTime(String actualTime) {
-		ActualTime = actualTime;
+	/**
+	 * @param actualStartTime the actualStartTime to set
+	 */
+	public void setActualStartTime(String actualStartTime) {
+		this.actualStartTime = actualStartTime;
 	}
-	
+	/**
+	 * @return the actualEndTime
+	 */
+	public String getActualEndTime() {
+		return actualEndTime;
+	}
+	/**
+	 * @param actualEndTime the actualEndTime to set
+	 */
+	public void setActualEndTime(String actualEndTime) {
+		this.actualEndTime = actualEndTime;
+	}
 	
 }
