@@ -1,7 +1,7 @@
-month,openTickets,closedTickets
-August,83,151
-September,100,175
-October,92,193
-November,85,157
-December,68,171
-January,77,140
+team,month,openTickets,closedTickets
+OTC,August,83,151
+OTC,September,100,175
+OTC,October,92,193
+OTC,November,85,157
+OTC,December,68,171
+OTC,January,77,140
