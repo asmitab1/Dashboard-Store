@@ -62,16 +62,19 @@ public class DataServiceHelper {
 		List<DefectResolution> defectResolutionsListFinal = new ArrayList<DefectResolution>();
 		DefectResolution defectResolution = new DefectResolution();
 		try {
-			defectResolutionsList = ProcessCSV.execute(PropertiesCache.getInstance()
-					.getProperty("PROGRAM_STATISTICS"), defectResolution);
-			for (DefectResolution p: (List<DefectResolution>) defectResolutionsList){
-				if(applicationID.equalsIgnoreCase(p.getTeam())) {
-					defectResolutionsListFinal.add(p);
+			if (applicationID != null) {
+				defectResolutionsList = ProcessCSV.execute(
+						PropertiesCache.getInstance().getProperty(
+								"DEFECTS_RESOLUTION_FILENAME"),
+						defectResolution);
+				for (DefectResolution p : (List<DefectResolution>) defectResolutionsList) {
+					if (applicationID.equalsIgnoreCase(p.getTeam())) {
+						defectResolutionsListFinal.add(p);
+					}
 				}
+				defectResolutionsList = defectResolutionsListFinal;
 			}
-			defectResolutionsList = defectResolutionsListFinal;
-			
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

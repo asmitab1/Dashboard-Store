@@ -14,6 +14,7 @@
      defectChartdata,
      currSprintName,
 	 pageRefreshInterval,
+	 programStatisticsResponse,
 	 intervalDuration = 30000;
 
  var storyProgressOptions = {
@@ -100,6 +101,8 @@
          borderWidth: 0
      }
  };
+	  
+	  
 
  var defectChartOptions = {
      colors: ['#7cb5ec', '#90ed7d', '#f7a35c', '#8085e9',
@@ -144,15 +147,36 @@
  };
 
 
- google.load("visualization", "1", {
-     packages: ["gauge"]
- });
- google.load("visualization", "1", {
-     packages: ["corechart"]
- });
-
 
  /************* Hard Coded Data sections ************/
+ 
+ var  runProgressDataTemplate = {
+	         series: [{
+            name: 'Task 1',
+            stack: 'Tasks',
+            data: [{
+                x: 0,
+                low: 7,
+                high: 8
+            }, {
+                x: 1,
+                low: 6.5,
+                high: 7.5
+            }]
+        }, {
+            name: 'Task 2',
+            stack: 'Tasks',
+            data: [{
+                x: 0,
+                low: 7.5,
+                high: 9
+            }, {
+                x: 1,
+                low: 7.5,
+                high: 8.5
+            }]
+        }]
+ } ;
 
  var monthlyTicketDataTemplate = {
      series: [{
@@ -164,10 +188,6 @@
          data: [4, 6],
          stack: 'Ticket'
      }]
- }
- 
- var runBookDataTemplate = {
-     series: [ {data: [5] }, {data: [5] }]
  }
 
  var storyProgressData = [{
@@ -237,7 +257,7 @@
      getdefectResolutions: function(projectID) {
          $.ajax({
              type: "GET",
-             url: "/dashboard/rest/services/defectResolutions",
+             url: "/dashboard/rest/services/defectResolutions?appID=" + projectID,
              async: false,
              dataType: "json",
              success: function(response) {
@@ -260,7 +280,10 @@
              async: false,
              dataType: "json",
              success: function(response) {
-                 drawProgramStatisticsChart(response);
+				 programStatisticsResponse = response;
+				 google.charts.load('current', {'packages':['gantt']});
+				google.charts.setOnLoadCallback(drawProgramStatisticsChart);
+
              },
              error: function(request, status, error) {
                  console.log(error);
@@ -345,6 +368,7 @@
      services.getdefectResolutions(currentProjectID);
 	services.getProgramStatistics(currentProjectID);
 	services.getMonthlyTicketCount(currentProjectID);
+	services.getResourceWorkload(currentProjectID);
      $('#bb-nav-next').click();
 
  }
@@ -368,18 +392,81 @@
      $(projectContainer).find('#chart-04').highcharts($.extend(sprintProgressnChartOptions, storyProgressDataDynamic));
  }
  
- function drawProgramStatisticsChart(dynamicData) {
+ 
+ function drawProgramStatisticsChart() {
+	  dynamicData = programStatisticsResponse;
+	  var runProgressData = new google.visualization.DataTable();
+      runProgressData.addColumn('string', 'Task ID');
+      runProgressData.addColumn('string', 'Task Name');
+      runProgressData.addColumn('date', 'Start Date');
+      runProgressData.addColumn('date', 'End Date');
+      runProgressData.addColumn('number', 'Duration');
+      runProgressData.addColumn('number', 'Percent Complete');
+      runProgressData.addColumn('string', 'Dependencies');
+	  
+	  var dataRows = new Array();
+	  
+	  
+	  var TodayDate = new Date();
+	 var d = TodayDate.getDate();
+	 var m = TodayDate.getMonth() + 1;
+	 var y = TodayDate.getFullYear();
+
+		 
+		 for (c in dynamicData) {
+			 
+			var dataObj = new Array();
+			dataObj.push(dynamicData[c].programName);
+			dataObj.push(dynamicData[c].programName);
+			dataObj.push( new Date(y +"/"+ m + "/"+ d + " "+ dynamicData[c].actualStartTime));
+			var targetEnd = new Date(y +"/"+ m + "/"+ d + " "+ dynamicData[c].targetTime);
+			var actualEnd = new Date(y +"/"+ m + "/"+ d + " "+ dynamicData[c].actualEndTime);
+			if(targetEnd > actualEnd) {
+				dataObj.push(targetEnd);
+			} else {
+				dataObj.push(actualEnd);
+			}
+			dataObj.push(null);
+			dataObj.push(100);
+			dataObj.push(null);	 
+			
+			dataRows.push(dataObj);
+		 }
+		 
+		 runProgressData.addRows(dataRows);
+		 
+		 var chart = new google.visualization.Gantt(document.getElementById('chart-02'));
+
+		 chart.draw(runProgressData, { height: 275});
 	 
-	 var drawProgramStatisticsChartOption = jQuery.extend(true, {}, sprintProgressnChartOptions);
-	 drawProgramStatisticsChartOption.chart.type = 'bar';
-	 drawProgramStatisticsChartOption.colors = ['#7cb5ec', '#90ed7d', '#f7a35c', '#8085e9', 
-   '#f15c80', '#e4d354', '#2b908f', '#f45b5b', '#91e8e1'];
+	 /*
+	 
+	 
+	 new Date(4 + "/" + 21 + "/" + 2016 + " " + "12:55 AM")
+	 
+	 
+	 
 	 var seriesArray = [];
 	 var categories = new Array();
 
+	 var targetDataObj = new Object();
+	 var positiveDeviation = new Object();
+	 var negetiveDeviation = new Object();
+
 	  for (c in dynamicData) {
-		 var dataObj = new Object();
-		 dataObj.name = dynamicData[c].TargetTime;
+		  new Date(m + "/" + d + "/" + y + " " + dynamicData[c].);
+		  
+		  var dataObj = new Object();
+		  dataObj.x = ;
+		  dataObj.low = ;
+		  dataObj.high = ;
+		  {
+                x: 0,
+                low: Date.UTC(2013, 3, 22, 1, 15),
+                high: Date.UTC(2013, 3, 22, 2, 15)
+            }
+		 
+		 dataObj.name = dynamicData[c].targetTime;
 		 var dataArray = new Array();
 		 for(d in dynamicData) {
 			 if(c==d){
@@ -393,10 +480,11 @@
 		 categories.push(dynamicData[c].ProgramName);
 	 }
 
-     runBookDataTemplate.series = seriesArray;
-	 drawProgramStatisticsChartOption.xAxis.categories =  categories;
-
-     $(projectContainer).find('#chart-02"').highcharts($.extend(drawProgramStatisticsChartOption, runBookDataTemplate));
+     runProgressDataTemplate.series = seriesArray;
+	 runProgressChartOptions.xAxis.categories =  categories;
+	 
+     $(projectContainer).find('#chart-02"').highcharts($.extend(runProgressChartOptions, runProgressDataTemplate));
+	 */
 	 
  }
 
