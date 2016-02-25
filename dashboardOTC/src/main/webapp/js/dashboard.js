@@ -215,7 +215,7 @@
      }
  ];
 
- google.charts.load('current', {'packages':['gantt']});
+
  
 
 
@@ -286,6 +286,7 @@
              dataType: "json",
              success: function(response) {
 				 programStatisticsResponse = response;
+				 google.charts.load('current', {'packages':['gantt']});
 				 google.charts.setOnLoadCallback(drawProgramStatisticsChart);
 
              },
@@ -458,7 +459,7 @@
 		 
 		 runProgressData.addRows(dataRows);
 		 
-		 var chart = new google.visualization.Gantt(document.getElementById('chart-02'));
+		 var chart = new google.visualization.Gantt(projectContainer.get(0).getElementById('chart-02'));
 
 		 chart.draw(runProgressData, { });
 	 
@@ -536,30 +537,7 @@
      $(projectContainer).find('#defectChart').highcharts(defectChartOptions);
  }
 
- function drawSeverityWiseDefectChart(dynamicData) {
 
-     var chartDataArray = [];
-     /*['Defect Category', 'Defect Count']*/
-     var chartElement;
-     for (c in dynamicData) {
-         chartElement = [dynamicData[c].priorityName.split("-")[1], dynamicData[c].count];
-         chartDataArray.push(chartElement);
-     }
-     defectChartOptions.series[0].data = chartDataArray;
-     $(projectContainer).find('#defectSeverityChart').highcharts(defectChartOptions);
-
- }
-
- function getDefectCountForPriority(priorityArray, priority) {
-     for (var i in priorityArray) {
-         if (priorityArray[i].priority == priority) {
-             return priorityArray[i].count;
-         }
-     }
-     return "-";
- }
-
- 
  function getDefectCount(outstandingDefectData){
 	 var count = 0;
 	 for (var d in outstandingDefectData) {
@@ -568,17 +546,7 @@
 	 return count;
  }
  
-  function getCategoryWiseTotalCount(outstandingDefectData, inpriority){
-	   var count = 0;
-	   for (var d in outstandingDefectData) {
-		   for (var i in outstandingDefectData[d].priority) {
-			   if(outstandingDefectData[d].priority[i].priority == inpriority){
-					count += outstandingDefectData[d].priority[i].count;
-			   }
-         } 
-	   }
-	   return count;
-  }
+ 
 
 
  function populateDefectAssignment(outstandingDefectData) {
@@ -612,16 +580,33 @@
  
  function populatedefectDetails(defectDetails){
 	 var defectListHTML = "";
+	 var rowCounter = 0;
      $(projectContainer).find(".no-defects-msg").hide();
      if (defectDetails.length == 0) {
          $(projectContainer).find(".no-defects-msg").show();
      }
-
+     for (var d in defectDetails) {
+    	 rowCounter++;
+		  
+		  if(d==0) {
+			  defectListHTML += "<div class='item active'>";
+		  } else {
+			  defectListHTML += "<div class='item'>";
+		  }
+     	 defectListHTML += "<ul class='defect_list_rows' id='defect_list_'"+rowCounter+"'>";
          defectListHTML += "<li class='odd'><span class='col1'> Ticket Number </span> <span class='col3'>" + defectDetails[1].ticketNumber + "</span> </li>";
          defectListHTML += "<li class='even'><span class='col1'> Issue Description </span> <span class='col3'>" + defectDetails[1].issueDescription + "</span> </li>";
          defectListHTML += "<li class='odd'><span class='col1'> Resolution </span> <span class='col3'>" + defectDetails[1].resolution + "</span> </li>";
          defectListHTML += "<li class='even'><span class='col1'> Mitigated Risk Opportunity </span> <span class='col3'>" + defectDetails[1].mitigatedRiskOpportunity + "</span> </li>";
+         defectListHTML += "</ul>";
+		 defectListHTML += "</div>";
+     }
 
+     /*$("ul#defect_list_1").hide();
+     $("ul#defect_list_2").hide();
+     
+     $("ul#defect_list_1").show();*/
+     
      $(projectContainer).find("#defect_list").html(defectListHTML);
 
  }
@@ -630,147 +615,6 @@
      projectContainer = $(".bb-item:eq(" + projectIndex + ")");
  }
 
- function populateReleaseView(projectDetails) {
-     allReleases = projectDetails["releases"];
-     //$(projectContainer).find("#projectName").text(projectDetails["projectName"]);
-	 if(currentProjectID == "Create") {
-		$(projectContainer).find("#projectName").html("<img src='images/create_logo_us_fpo.png'/>");	 
-	 } else if (currentProjectID == "Connect") {
-		 $(projectContainer).find("#projectName").html("<img src='images/MHHE_Connect_homepage.png'/> Green");	 
-	 } else if(currentProjectID == "Acuity") {
-		 $(projectContainer).find("#projectName").html("<img src='images/Acuity_logo.png'/>");		 
-	 } else if (currentProjectID == "EZTool") {
-		 $(projectContainer).find("#projectName").html("<img src='images/MHHE_Connect_homepage.png'/> Tools");	 
-	 } 
-
-     $(projectContainer).find(".carousel-inner").children().filter(function(index) {
-         if (index > 0) return true;
-     }).remove();
-
-     for (var count = 1; count < allReleases.length; count++) {
-         var obj = $(projectContainer).find(".carousel-inner .item:eq(0)").clone();
-         $(obj).removeClass("active");
-         $(projectContainer).find(".carousel-inner").append(obj);
-     }
-     for (var index in allReleases) {
-         populateReleaseChart(allReleases[index], $(projectContainer).find(".releaseContainer:eq(" + index + ")"));
-     }
-
- }
-
- function populateReleaseChart(sprintJSON, parentElement) {
-     var totalWidth = Math.ceil(releaseWidth * .85);
-     var completed = parseInt(sprintJSON.completed);
-     var inProgress = parseInt(sprintJSON.inProgress);
-     var notStarted = parseInt(sprintJSON.notStarted);
-     var totalCount = parseInt(sprintJSON.totalCount);
-     var releaseName = sprintJSON.releaseName;
-     $(parentElement).find("#releaseName").html(releaseName);
-     $(parentElement).find("#projectID").html(currentProjectID + " ");
-
-
-     canvas = $(parentElement).find("#myCanvas").get(0);
-     context = canvas.getContext('2d');
-     context.clearRect(0, 0, canvas.width, canvas.height);
-
-     var txt = sprintJSON.targetDate;
-     var txtWidth = context.measureText(txt).width;
-
-     sprintWidth = Math.ceil(totalWidth / totalCount);
-
-     totalWidth = sprintWidth * totalCount;
-
-
-     $(parentElement).find("#myCanvas").attr('width', (totalWidth + Math.ceil(txtWidth / 2) + 20));
-
-     var keyFeatures = sprintJSON.keyFeatures;
-     var featureHtml = "<ul>";
-     for (var feature in keyFeatures) {
-         featureHtml += "<li> <span>" + keyFeatures[feature] + " </span></li>";
-     }
-     featureHtml += "</ul>";
-
-     $(parentElement).find("#keyFeatures").find(".chart-stage").html(featureHtml);
-
-
-     context.font = "14px Arial";
-
-     var posX = 0;
-     var allcounter = 0;
-
-     var indicatorShift = (completed * sprintWidth + sprintWidth / 2 - 20);
-     var rectYstart = canvas.height / 2 - barHeight / 2;
-
-     for (var i = 0; i < completed; i++) {
-         context.fillStyle = "green";
-         context.fillRect(posX, rectYstart, sprintWidth, barHeight);
-         context.strokeRect(posX, rectYstart, sprintWidth, barHeight);
-         context.fillStyle = "white";
-         context.fillText(sprintJSON.sprintNames[allcounter++], (posX + sprintWidth / 8), canvas.height * .5);
-         posX = posX + sprintWidth;
-     }
-
-     for (var i = 0; i < inProgress; i++) {
-         context.fillStyle = "#3ADC3A"; //"#FFCC00";
-         context.fillRect(posX, rectYstart, sprintWidth, barHeight);
-         context.strokeRect(posX, rectYstart, sprintWidth, barHeight);
-         context.fillStyle = "black";
-         context.fillText(sprintJSON.sprintNames[allcounter++], (posX + sprintWidth / 8), canvas.height * .5);
-         posX = posX + sprintWidth;
-     }
-
-     for (var i = 0; i < notStarted; i++) {
-         context.fillStyle = "#C0C0C0";
-         context.fillRect(posX, rectYstart, sprintWidth, barHeight);
-         context.strokeRect(posX, rectYstart, sprintWidth, barHeight);
-         context.fillStyle = "black";
-         context.fillText(sprintJSON.sprintNames[allcounter++], (posX + sprintWidth / 8), canvas.height * .5);
-         posX = posX + sprintWidth;
-     }
-
-     var imgSrc = document.getElementById("currentSprint").src;
-     var image = new Image();
-
-     image.src = imgSrc;
-     image.context = context;
-
-
-
-     context.setLineDash([5]);
-     context.beginPath();
-     context.moveTo(posX, 20);
-     context.lineTo(posX, rectYstart);
-     context.strokeStyle = "black";
-     context.stroke();
-
-
-     context.beginPath();
-     context.moveTo(posX, rectYstart + barHeight);
-     context.lineTo(posX, canvas.height - 20);
-     context.strokeStyle = "black";
-     context.stroke();
-
-
-     context.font = "12px Arial";
-     context.fillStyle = "black";
-     context.fillText(txt, posX - Math.floor(txtWidth / 2), 15);
-
-     image.onload = function() {
-         this.context.drawImage(this, indicatorShift, 0);
-     };
-
- }
-
- function updateSprintDetails(dynamicData) {
-     currSprintName = dynamicData.name.replace(/"/g, "");
-     var startDate = convertDate(dynamicData.startDate.substr(0, 10));
-     var endDate = convertDate(dynamicData.endDate.substr(0, 10));
-     $(projectContainer).find("#sprint-name").html(currSprintName);
-     $(projectContainer).find("#sprint-start-date").html(startDate);	 
-     $(projectContainer).find("#sprint-end-date").html(endDate);
-     $(projectContainer).find("#sprint-total-story-count").html(dynamicData.totalStoryCount);
-     $(projectContainer).find("#sprint-total-story-points").html(dynamicData.totalStoryPoints);
- }
 
  function convertDate(dateStr) {
      var m_names = new Array("Jan", "Feb", "Mar",

@@ -1,5 +1,5 @@
 team,programName,weight,targetTime,actualStartTime,actualEndTime
-OTC,ShipConfirm,10,7:30 PM,7:07 PM,7:11 PM
+OTC,ShipConfirm,10,4:30 PM,4:07 PM,4:11 PM
 OTC,RevRec,30,1:00 AM,12:41 AM,12:42 AM
 OTC,AutoInvoice,60,6:00 AM,5:18 AM,5:25 AM
 OTC,Receipt,70,12:30 AM,12:41 AM,12:46 AM
