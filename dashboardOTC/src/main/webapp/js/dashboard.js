@@ -214,6 +214,8 @@
          }]
      }
  ];
+
+ google.charts.load('current', {'packages':['gantt']});
  
 
 
@@ -284,7 +286,6 @@
              dataType: "json",
              success: function(response) {
 				 programStatisticsResponse = response;
-				 google.charts.load('current', {'packages':['gantt']});
 				 google.charts.setOnLoadCallback(drawProgramStatisticsChart);
 
              },
