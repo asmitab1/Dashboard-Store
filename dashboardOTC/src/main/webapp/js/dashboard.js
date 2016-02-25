@@ -557,7 +557,7 @@
 
  
  function getDefectCount(outstandingDefectData){
-	 ver count = 0;
+	 var count = 0;
 	 for (var d in outstandingDefectData) {
 		 count += outstandingDefectData[d].Urgent+outstandingDefectData[d].High+outstandingDefectData[d].Medium+outstandingDefectData[d].Low;
 	 }
