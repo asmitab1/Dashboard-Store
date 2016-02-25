@@ -376,6 +376,7 @@
 
 
  function refreshProject() {
+	 if(allProjectList.length > 1) {
      if (!allProjectList)
          services.getAllProjects();
      $(projectContainer).find("#myCarousel").carousel(0);
@@ -394,6 +395,7 @@
 	services.getResourceWorkload(currentProjectID);
 	services.getdefectAssignment(currentProjectID);
      $('#bb-nav-next').click();
+	 }
 
  }
 
@@ -459,7 +461,8 @@
 		 
 		 runProgressData.addRows(dataRows);
 		 
-		 var chart = new google.visualization.Gantt(projectContainer.get(0).getElementById('chart-02'));
+		 
+		 var chart = new google.visualization.Gantt($(projectContainer).find("#chart-02").get(0));
 
 		 chart.draw(runProgressData, { });
 	 
