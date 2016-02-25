@@ -240,6 +240,8 @@
                  }
                  Page.init();
                  selectProjectContainer(currentProjectIndex);
+				 $(projectContainer).find("#projectName").text(allProjectList[currentProjectIndex].projectName);
+				 
                  services.getdefectResolutions(currentProjectID);
 				 services.getProgramStatistics(currentProjectID);
 				 services.getMonthlyTicketCount(currentProjectID);
