@@ -553,15 +553,15 @@
      return "-";
  }
 
- function getOutstandingDefectCount(outstandingDefectData) {
-     var count = 0;
-     for (var d in outstandingDefectData) {
-         for (var i in outstandingDefectData[d].priority) {
-             count += outstandingDefectData[d].priority[i].count;
-         }
-     }
-     return count;
+ 
+ function getDefectCount(outstandingDefectData){
+	 ver count = 0;
+	 for (var d in outstandingDefectData) {
+		 count += outstandingDefectData[d].Urgent+outstandingDefectData[d].High+outstandingDefectData[d].Medium+outstandingDefectData[d].Low;
+	 }
+	 return count;
  }
+ 
   function getCategoryWiseTotalCount(outstandingDefectData, inpriority){
 	   var count = 0;
 	   for (var d in outstandingDefectData) {
@@ -577,6 +577,7 @@
 
  function populateDefectAssignment(outstandingDefectData) {
      var defectListHTML = "";
+     var defectCount = getDefectCount(outstandingDefectData);
      $(projectContainer).find(".outstanding-defect-list-header").show();
      $(projectContainer).find(".no-defects-msg").hide();
      if (outstandingDefectData.length == 0) {
@@ -598,21 +599,6 @@
          $(projectContainer).find(".outstanding-defect-list-header").html("<li> <span class='col1'> Analyst </span> <span class='col2'> Urgent </span> <span class='col2'> High </span>  <span class='col2'> Medium </span> <span class='col2'> Low </span></li>");
      
      $(projectContainer).find("#outstanding_defect_list").html(defectListHTML);
-
-     /*if (rowCounter > noOfAssignedDefectsToShow) {
-         if ($(projectContainer).find('#ticker-flag').val() == "N") {
-             $(projectContainer).find('#ticker-flag').val("Y");
-             $(projectContainer).find('.news-container').vTicker({
-                 speed: 1000,
-                 pause: 3000,
-                 animation: 'fade',
-                 mousePause: false,
-                 showItems: noOfAssignedDefectsToShow,
-                 height: 400,
-                 direction: 'up'
-             });
-         }
-     } */
      }
  }
  
