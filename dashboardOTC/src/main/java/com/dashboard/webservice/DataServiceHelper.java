@@ -13,6 +13,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.dashboard.ProcessCSV;
+import com.dashboard.javabean.DefectAssignment;
 import com.dashboard.javabean.DefectResolution;
 import com.dashboard.javabean.MonthlyTicketCount;
 import com.dashboard.javabean.ProgramStatistics;
@@ -146,5 +147,30 @@ public class DataServiceHelper {
 		}
 
 		return resourceWorkloadList;
+	}
+	
+	public Object getdefectAssignment(String applicationID) {
+		Object defectAssignmentList = null;
+		List<DefectAssignment> defectAssignmentListFinal = new ArrayList<DefectAssignment>();
+		DefectAssignment defectAssignment = new DefectAssignment();
+		try {
+			if (applicationID != null) {
+				defectAssignmentList = ProcessCSV.execute(
+						PropertiesCache.getInstance().getProperty(
+								"DEFECT_ASSIGNMENT_FILENAME"),
+								defectAssignment);
+				for (DefectAssignment p : (List<DefectAssignment>) defectAssignmentList) {
+					if (applicationID.equalsIgnoreCase(p.getProject())) {
+						defectAssignmentListFinal.add(p);
+					}
+				}
+				defectAssignmentList = defectAssignmentListFinal;
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return defectAssignmentList;
 	}
 }
