@@ -341,6 +341,7 @@
              async: false,
              dataType: "json",
              success: function(response) {
+            	 showDefectAssignment(response);
              },
              error: function(request, status, error) {
                  console.log(error);
@@ -781,12 +782,12 @@
      return m_names[_month] + " " + _date + ", " + _year;
  }
 
- function showStoryAssignment(jsonText) {
-     var storyAssignmentHTML = "";
+ function showDefectAssignment(jsonText) {
+     var defectAssignmentHTML = "";
      $.each(jsonText, function(index, value) {
-         storyAssignmentHTML += "<span class='" + value.class + "'>" + value.Developer + " :  Story- " + value.StoryId + " (<span class='story-desc'>" + value.StoryDescription + "</span>) | </span>";
+    	 defectAssignmentHTML += "<span class='" + value.class + "'>" + value.analyst + " :  Story- " + value.storyId + " (<span class='story-desc'>" + value.storyDesc + "</span>) | </span>";
      });
-     $(projectContainer).find("#story-assignment").html(storyAssignmentHTML);
+     $(projectContainer).find("#story-assignment").html(defectAssignmentHTML);
 
  }
  
