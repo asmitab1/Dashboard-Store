@@ -244,6 +244,7 @@
 				 services.getProgramStatistics(currentProjectID);
 				 services.getMonthlyTicketCount(currentProjectID);
 				 services.getResourceWorkload(currentProjectID);
+				 services.getdefectAssignment(currentProjectID);
                 
              },
              error: function(request, status, error) {
@@ -386,6 +387,7 @@
 	services.getProgramStatistics(currentProjectID);
 	services.getMonthlyTicketCount(currentProjectID);
 	services.getResourceWorkload(currentProjectID);
+	services.getdefectAssignment(currentProjectID);
      $('#bb-nav-next').click();
 
  }
