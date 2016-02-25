@@ -612,16 +612,25 @@
  
  function populatedefectDetails(defectDetails){
 	 var defectListHTML = "";
+	 var rowCounter = 0;
      $(projectContainer).find(".no-defects-msg").hide();
      if (defectDetails.length == 0) {
          $(projectContainer).find(".no-defects-msg").show();
      }
-
+     for (var d in defectDetails) {
+    	 rowCounter++;
+     	 defectListHTML += "<ul class='defect_list_rows' id='defect_list_'"+rowCounter+"'>";
          defectListHTML += "<li class='odd'><span class='col1'> Ticket Number </span> <span class='col3'>" + defectDetails[1].ticketNumber + "</span> </li>";
          defectListHTML += "<li class='even'><span class='col1'> Issue Description </span> <span class='col3'>" + defectDetails[1].issueDescription + "</span> </li>";
          defectListHTML += "<li class='odd'><span class='col1'> Resolution </span> <span class='col3'>" + defectDetails[1].resolution + "</span> </li>";
          defectListHTML += "<li class='even'><span class='col1'> Mitigated Risk Opportunity </span> <span class='col3'>" + defectDetails[1].mitigatedRiskOpportunity + "</span> </li>";
+         defectListHTML += "</ul>";
+     }
 
+     $("ul#defect_list_1").hide();
+     $("ul#defect_list_2").hide();
+     $("ul#defect_list_1").show();
+     
      $(projectContainer).find("#defect_list").html(defectListHTML);
 
  }
