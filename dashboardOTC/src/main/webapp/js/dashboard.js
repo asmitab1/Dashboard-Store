@@ -330,6 +330,23 @@
              }
          });
 
+     },
+     getdefectAssignment: function(projectID) {
+         $.ajax({
+             type: "GET",
+             url: "/dashboard/rest/services/defectAssignment?appID=" + projectID,
+             async: false,
+             dataType: "json",
+             success: function(response) {
+             },
+             error: function(request, status, error) {
+                 console.log(error);
+             },
+             failure: function(status) {
+                 console.log(status);
+             }
+         });
+
      }
  };
 
