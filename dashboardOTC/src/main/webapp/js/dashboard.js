@@ -580,6 +580,7 @@
  function populateDefectAssignment(outstandingDefectData) {
      var defectListHTML = "";
      var defectCount = getDefectCount(outstandingDefectData);
+     $(projectContainer).find("#outstanding-defect-count").html(defectCount);
      $(projectContainer).find(".outstanding-defect-list-header").show();
      $(projectContainer).find(".no-defects-msg").hide();
      if (outstandingDefectData.length == 0) {
