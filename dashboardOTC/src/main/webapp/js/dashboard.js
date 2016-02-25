@@ -629,6 +629,7 @@
 
      $("ul#defect_list_1").hide();
      $("ul#defect_list_2").hide();
+     
      $("ul#defect_list_1").show();
      
      $(projectContainer).find("#defect_list").html(defectListHTML);
