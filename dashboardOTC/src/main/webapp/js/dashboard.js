@@ -785,7 +785,7 @@
  function showDefectAssignment(jsonText) {
      var defectAssignmentHTML = "";
      $.each(jsonText, function(index, value) {
-    	 defectAssignmentHTML += "<span class='" + value.class + "'>" + value.analyst + " :  Story- " + value.storyId + " (<span class='story-desc'>" + value.storyDesc + "</span>) | </span>";
+    	 defectAssignmentHTML += "<span >" + value.analyst + " :  Story- " + value.storyId + " (<span class='story-desc'>" + value.storyDesc + "</span>) | </span>";
      });
      $(projectContainer).find("#story-assignment").html(defectAssignmentHTML);
 
