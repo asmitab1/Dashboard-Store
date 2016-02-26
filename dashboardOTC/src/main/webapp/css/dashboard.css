@@ -12,15 +12,19 @@ h2 {
 margin: 0 auto;
 }
 
-ul#outstanding_defect_list, ul.outstanding-defect-list-header, ul#defect_list {
+#myCarousel{
+	margin-top : 20px;
+}
+
+ul#outstanding_defect_list, ul.outstanding-defect-list-header, ul.defect_list_rows {
 	list-style: none;
 }
 
-ul#outstanding_defect_list, ul.outstanding-defect-list-header, ul#defect_list {
+ul#outstanding_defect_list, ul.outstanding-defect-list-header, ul.defect_list_rows {
 	padding: 0 0;
 }
 
-ul#outstanding_defect_list li , ul#defect_list li {
+ul#outstanding_defect_list li , ul.defect_list_rows li {
 	overflow: hidden;
 	border-bottom: 1px solid #ccc;
 	padding: 5px 5px;
@@ -38,13 +42,14 @@ ul#outstanding_defect_list li .col2, ul.outstanding-defect-list-header li .col2
 	width: 15%;
 }
 
-ul#defect_list li .col1
+ul.defect_list_rows li .col1
 {
 	float: left;
 	width: 40%;
+	font-weight: bold;
 }
 
-ul#defect_list li .col3
+ul.defect_list_rows li .col3
 	{
 	float: left;
 	width: 60%;
@@ -144,11 +149,11 @@ text[text-anchor=middle] {
 	padding-left: 10px;
 }
 
-#outstanding_defect_list .odd, ul#defect_list .odd {
+#outstanding_defect_list .odd, ul.defect_list_rows .odd {
 	background: #A7D5FF; /*#D8F6CE*/
 }
 
-#outstanding_defect_list .even , ul#defect_list even{
+#outstanding_defect_list .even , ul.defect_list_rows .even{
 	background: #ffffff;
 }
 

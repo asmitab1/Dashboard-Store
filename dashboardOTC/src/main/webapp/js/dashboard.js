@@ -10,7 +10,7 @@
      allProjectList,
      allProjectReleases,
      allDefectAssignments,
-     noOfAssignedDefectsToShow = 5,
+     noOfAssignedDefectsToShow = 6,
      defectChartdata,
      currSprintName,
 	 pageRefreshInterval,
@@ -48,8 +48,8 @@
          },
          marginTop: 60,
          marginRight: 150,
-         height: 360,
-         width: 500
+         height: 340,
+         width: 700
      },
      colors: ['#74FF74', '#82D5FF'],
      title: {
@@ -442,18 +442,25 @@
 		 for (c in dynamicData) {
 			 
 			var dataObj = new Array();
+			var progressPercent = 100;
 			dataObj.push(dynamicData[c].programName);
 			dataObj.push(dynamicData[c].programName);
 			dataObj.push( new Date(y +"/"+ m + "/"+ d + " "+ dynamicData[c].actualStartTime));
 			var targetEnd = new Date(y +"/"+ m + "/"+ d + " "+ dynamicData[c].targetTime);
 			var actualEnd = new Date(y +"/"+ m + "/"+ d + " "+ dynamicData[c].actualEndTime);
 			if(targetEnd > actualEnd) {
+				if(targetEnd > new Date()) {
+					progressPercent = 50;
+				} 
 				dataObj.push(targetEnd);
 			} else {
+				if(actualEnd > new Date()) {
+					progressPercent = 50;
+				}
 				dataObj.push(actualEnd);
 			}
 			dataObj.push(null);
-			dataObj.push(100);
+			dataObj.push(progressPercent);
 			dataObj.push(null);	 
 			
 			dataRows.push(dataObj);
@@ -577,6 +584,22 @@
          $(projectContainer).find(".outstanding-defect-list-header").html("<li> <span class='col1'> Analyst </span> <span class='col2'> Urgent </span> <span class='col2'> High </span>  <span class='col2'> Medium </span> <span class='col2'> Low </span></li>");
      
      $(projectContainer).find("#outstanding_defect_list").html(defectListHTML);
+	 
+     }
+	 
+	 if (rowCounter > noOfAssignedDefectsToShow) {
+         if ($(projectContainer).find('#ticker-flag').val() == "N") {
+             $(projectContainer).find('#ticker-flag').val("Y");
+             $(projectContainer).find('.news-container').vTicker({
+                 speed: 1000,
+                 pause: 3000,
+                 animation: 'fade',
+                 mousePause: false,
+                 showItems: noOfAssignedDefectsToShow,
+                 height: 400,
+                 direction: 'up'
+             });
+         }
      }
  }
  
@@ -597,9 +620,9 @@
 			  defectListHTML += "<div class='item'>";
 		  }
      	 defectListHTML += "<ul class='defect_list_rows' id='defect_list_'"+rowCounter+"'>";
-         defectListHTML += "<li class='odd'><span class='col1'> Ticket Number </span> <span class='col3'>" + defectDetails[1].ticketNumber + "</span> </li>";
+         defectListHTML += "<li class='even'><span class='col1'> Ticket Number </span> <span class='col3'>" + defectDetails[1].ticketNumber + "</span> </li>";
          defectListHTML += "<li class='even'><span class='col1'> Issue Description </span> <span class='col3'>" + defectDetails[1].issueDescription + "</span> </li>";
-         defectListHTML += "<li class='odd'><span class='col1'> Resolution </span> <span class='col3'>" + defectDetails[1].resolution + "</span> </li>";
+         defectListHTML += "<li class='even'><span class='col1'> Resolution </span> <span class='col3'>" + defectDetails[1].resolution + "</span> </li>";
          defectListHTML += "<li class='even'><span class='col1'> Mitigated Risk Opportunity </span> <span class='col3'>" + defectDetails[1].mitigatedRiskOpportunity + "</span> </li>";
          defectListHTML += "</ul>";
 		 defectListHTML += "</div>";
@@ -633,7 +656,7 @@
  function showDefectAssignment(jsonText) {
      var defectAssignmentHTML = "";
      $.each(jsonText, function(index, value) {
-    	 defectAssignmentHTML += "<span >" + value.analyst + " :  Story- " + value.storyId + " (<span class='story-desc'>" + value.storyDesc + "</span>) | </span>";
+    	 defectAssignmentHTML += "<span >" + value.analyst + " :  Defect- " + value.storyId + " (<span class='story-desc'>" + value.storyDesc + "</span>) | </span>";
      });
      $(projectContainer).find("#story-assignment").html(defectAssignmentHTML);
 
