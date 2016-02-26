@@ -514,6 +514,10 @@
 
  function populateDefectAssignment(outstandingDefectData) {
      var defectListHTML = "";
+     var urgentCount;
+     var highCount;
+     var mediumCount;
+     var lowCount;
      var defectCount = getDefectCount(outstandingDefectData);
      $(projectContainer).find("#outstanding-defect-count").html(defectCount);
      $(projectContainer).find(".outstanding-defect-list-header").show();
@@ -524,7 +528,13 @@
      }
      var rowCounter = 0,
          classNme;
-
+     for (var d in outstandingDefectData){
+    	 urgentCount += outstandingDefectData[d].Urgent;
+    	 highCount += outstandingDefectData[d].High;
+    	 mediumCount += outstandingDefectData[d].Medium;
+    	 lowCount += outstandingDefectData[d].Low;
+     }
+     
      for (var d in outstandingDefectData) {
          rowCounter++;
          if (rowCounter % 2 == 0) {
@@ -532,7 +542,7 @@
          } else {
              classNme = "odd";
          }
-         defectListHTML += "<li class=" + classNme + "><span class='col1'>" + outstandingDefectData[d].Analyst + "</span> <span class='col2'>" + outstandingDefectData[d].Urgent + "</span> <span class='col2'>" + outstandingDefectData[d].High + "</span> <span class='col2'>" + outstandingDefectData[d].Medium + "</span> <span class='col2'>" + outstandingDefectData[d].Low + "</span> </li>";
+         defectListHTML += "<li class=" + classNme + "><span class='col1'>" + outstandingDefectData[d].Analyst + "</span> <span class='col2'>" + outstandingDefectData[d].Urgent +"("+urgentCount+") </span> <span class='col2'>" + outstandingDefectData[d].High +"("+highCount+") </span> <span class='col2'>" + outstandingDefectData[d].Medium + "("+mediumCount+")</span> <span class='col2'>" + outstandingDefectData[d].Low +"("+lowCount+") </span> </li>";
 
          $(projectContainer).find(".outstanding-defect-list-header").html("<li> <span class='col1'> Support Analyst </span> <span class='col2'> Urgent </span> <span class='col2'> High </span>  <span class='col2'> Medium </span> <span class='col2'> Low </span></li>");
      
