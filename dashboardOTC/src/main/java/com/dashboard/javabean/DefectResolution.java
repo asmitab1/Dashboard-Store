@@ -5,6 +5,7 @@ public class DefectResolution {
 	private String team;
 	private String ticketNumber;
 	private String issueDescription;
+	private String rootCause;
 	private String resolution;
 	private String mitigatedRiskOpportunity;
 	public String getTeam() {
@@ -15,6 +16,12 @@ public class DefectResolution {
 	}
 	public String getTicketNumber() {
 		return ticketNumber;
+	}
+	public String getRootCause() {
+		return rootCause;
+	}
+	public void setRootCause(String rootCause) {
+		this.rootCause = rootCause;
 	}
 	public void setTicketNumber(String ticketNumber) {
 		this.ticketNumber = ticketNumber;
