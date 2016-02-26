@@ -51,7 +51,7 @@
          height: 340,
          width: 700
      },
-     colors: ['#82D5FF', '#74FF74'],
+     colors: ['#82D5FF', '#74FF74', '#f7a35c'],
      title: {
          text: ''
      },
@@ -187,7 +187,13 @@
          name: 'Resolved',
          data: [4, 6],
          stack: 'Ticket'
-     }]
+     },
+	 {
+            name: "Injection Rate",
+            data: [ 49.9, 71.5],
+            type: "line",
+			zIndex: 42
+        }]
  }
 
  var storyProgressData = [{
@@ -404,15 +410,18 @@
      var storyProgressDataDynamic = monthlyTicketDataTemplate;
 	 var openTicketArray = new Array();
 	 var closedTicketArray = new Array();
+	 var injectedTicketArray = new Array();
 	 var categories = new Array();
 	  for (c in dynamicData) {
 		 openTicketArray.push(dynamicData[c].openTickets);
 		 closedTicketArray.push(dynamicData[c].closedTickets);
 		 categories.push(dynamicData[c].month);
+		 injectedTicketArray.push(dynamicData[c].injectionRate);
 	 }
 
      storyProgressDataDynamic.series[0].data = openTicketArray;
 	 storyProgressDataDynamic.series[1].data = closedTicketArray;
+	 storyProgressDataDynamic.series[2].data = injectedTicketArray;
 	 sprintProgressnChartOptions.xAxis.categories =  categories;
 
      $(projectContainer).find('#chart-04').highcharts($.extend(sprintProgressnChartOptions, storyProgressDataDynamic));
