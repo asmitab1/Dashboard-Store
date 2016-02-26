@@ -583,10 +583,11 @@
 			  defectListHTML += "<div class='item'>";
 		  }
      	 defectListHTML += "<ul class='defect_list_rows' id='defect_list_'"+rowCounter+"'>";
-         defectListHTML += "<li class='even'><span class='col1'> Ticket Number </span> <span class='col3'>" + defectDetails[1].ticketNumber + "</span> </li>";
-         defectListHTML += "<li class='even'><span class='col1'> Issue Description </span> <span class='col3'>" + defectDetails[1].issueDescription + "</span> </li>";
-         defectListHTML += "<li class='even'><span class='col1'> Resolution </span> <span class='col3'>" + defectDetails[1].resolution + "</span> </li>";
-         defectListHTML += "<li class='even'><span class='col1'> Mitigated Risk Opportunity </span> <span class='col3'>" + defectDetails[1].mitigatedRiskOpportunity + "</span> </li>";
+         defectListHTML += "<li class='even'><span class='col1'> Ticket Number </span> <span class='col3'>" + defectDetails[d].ticketNumber + "</span> </li>";
+         defectListHTML += "<li class='even'><span class='col1'> Issue Description </span> <span class='col3'>" + defectDetails[d].issueDescription + "</span> </li>";
+         defectListHTML += "<li class='even'><span class='col1'> Root Cause </span> <span class='col3'>" + defectDetails[d].rootCause + "</span> </li>";
+         defectListHTML += "<li class='even'><span class='col1'> Resolution </span> <span class='col3'>" + defectDetails[d].resolution + "</span> </li>";
+         defectListHTML += "<li class='even'><span class='col1'> Mitigated Risk Opportunity </span> <span class='col3'>" + defectDetails[d].mitigatedRiskOpportunity + "</span> </li>";
          defectListHTML += "</ul>";
 		 defectListHTML += "</div>";
      }
