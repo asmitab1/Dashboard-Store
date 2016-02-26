@@ -514,10 +514,10 @@
 
  function populateDefectAssignment(outstandingDefectData) {
      var defectListHTML = "";
-     var urgentCount;
-     var highCount;
-     var mediumCount;
-     var lowCount;
+     var urgentCount = 0;
+     var highCount = 0;
+     var mediumCount = 0;
+     var lowCount = 0;
      var defectCount = getDefectCount(outstandingDefectData);
      $(projectContainer).find("#outstanding-defect-count").html(defectCount);
      $(projectContainer).find(".outstanding-defect-list-header").show();
@@ -542,9 +542,9 @@
          } else {
              classNme = "odd";
          }
-         defectListHTML += "<li class=" + classNme + "><span class='col1'>" + outstandingDefectData[d].Analyst + "</span> <span class='col2'>" + outstandingDefectData[d].Urgent +"("+urgentCount+") </span> <span class='col2'>" + outstandingDefectData[d].High +"("+highCount+") </span> <span class='col2'>" + outstandingDefectData[d].Medium + "("+mediumCount+")</span> <span class='col2'>" + outstandingDefectData[d].Low +"("+lowCount+") </span> </li>";
+         defectListHTML += "<li class=" + classNme + "><span class='col1'>" + outstandingDefectData[d].Analyst + "</span> <span class='col2'>" + outstandingDefectData[d].Urgent +" </span> <span class='col2'>" + outstandingDefectData[d].High +"</span> <span class='col2'>" + outstandingDefectData[d].Medium + "</span> <span class='col2'>" + outstandingDefectData[d].Low +"</span> </li>";
 
-         $(projectContainer).find(".outstanding-defect-list-header").html("<li> <span class='col1'> Support Analyst </span> <span class='col2'> Urgent </span> <span class='col2'> High </span>  <span class='col2'> Medium </span> <span class='col2'> Low </span></li>");
+         $(projectContainer).find(".outstanding-defect-list-header").html("<li> <span class='col1'> Support Analyst </span> <span class='col2'> Urgent("+urgentCount+")</span> <span class='col2'> High("+highCount+") </span>  <span class='col2'> Medium("+mediumCount+") </span> <span class='col2'> Low("+lowCount+") </span></li>");
      
      $(projectContainer).find("#outstanding_defect_list").html(defectListHTML);
 	 
