@@ -51,13 +51,13 @@
          height: 340,
          width: 700
      },
-     colors: ['#74FF74', '#82D5FF'],
+     colors: ['#82D5FF', '#74FF74'],
      title: {
          text: ''
      },
 
      xAxis: {
-         categories: ['Resolved', 'Open']
+         categories: ['Resolved during month', 'Open at month end']
      },
 
      yAxis: {
@@ -473,53 +473,6 @@
 
 		 chart.draw(runProgressData, { });
 	 
-	 /*
-	 
-	 
-	 new Date(4 + "/" + 21 + "/" + 2016 + " " + "12:55 AM")
-	 
-	 
-	 
-	 var seriesArray = [];
-	 var categories = new Array();
-
-	 var targetDataObj = new Object();
-	 var positiveDeviation = new Object();
-	 var negetiveDeviation = new Object();
-
-	  for (c in dynamicData) {
-		  new Date(m + "/" + d + "/" + y + " " + dynamicData[c].);
-		  
-		  var dataObj = new Object();
-		  dataObj.x = ;
-		  dataObj.low = ;
-		  dataObj.high = ;
-		  {
-                x: 0,
-                low: Date.UTC(2013, 3, 22, 1, 15),
-                high: Date.UTC(2013, 3, 22, 2, 15)
-            }
-		 
-		 dataObj.name = dynamicData[c].targetTime;
-		 var dataArray = new Array();
-		 for(d in dynamicData) {
-			 if(c==d){
-				dataArray.push(parseInt(dynamicData[c].Weight));
-			 } else {
-				dataArray.push(null);
-			 }
-		 }
-		 dataObj.data = dataArray;
-		 seriesArray.push(dataObj);
-		 categories.push(dynamicData[c].ProgramName);
-	 }
-
-     runProgressDataTemplate.series = seriesArray;
-	 runProgressChartOptions.xAxis.categories =  categories;
-	 
-     $(projectContainer).find('#chart-02"').highcharts($.extend(runProgressChartOptions, runProgressDataTemplate));
-	 */
-	 
  }
 
  function createDefectChartData(defectData) {
@@ -581,7 +534,7 @@
          }
          defectListHTML += "<li class=" + classNme + "><span class='col1'>" + outstandingDefectData[d].Analyst + "</span> <span class='col2'>" + outstandingDefectData[d].Urgent + "</span> <span class='col2'>" + outstandingDefectData[d].High + "</span> <span class='col2'>" + outstandingDefectData[d].Medium + "</span> <span class='col2'>" + outstandingDefectData[d].Low + "</span> </li>";
 
-         $(projectContainer).find(".outstanding-defect-list-header").html("<li> <span class='col1'> Analyst </span> <span class='col2'> Urgent </span> <span class='col2'> High </span>  <span class='col2'> Medium </span> <span class='col2'> Low </span></li>");
+         $(projectContainer).find(".outstanding-defect-list-header").html("<li> <span class='col1'> Support Analyst </span> <span class='col2'> Urgent </span> <span class='col2'> High </span>  <span class='col2'> Medium </span> <span class='col2'> Low </span></li>");
      
      $(projectContainer).find("#outstanding_defect_list").html(defectListHTML);
 	 
