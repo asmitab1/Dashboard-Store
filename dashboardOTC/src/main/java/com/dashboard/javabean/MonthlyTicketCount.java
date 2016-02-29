@@ -7,6 +7,7 @@ public class MonthlyTicketCount {
 	private int openTickets;
 	private int closedTickets;
 	private int injectionRate;
+	private int initialTickets;
 	
 	public String getTeam() {
 		return team;
@@ -43,6 +44,18 @@ public class MonthlyTicketCount {
 	 */
 	public void setInjectionRate(int injectionRate) {
 		this.injectionRate = injectionRate;
+	}
+	/**
+	 * @return the initialTickets
+	 */
+	public int getInitialTickets() {
+		return initialTickets;
+	}
+	/**
+	 * @param initialTickets the initialTickets to set
+	 */
+	public void setInitialTickets(int initialTickets) {
+		this.initialTickets = initialTickets;
 	}
 	
 }

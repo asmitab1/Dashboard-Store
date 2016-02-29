@@ -49,7 +49,7 @@
          marginTop: 60,
          marginRight: 150,
          height: 340,
-         width: 700
+         width: 720
      },
      colors: ['#82D5FF', '#74FF74', '#f7a35c'],
      title: {
@@ -57,7 +57,7 @@
      },
 
      xAxis: {
-         categories: ['Resolved during month', 'Open at month end']
+         categories: ['Resolved-in month', 'Open-month end']
      },
 
      yAxis: {
@@ -180,11 +180,11 @@
 
  var monthlyTicketDataTemplate = {
      series: [{
-         name: 'Open',
+         name: 'Open at month-end',
          data: [5, 2],
          stack: 'Ticket'
      }, {
-         name: 'Resolved',
+         name: 'Resolved in month',
          data: [4, 6],
          stack: 'Ticket'
      },
@@ -413,6 +413,9 @@
 	 var injectedTicketArray = new Array();
 	 var categories = new Array();
 	  for (c in dynamicData) {
+		  /*if(c == 0 ){
+			 injectedTicketArray.push({x: 0 , y : dynamicData[c].initialTickets});
+		  } */
 		 openTicketArray.push(dynamicData[c].openTickets);
 		 closedTicketArray.push(dynamicData[c].closedTickets);
 		 categories.push(dynamicData[c].month);
