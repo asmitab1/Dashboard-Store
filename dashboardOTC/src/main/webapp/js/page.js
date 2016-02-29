@@ -104,7 +104,7 @@ function initialize() {
 				setJSP( 'destroy', old );
 				//updateBDChart(burnDownChartData[currentProjectIndex]);
 				//updateSPChart(storyProgressData[currentProjectIndex]);
-				
+				services.getProgramStatistics(currentProjectID);
 				$(projectContainer).find("#myCarousel").carousel('cycle');
 				
 				

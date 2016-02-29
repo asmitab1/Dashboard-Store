@@ -248,7 +248,6 @@
                  }
                  Page.init();
                  selectProjectContainer(currentProjectIndex);
-				 $(projectContainer).find("#projectName").text(allProjectList[currentProjectIndex].projectName);
 				 
                  services.getdefectResolutions(currentProjectID);
 				 services.getProgramStatistics(currentProjectID);
@@ -292,8 +291,7 @@
              dataType: "json",
              success: function(response) {
 				 programStatisticsResponse = response;
-				 google.charts.load('current', {'packages':['gantt']});
-				 google.charts.setOnLoadCallback(drawProgramStatisticsChart);
+				 drawProgramStatisticsChart();
 
              },
              error: function(request, status, error) {
@@ -363,11 +361,10 @@
  };
 
  $(function() {
-     services.getAllProjects();
- });
-
- $(document).ready(function() {
-	 $('body').on('click', '.toggle-button', function() {
+	 google.charts.load('current', {'packages':['gantt']});
+	 google.charts.setOnLoadCallback(function() {
+		 services.getAllProjects();
+		 	 $('body').on('click', '.toggle-button', function() {
 		$(this).toggleClass('toggle-button-selected'); 
 		pageFlipOnOff($(this));
 	});
@@ -376,9 +373,9 @@
      pageRefreshInterval = setInterval(function() {
          refreshProject();
      }, intervalDuration);
+		 });
      
  });
-
 
 
  function refreshProject() {
@@ -396,7 +393,7 @@
      selectProjectContainer(currentProjectIndex);
 
      services.getdefectResolutions(currentProjectID);
-	services.getProgramStatistics(currentProjectID);
+	//services.getProgramStatistics(currentProjectID);
 	services.getMonthlyTicketCount(currentProjectID);
 	services.getResourceWorkload(currentProjectID);
 	services.getdefectAssignment(currentProjectID);
@@ -432,6 +429,7 @@
  
  
  function drawProgramStatisticsChart() {
+	 $(projectContainer).find("#chart-02").empty();
 	  dynamicData = programStatisticsResponse;
 	  var runProgressData = new google.visualization.DataTable();
       runProgressData.addColumn('string', 'Task ID');
@@ -615,6 +613,7 @@
 
  function selectProjectContainer(projectIndex) {
      projectContainer = $(".bb-item:eq(" + projectIndex + ")");
+	 $(projectContainer).find("#projectName").text(allProjectList[currentProjectIndex].projectName);
  }
 
 

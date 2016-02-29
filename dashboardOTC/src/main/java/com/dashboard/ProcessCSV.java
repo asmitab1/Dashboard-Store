@@ -24,53 +24,11 @@ import com.fasterxml.jackson.dataformat.csv.CsvSchema;
  *
  */
 public class ProcessCSV {
-
-	/**
-	 * @param args
-	 * @throws IOException 
-	 * @throws JsonProcessingException 
-	 */
-	
-	public static void main(String args[]){
-	/*	ProcessCSV proc = new ProcessCSV();
-		try{
-			MonthlyTicketCount MonthlyTicketCount = new MonthlyTicketCount();
-			//List<Object> MonthlyTicketCountList = proc.execute(MonthlyTicketCount);
-			ProgramStatistics ProgramStatistics = new ProgramStatistics();
-			List<Object> ProgramStatisticsList = proc.execute(ProgramStatistics);
-			for(Object programStatisticsRows : ProgramStatisticsList){
-				System.out.println("NEW ROW");
-				System.out.println(((ProgramStatistics) programStatisticsRows).getTeam());
-				System.out.println(((ProgramStatistics) programStatisticsRows).getProgramName());
-				System.out.println(((ProgramStatistics) programStatisticsRows).getWeight());
-				
-				System.out.println(((ProgramStatistics) programStatisticsRows).getActualTime());
-				System.out.println(((ProgramStatistics) programStatisticsRows).getTargetTime());
-			}
-			for(Object ticketCountRows : MonthlyTicketCountList){
-				System.out.println("NEW ROW");
-				System.out.println(((MonthlyTicketCount) ticketCountRows).getMonth());
-				System.out.println(((MonthlyTicketCount) ticketCountRows).getOpenTickets());
-				System.out.println(((MonthlyTicketCount) ticketCountRows).getClosedTickets());
-			}
-		}
-		catch(Exception ex){
-			System.out.println(ex);
-		}*/
-		
-		
-	}
-
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static List<Object>  execute(String fileName, Object obj) throws JsonProcessingException, IOException{
 		List CSVRows = new ArrayList();
 		List CSVRowsException = new ArrayList();
 		CsvMapper mapper = new CsvMapper();
-		
-		/*URL url = ProcessCSV.class.getClassLoader()
-				.getResource(fileName);
-
-		String filePath = url.getPath();*/
 		String filePath  = PropertiesCache.getInstance()
 				.getProperty("FTP_LOCATION") + fileName;
 		try{
@@ -84,6 +42,7 @@ public class ProcessCSV {
 			return CSVRows;
 		}
 		catch(Exception ex){
+			System.out.println("Exception in File Processing: " + fileName + " ," + ex.getMessage());
 			CSVRowsException = executeFileException(fileName, obj);
 			return CSVRowsException;
 		}
