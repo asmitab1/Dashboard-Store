@@ -18,6 +18,7 @@ import com.dashboard.javabean.DefectResolution;
 import com.dashboard.javabean.MonthlyTicketCount;
 import com.dashboard.javabean.ProgramStatistics;
 import com.dashboard.javabean.ProjectConfig;
+import com.dashboard.javabean.ProjectRelease;
 import com.dashboard.javabean.ResourceWorkload;
 import com.dashboard.resourcemanager.PropertiesCache;
 import com.google.gson.Gson;
@@ -172,5 +173,48 @@ public class DataServiceHelper {
 		}
 
 		return defectAssignmentList;
+	}
+
+	public Object getReleases(String applicationID) {
+
+		ProjectRelease projectRelease = null;
+		ProjectConfig[] projects = null;
+		FileReader fileReader = null;
+		BufferedReader bufferedReader = null;
+		Gson gson = new Gson();
+
+		URL url = this.getClass().getClassLoader()
+				.getResource("projects.config");
+
+		String filePath = url.getPath();
+		try {
+			fileReader = new FileReader(filePath);
+			bufferedReader = new BufferedReader(fileReader);
+			String jsonText = IOUtils.toString(bufferedReader);
+			JSONObject jsonObject = new JSONObject(jsonText);
+			JSONArray jsonArray = jsonObject.getJSONArray("projectList");
+			projects = gson.fromJson(jsonArray.toString(),
+					ProjectConfig[].class);
+			
+			for(ProjectConfig p: projects){
+				if(applicationID.equals(p.getProjectId()) && p.getProjectRelease() != null){
+					projectRelease = p.getProjectRelease();
+				}
+			}
+			
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				fileReader.close();
+				bufferedReader.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return projectRelease;
 	}
 }

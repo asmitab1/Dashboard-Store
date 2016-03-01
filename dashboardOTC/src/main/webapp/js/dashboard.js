@@ -249,11 +249,22 @@
                  Page.init();
                  selectProjectContainer(currentProjectIndex);
 				 
+				 if(allProjectList[currentProjectIndex].projectType == 'dev') {
+					 $(".dev-view").show();
+					 $(".support-view").hide();
+				 services.getAllReleases(currentProjectID);
+				 services.getBurnDownChartData(currentProjectID);
+                 services.getAllDefectAssignments(currentProjectID);
+                 services.getStoryAssignment(currentProjectID);
+				 } else {	
+					$(".dev-view").hide();
+					$(".support-view").show();				 
                  services.getdefectResolutions(currentProjectID);
 				 services.getProgramStatistics(currentProjectID);
 				 services.getMonthlyTicketCount(currentProjectID);
 				 services.getResourceWorkload(currentProjectID);
 				 services.getdefectAssignment(currentProjectID);
+				 }
                 
              },
              error: function(request, status, error) {
@@ -357,6 +368,25 @@
              }
          });
 
+     },
+	 getAllReleases: function(projectID) {
+         $.ajax({
+             type: "GET",
+             url: "/dashboard/rest/services/allReleases?appID=" + projectID,
+             async: false,
+             dataType: "json",
+             success: function(response) {
+                 allProjectReleases = response;
+                 if (allProjectReleases)
+                     populateReleaseView(allProjectReleases);
+             },
+             error: function(request, status, error) {
+                 console.log(error);
+             },
+             failure: function(status) {
+                 console.log(status);
+             }
+         });
      }
  };
 
@@ -380,24 +410,31 @@
 
  function refreshProject() {
 	 if(allProjectList.length > 1) {
-     if (!allProjectList)
-         services.getAllProjects();
-     $(projectContainer).find("#myCarousel").carousel(0);
-     $(projectContainer).find("#myCarousel").carousel('pause');
-     if (currentProjectIndex < totalProjects - 1) {
-         currentProjectIndex++;
-     } else {
-         currentProjectIndex = 0;
-     }
-     currentProjectID = allProjectList[currentProjectIndex].projectId;
-     selectProjectContainer(currentProjectIndex);
+		 if (!allProjectList)
+			 services.getAllProjects();
+		 $(projectContainer).find("#myCarousel").carousel(0);
+		 $(projectContainer).find("#myCarousel").carousel('pause');
+		 if (currentProjectIndex < totalProjects - 1) {
+			 currentProjectIndex++;
+		 } else {
+			 currentProjectIndex = 0;
+		 }
+		 currentProjectID = allProjectList[currentProjectIndex].projectId;
+		 selectProjectContainer(currentProjectIndex);
 
-     services.getdefectResolutions(currentProjectID);
-	//services.getProgramStatistics(currentProjectID);
-	services.getMonthlyTicketCount(currentProjectID);
-	services.getResourceWorkload(currentProjectID);
-	services.getdefectAssignment(currentProjectID);
-     $('#bb-nav-next').click();
+		 if(allProjectList[currentProjectIndex].projectType == 'dev') { 
+			 services.getAllReleases(currentProjectID);
+			 //services.getBurnDownChartData(currentProjectID);
+			 services.getAllDefectAssignments(currentProjectID);
+			 services.getStoryAssignment(currentProjectID);
+		} else { 
+			 services.getdefectResolutions(currentProjectID);
+			//services.getProgramStatistics(currentProjectID);
+			services.getMonthlyTicketCount(currentProjectID);
+			services.getResourceWorkload(currentProjectID);
+			services.getdefectAssignment(currentProjectID);
+		}
+		 $('#bb-nav-next').click();
 	 }
 
  }
@@ -651,3 +688,119 @@
 		}, intervalDuration);
 	} 
 }
+ function populateReleaseView(releases) {
+         populateReleaseChart(releases, $(projectContainer).find(".releaseView"));
+ }
+ 
+  function populateReleaseChart(sprintJSON, parentElement) {
+	  var completed = 0, inProgress = 0, notStarted = 0 ,totalCount = 0;
+	  
+	  for(var ph in sprintJSON.phaseNames) {
+		  totalCount++;
+		  if(inProgress >0){
+			  notStarted++;
+		  } else if(sprintJSON.phaseNames[ph] == sprintJSON.currentPhase) {
+			  inProgress++;
+		  }else {
+			  completed++;
+		  }
+	  }
+
+     var totalWidth = Math.ceil(releaseWidth * .85);
+     
+     var releaseName = sprintJSON.releaseName;
+     $(parentElement).find("#releaseName").html(releaseName);
+     $(parentElement).find("#projectID").html(currentProjectID + " ");
+
+
+     canvas = $(parentElement).find("#myCanvas").get(0);
+     context = canvas.getContext('2d');
+     context.clearRect(0, 0, canvas.width, canvas.height);
+
+     var txt = sprintJSON.targetDate;
+     var txtWidth = context.measureText(txt).width;
+
+     sprintWidth = Math.ceil(totalWidth / totalCount);
+
+     totalWidth = sprintWidth * totalCount;
+
+
+     $(parentElement).find("#myCanvas").attr('width', (totalWidth + Math.ceil(txtWidth / 2) + 20));
+
+     var keyFeatures = sprintJSON.keyFeatures;
+     var featureHtml = "<ul>";
+     for (var feature in keyFeatures) {
+         featureHtml += "<li> <span>" + keyFeatures[feature] + " </span></li>";
+     }
+     featureHtml += "</ul>";
+
+     $(parentElement).find("#keyFeatures").find(".chart-stage").html(featureHtml);
+
+
+     context.font = "14px Arial";
+
+     var posX = 0;
+     var allcounter = 0;
+
+     var indicatorShift = (completed * sprintWidth + sprintWidth / 2 - 20);
+     var rectYstart = canvas.height / 2 - barHeight / 2;
+
+     for (var i = 0; i < completed; i++) {
+         context.fillStyle = "green";
+         context.fillRect(posX, rectYstart, sprintWidth, barHeight);
+         context.strokeRect(posX, rectYstart, sprintWidth, barHeight);
+         context.fillStyle = "white";
+         context.fillText(sprintJSON.phaseNames[allcounter++], (posX + sprintWidth / 8), canvas.height * .5);
+         posX = posX + sprintWidth;
+     }
+
+     for (var i = 0; i < inProgress; i++) {
+         context.fillStyle = "#3ADC3A"; //"#FFCC00";
+         context.fillRect(posX, rectYstart, sprintWidth, barHeight);
+         context.strokeRect(posX, rectYstart, sprintWidth, barHeight);
+         context.fillStyle = "black";
+         context.fillText(sprintJSON.phaseNames[allcounter++], (posX + sprintWidth / 8), canvas.height * .5);
+         posX = posX + sprintWidth;
+     }
+
+     for (var i = 0; i < notStarted; i++) {
+         context.fillStyle = "#C0C0C0";
+         context.fillRect(posX, rectYstart, sprintWidth, barHeight);
+         context.strokeRect(posX, rectYstart, sprintWidth, barHeight);
+         context.fillStyle = "black";
+         context.fillText(sprintJSON.phaseNames[allcounter++], (posX + sprintWidth / 8), canvas.height * .5);
+         posX = posX + sprintWidth;
+     }
+
+     var imgSrc = document.getElementById("currentSprint").src;
+     var image = new Image();
+
+     image.src = imgSrc;
+     image.context = context;
+
+
+
+     context.setLineDash([5]);
+     context.beginPath();
+     context.moveTo(posX, 20);
+     context.lineTo(posX, rectYstart);
+     context.strokeStyle = "black";
+     context.stroke();
+
+
+     context.beginPath();
+     context.moveTo(posX, rectYstart + barHeight);
+     context.lineTo(posX, canvas.height - 20);
+     context.strokeStyle = "black";
+     context.stroke();
+
+
+     context.font = "12px Arial";
+     context.fillStyle = "black";
+     context.fillText(txt, posX - Math.floor(txtWidth / 2), 15);
+
+     image.onload = function() {
+         this.context.drawImage(this, indicatorShift, 0);
+     };
+
+ }

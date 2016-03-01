@@ -9,6 +9,7 @@ import javax.ws.rs.core.Response;
 
 import com.dashboard.Utility;
 import com.dashboard.javabean.ProjectConfig;
+import com.dashboard.resourcemanager.ApplicationCacheWrapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -67,6 +68,14 @@ public class DataServices {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getdefectAssignment(@QueryParam("appID") String applicationID) {	
 		String output = Utility.getObjetToJson(dHelper.getdefectAssignment(applicationID));
+		return Response.status(200).entity(output).build();
+	}
+	
+	@GET
+	@Path("allReleases")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAllReleases(@QueryParam("appID") String applicationID) {
+		String output = Utility.getObjetToJson(dHelper.getReleases(applicationID));
 		return Response.status(200).entity(output).build();
 	}
 	

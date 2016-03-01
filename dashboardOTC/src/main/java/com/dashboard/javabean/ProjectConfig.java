@@ -11,7 +11,9 @@ public class ProjectConfig implements Serializable{
 	private String projectId;
 	@Expose
 	private String projectName;
+	@Expose
 	private String projectType;
+	private ProjectRelease projectRelease;
 
 	/**
 	 * @return the projectName
@@ -48,6 +50,18 @@ public class ProjectConfig implements Serializable{
 	 */
 	public void setProjectId(String projectId) {
 		this.projectId = projectId;
+	}
+	/**
+	 * @return the projectRelease
+	 */
+	public ProjectRelease getProjectRelease() {
+		return projectRelease;
+	}
+	/**
+	 * @param projectRelease the projectRelease to set
+	 */
+	public void setProjectRelease(ProjectRelease projectRelease) {
+		this.projectRelease = projectRelease;
 	}
 	
 }
