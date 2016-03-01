@@ -33,8 +33,10 @@ public class ProcessCSV {
 		CsvMapper mapper = new CsvMapper();
 		String filePath  = PropertiesCache.getInstance()
 				.getProperty("FTP_LOCATION") + fileName;
+		String fileLockPath = PropertiesCache.getInstance()
+				.getProperty("FTP_LOCATION") + "rajat.lock";
 		
-		File f = new File(filePath+"rajat.lock");
+		File f = new File(fileLockPath);
 		if(f.exists()){
 			System.out.println("Lock found in Processing: " + fileName);
 			CSVRowsLock = executeFileException(fileName, obj);
