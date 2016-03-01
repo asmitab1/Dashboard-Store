@@ -15,6 +15,14 @@ public class ProgramStatistics {
 	String targetTime;
 	String actualStartTime;
 	String actualEndTime;
+	String totalPercentageCalculation;
+	
+	public String getTotalPercentageCalculation() {
+		return totalPercentageCalculation;
+	}
+	public void setTotalPercentageCalculation(String totalPercentageCalculation) {
+		this.totalPercentageCalculation = totalPercentageCalculation;
+	}
 	/**
 	 * @return the team
 	 */
