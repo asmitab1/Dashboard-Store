@@ -270,6 +270,27 @@
      }
  ];
 
+ var burnDownChartDataTemplate = {
+     subtitle: {
+         text: 'Sprint #13',
+         x: 0,
+         style: {
+             fontSize: '18px'
+         }
+     },
+     series: [{
+         name: 'Guideline',
+         lineWidth: 2,
+
+         data: []
+     }, {
+         name: 'Remaining Values',
+         marker: {
+             radius: 6
+         },
+         data: []
+     }]
+ };
 
  
 
