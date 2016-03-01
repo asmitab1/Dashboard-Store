@@ -6,6 +6,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.io.FileUtils;
 import org.codehaus.jackson.JsonProcessingException;
 
 import com.dashboard.javabean.MonthlyTicketCount;
@@ -43,7 +44,9 @@ public class ProcessCSV {
 			try{
 				String sourceLocation = filePath;
 				String destLocation = "/temp/"+ fileName;
-				FileUtils.copyFile(sourceLocation, destLocation);
+				File source = new File(sourceLocation);
+				File destination = new File(destLocation);
+				FileUtils.copyFile(source, destination);
 				File csvFile = new File(destLocation);
 				CsvSchema schema = CsvSchema.emptySchema().withHeader().withColumnSeparator(',');
 				com.fasterxml.jackson.databind.MappingIterator<Object> it =  mapper.reader(obj.getClass()).with(schema).readValues(csvFile);
