@@ -322,6 +322,10 @@
 				 if(allProjectList[currentProjectIndex].projectType == 'dev') {
 					 $(".dev-view").show();
 					 $(".support-view").hide();
+					 $(projectContainer).find("#title-1").text('Release View');
+					 $(projectContainer).find("#title-2").text('Effort Burndown Chart');
+					 $(projectContainer).find("#title-1").text('Release View');
+					 $(projectContainer).find("#title-1").text('Release View');
 				 services.getAllReleases(currentProjectID);
 				 services.getBurnDownChartData(currentProjectID);
                  services.getAllDefectAssignments(currentProjectID);
@@ -448,7 +452,7 @@
              success: function(response) {
                  allProjectReleases = response;
                  if (allProjectReleases)
-                     populateReleaseView(allProjectReleases);
+					populateReleaseChart(allProjectReleases);
              },
              error: function(request, status, error) {
                  console.log(error);
@@ -776,11 +780,10 @@
 		}, intervalDuration);
 	} 
 }
- function populateReleaseView(releases) {
-         populateReleaseChart(releases, $(projectContainer).find(".releaseView"));
- }
+
  
   function populateReleaseChart(sprintJSON, parentElement) {
+	  var parentElement = $(projectContainer).find(".release-container");
 	  var completed = 0, inProgress = 0, notStarted = 0 ,totalCount = 0;
 	  
 	  for(var ph in sprintJSON.phaseNames) {
