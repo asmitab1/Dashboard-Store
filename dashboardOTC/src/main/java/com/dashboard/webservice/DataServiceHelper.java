@@ -217,4 +217,30 @@ public class DataServiceHelper {
 		}
 		return projectRelease;
 	}
+
+	public Object getBurnDownChartData(String applicationID) {
+		Object defectAssignmentList = null;
+		List<DefectAssignment> defectAssignmentListFinal = new ArrayList<DefectAssignment>();
+		DefectAssignment defectAssignment = new DefectAssignment();
+		try {
+			if (applicationID != null) {
+				defectAssignmentList = ProcessCSV.execute(
+						PropertiesCache.getInstance().getProperty(
+								"DEFECT_ASSIGNMENT_FILENAME"),
+								defectAssignment);
+				for (DefectAssignment p : (List<DefectAssignment>) defectAssignmentList) {
+					if (applicationID.equalsIgnoreCase(p.getProject())) {
+						defectAssignmentListFinal.add(p);
+					}
+				}
+				defectAssignmentList = defectAssignmentListFinal;
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return defectAssignmentList;
+	
+	}
 }

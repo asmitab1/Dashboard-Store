@@ -35,6 +35,55 @@
      min: 0
  };
 
+ var burnDownChartOptions = {
+     chart: {
+         marginRight: 40
+     },
+     title: {
+         text: ''
+     },
+     colors: ['#707070', '#3385FF'],
+     plotOptions: {
+         line: {
+             lineWidth: 3
+         },
+         tooltip: {
+             hideDelay: 200
+         }
+     },
+     xAxis: {
+         title: {
+             text: 'Days',
+             style: {
+                 fontSize: '15px'
+             }
+         },
+         categories: ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6',
+             'Day 7', 'Day 8', 'Day 9', 'Day 10', 'Day 11', 'Day 12', 'Day 13', 'Day 14', 'Day 15'
+         ]
+     },
+     yAxis: {
+         title: {
+             text: 'Person Days',
+             style: {
+                 fontSize: '15px'
+             }
+         },
+         plotLines: [{
+             value: 0,
+             width: 1
+         }]
+     },
+     tooltip: {
+         enabled: false
+     },
+     legend: {
+         layout: 'vertical',
+         verticalAlign: 'bottom',
+         borderWidth: 0
+     }
+ };
+
 
  var sprintProgressnChartOptions = {
      chart: {
@@ -379,6 +428,24 @@
                  allProjectReleases = response;
                  if (allProjectReleases)
                      populateReleaseView(allProjectReleases);
+             },
+             error: function(request, status, error) {
+                 console.log(error);
+             },
+             failure: function(status) {
+                 console.log(status);
+             }
+         });
+     },
+	 getBurnDownChartData: function(projectID) {
+         $.ajax({
+             type: "GET",
+             url: "/dashboard/rest/services/burnDownChart?appID=" + projectID,
+             async: false,
+             dataType: "json",
+             success: function(response) {
+                 drawBurnDownChart(response);
+
              },
              error: function(request, status, error) {
                  console.log(error);
@@ -803,4 +870,54 @@
          this.context.drawImage(this, indicatorShift, 0);
      };
 
+ }
+ 
+ function drawBurnDownChart(dynamicData) {
+     var dayArray = [],
+         idealEffortArray = [],
+         effortArray = [];
+	if (currentProjectID == "Create") {	 
+		 //effortArray = [84, 84, 84, 84, 84, 84, 84, 76, 110, 136, 136, 136, 136, 136, 136, 136, 123, 110, 110, 110, 110, 110, 110, 110, 123, 123];
+		 effortArray = [110, 110, 106, 100, 100, 94, 88, 76, 76, 72, 70, 70, 66, 62, 58, 54, 50, 46, 46, 42, 42, 38, 34, 30, 26, 26];
+	}else if(currentProjectID == "EZTool"){
+		//effortArray = [ 13, 13, 13, 13, 31, 18, 18, 18, 18, 18, 45, 45, 45];
+		effortArray = [ 63, 63, 52, 52, 48, 45, 31,31, 25, 25, 25, 18, 18];
+	} else if(currentProjectID == "Connect"){
+		//effortArray = [129, 129, 129, 116, 122, 88, 109, 109, 109, 110, 110, 76, 24, 12];
+		effortArray = [122, 122, 116, 110, 109, 109, 109, 88, 88, 76, 70, 45, 24, 12];
+	} 
+		 
+	if (currentProjectID == "Create" || currentProjectID == "Connect" || currentProjectID == "EZTool") {
+         burnDownChartOptions.yAxis.title.text = 'Story Points';
+		 //dynamicData[0].totalTimeEstimatedInDay = effortArray[0];
+		 effortArray[0] = dynamicData[0].totalTimeEstimatedInDay;
+	}
+     else {
+         burnDownChartOptions.yAxis.title.text = 'Person Days';
+	 }
+
+	 if(dynamicData[0].sprintSpanInDay < dynamicData[0].day) {
+		dynamicData[0].sprintSpanInDay = dynamicData[0].day + 1;
+	 }
+
+     burnDownChartOptions.xAxis.categories = dayArray;
+     for (c = 0; c < dynamicData[0].sprintSpanInDay; c++) {
+         dayArray.push(c + 1);
+         idealEffortArray.push(dynamicData[0].totalTimeEstimatedInDay - (dynamicData[0].totalTimeEstimatedInDay /( dynamicData[0].sprintSpanInDay -1)) * c);
+     }
+	if (currentProjectID != "Create" && currentProjectID != "Connect" && currentProjectID != "EZTool") {
+	 effortArray.push(dynamicData[0].totalTimeEstimatedInDay);
+     for (c = 1; c < dynamicData[0].day - 1; c++) {
+         effortArray.push(dynamicData[0].totalTimeEstimatedInDay - ((dynamicData[0].totalTimeEstimatedInDay - dynamicData[0].remainingEffort) / dynamicData[0].day) * c + 2);
+     }
+	  for (c in dynamicData) {
+         effortArray.push(dynamicData[c].remainingEffort);
+     }
+	}
+
+     burnDownChartDataTemplate.series[0].data = idealEffortArray;
+     burnDownChartDataTemplate.series[1].data = effortArray;
+     burnDownChartDataTemplate.subtitle.text = currSprintName;
+
+     $(projectContainer).find('#burndowncontainer').highcharts($.extend(burnDownChartOptions, burnDownChartDataTemplate));
  }

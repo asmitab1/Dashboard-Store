@@ -79,4 +79,12 @@ public class DataServices {
 		return Response.status(200).entity(output).build();
 	}
 	
+	@GET
+	@Path("burnDownChart")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getBurnDownChartData(@QueryParam("appID") String applicationID) {
+		String output = Utility.getObjetToJson(dHelper.getBurnDownChartData(applicationID));
+		return Response.status(200).entity(output).build();
+	}
+	
 }
