@@ -15,6 +15,7 @@ import org.json.JSONObject;
 import com.dashboard.ProcessCSV;
 import com.dashboard.javabean.DefectAssignment;
 import com.dashboard.javabean.DefectResolution;
+import com.dashboard.javabean.EffortBurndown;
 import com.dashboard.javabean.MonthlyTicketCount;
 import com.dashboard.javabean.ProgramStatistics;
 import com.dashboard.javabean.ProjectConfig;
@@ -218,29 +219,30 @@ public class DataServiceHelper {
 		return projectRelease;
 	}
 
+	@SuppressWarnings("unchecked")
 	public Object getBurnDownChartData(String applicationID) {
-		Object defectAssignmentList = null;
-		List<DefectAssignment> defectAssignmentListFinal = new ArrayList<DefectAssignment>();
-		DefectAssignment defectAssignment = new DefectAssignment();
+		Object effortBurndownList = null;
+		List<EffortBurndown> effortBurndownListFinal = new ArrayList<EffortBurndown>();
+		EffortBurndown effortBurndown = new EffortBurndown();
 		try {
 			if (applicationID != null) {
-				defectAssignmentList = ProcessCSV.execute(
+				effortBurndownList = ProcessCSV.execute(
 						PropertiesCache.getInstance().getProperty(
-								"DEFECT_ASSIGNMENT_FILENAME"),
-								defectAssignment);
-				for (DefectAssignment p : (List<DefectAssignment>) defectAssignmentList) {
-					if (applicationID.equalsIgnoreCase(p.getProject())) {
-						defectAssignmentListFinal.add(p);
-					}
+								"EFFORT_BURNDOWN_FILENAME"),
+								effortBurndown);
+				for (EffortBurndown p : (List<EffortBurndown>) effortBurndownList) {
+					//if (applicationID.equalsIgnoreCase(p.getProject())) {
+						effortBurndownListFinal.add(p);
+					//}
 				}
-				defectAssignmentList = defectAssignmentListFinal;
+				effortBurndownList = effortBurndownListFinal;
 			}
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-		return defectAssignmentList;
+		return effortBurndownList;
 	
 	}
 }
