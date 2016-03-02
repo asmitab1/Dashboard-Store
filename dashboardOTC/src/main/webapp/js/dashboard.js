@@ -100,7 +100,7 @@
          height: 340,
          width: 720
      },
-     colors: ['#82D5FF', '#74FF74', '#f7a35c'],
+     colors: ['#82D5FF', '#74FF74', '#3D06D2'],
      title: {
          text: ''
      },
@@ -546,10 +546,10 @@
 	 var d = TodayDate.getDate();
 	 var m = TodayDate.getMonth() + 1;
 	 var y = TodayDate.getFullYear();
-
+	 var totalProgressPercent = 0;
 		 
 		 for (c in dynamicData) {
-			 
+			totalProgressPercent =  dynamicData[0].totalPercentageCalculation;
 			var dataObj = new Array();
 			var progressPercent = 100;
 			dataObj.push(dynamicData[c].programName);
@@ -576,8 +576,9 @@
 		 }
 		 
 		 runProgressData.addRows(dataRows);
-		 
-		 
+		 //document.getElementById("#myBar").setAttribute("style", "width: "+totalProgressPercent+"%;");
+		 $(projectContainer).find("#myBar").css('width' , totalProgressPercent+"%");
+		 $(projectContainer).find("#label").html(totalProgressPercent+"%");
 		 var chart = new google.visualization.Gantt($(projectContainer).find("#chart-02").get(0));
 
 		 chart.draw(runProgressData, { });
@@ -892,10 +893,10 @@
 	 if(allProjectList[currentProjectIndex].projectType == 'dev') {
 					 $(".dev-view").show();
 					 $(".support-view").hide();
-					 $(projectContainer).find("#title-1").text('Release View');
+					 $(projectContainer).find("#title-1").text('Release Milestone');
 					 $(projectContainer).find("#title-2").text('Effort Burndown Chart');
-					 $(projectContainer).find("#title-3").text('Defects View');
-					 $(projectContainer).find("#title-4").text('Release View');
+					 $(projectContainer).find("#title-3").text('Task Assignments');
+					 $(projectContainer).find("#title-4").text('Defect Assignments');
 					 $(projectContainer).find(".variable-width-1").removeClass("col-sm-5");
 					 $(projectContainer).find(".variable-width-1").addClass("col-sm-6");
 					 $(projectContainer).find(".variable-width-2").removeClass("col-sm-7");
@@ -904,6 +905,7 @@
 					 $(projectContainer).find(".variable-width-3").addClass("col-sm-6");
 					 $(projectContainer).find(".variable-width-4").removeClass("col-sm-7");
 					 $(projectContainer).find(".variable-width-4").addClass("col-sm-6");
+					 $(projectContainer).find("#myProgress").hide();
 					 services.getAllReleases(currentProjectID);
 					 services.getBurnDownChartData(currentProjectID);
 					 //services.getAllDefectAssignments(currentProjectID);
