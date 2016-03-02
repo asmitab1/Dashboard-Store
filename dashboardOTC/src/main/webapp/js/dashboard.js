@@ -6,7 +6,7 @@
      currentProjectIndex = 0,
      currentProjectID,
      totalProjects,
-     releaseWidth = 346,
+     releaseWidth = 670,
      allProjectList,
      allProjectReleases,
      allDefectAssignments,
@@ -53,7 +53,7 @@
      },
      xAxis: {
          title: {
-             text: 'Days',
+             text: 'Week',
              style: {
                  fontSize: '15px'
              }
@@ -317,40 +317,9 @@
                      $(".bb-item#item" + pjt).html($("#project-template").html());
                  }
                  Page.init();
-                 selectProjectContainer(currentProjectIndex);
-				 
-				 if(allProjectList[currentProjectIndex].projectType == 'dev') {
-					 $(".dev-view").show();
-					 $(".support-view").hide();
-					 $(projectContainer).find("#title-1").text('Release View');
-					 $(projectContainer).find("#title-2").text('Effort Burndown Chart');
-					 $(projectContainer).find("#title-3").text('Defects View');
-					 $(projectContainer).find("#title-4").text('Release View');
-					 $(projectContainer).find(".variable-width-1").removeClass("col-sm-5");
-					 $(projectContainer).find(".variable-width-1").addClass("col-sm-6");
-					 $(projectContainer).find(".variable-width-2").removeClass("col-sm-7");
-					 $(projectContainer).find(".variable-width-2").addClass("col-sm-6");
-					 $(projectContainer).find(".variable-width-3").removeClass("col-sm-5");
-					 $(projectContainer).find(".variable-width-3").addClass("col-sm-6");
-					 $(projectContainer).find(".variable-width-4").removeClass("col-sm-7");
-					 $(projectContainer).find(".variable-width-4").addClass("col-sm-6");
-					 services.getAllReleases(currentProjectID);
-					 services.getBurnDownChartData(currentProjectID);
-					 services.getAllDefectAssignments(currentProjectID);
-					 services.getStoryAssignment(currentProjectID);
-				 } else {	
-					$(".dev-view").hide();
-					$(".support-view").show();	
-					 $(projectContainer).find("#title-1").text('Current Major RCA');
-					 $(projectContainer).find("#title-2").text('Runbook Status for Tonight');
-					 $(projectContainer).find("#title-3").text('Work Assignment');
-					 $(projectContainer).find("#title-4").text('Backlog Management Index');					
-					 services.getdefectResolutions(currentProjectID);
-					 services.getProgramStatistics(currentProjectID);
-					 services.getMonthlyTicketCount(currentProjectID);
-					 services.getResourceWorkload(currentProjectID);
-					 services.getdefectAssignment(currentProjectID);
-				 }
+                 selectProjectContainer(currentProjectIndex);			 
+				 setupandServiceCall();
+ 
                 
              },
              error: function(request, status, error) {
@@ -526,18 +495,7 @@
 		 currentProjectID = allProjectList[currentProjectIndex].projectId;
 		 selectProjectContainer(currentProjectIndex);
 
-		 if(allProjectList[currentProjectIndex].projectType == 'dev') { 
-			 services.getAllReleases(currentProjectID);
-			 //services.getBurnDownChartData(currentProjectID);
-			 services.getAllDefectAssignments(currentProjectID);
-			 services.getStoryAssignment(currentProjectID);
-		} else { 
-			 services.getdefectResolutions(currentProjectID);
-			//services.getProgramStatistics(currentProjectID);
-			services.getMonthlyTicketCount(currentProjectID);
-			services.getResourceWorkload(currentProjectID);
-			services.getdefectAssignment(currentProjectID);
-		}
+		 setupandServiceCall();
 		 $('#bb-nav-next').click();
 	 }
 
@@ -820,7 +778,7 @@
      context = canvas.getContext('2d');
      context.clearRect(0, 0, canvas.width, canvas.height);
 
-     var txt = sprintJSON.targetDate;
+     var txt = sprintJSON.endDate;
      var txtWidth = context.measureText(txt).width;
 
      sprintWidth = Math.ceil(totalWidth / totalCount);
@@ -928,4 +886,39 @@
      burnDownChartDataTemplate.subtitle.text = currSprintName;
 
      $(projectContainer).find('#chart-02').highcharts($.extend(burnDownChartOptions, burnDownChartDataTemplate));
+ }
+ 
+ function setupandServiceCall(){
+	 if(allProjectList[currentProjectIndex].projectType == 'dev') {
+					 $(".dev-view").show();
+					 $(".support-view").hide();
+					 $(projectContainer).find("#title-1").text('Release View');
+					 $(projectContainer).find("#title-2").text('Effort Burndown Chart');
+					 $(projectContainer).find("#title-3").text('Defects View');
+					 $(projectContainer).find("#title-4").text('Release View');
+					 $(projectContainer).find(".variable-width-1").removeClass("col-sm-5");
+					 $(projectContainer).find(".variable-width-1").addClass("col-sm-6");
+					 $(projectContainer).find(".variable-width-2").removeClass("col-sm-7");
+					 $(projectContainer).find(".variable-width-2").addClass("col-sm-6");
+					 $(projectContainer).find(".variable-width-3").removeClass("col-sm-5");
+					 $(projectContainer).find(".variable-width-3").addClass("col-sm-6");
+					 $(projectContainer).find(".variable-width-4").removeClass("col-sm-7");
+					 $(projectContainer).find(".variable-width-4").addClass("col-sm-6");
+					 services.getAllReleases(currentProjectID);
+					 services.getBurnDownChartData(currentProjectID);
+					 //services.getAllDefectAssignments(currentProjectID);
+					 //services.getStoryAssignment(currentProjectID);
+				 } else {	
+					$(".dev-view").hide();
+					$(".support-view").show();	
+					 $(projectContainer).find("#title-1").text('Current Major RCA');
+					 $(projectContainer).find("#title-2").text('Runbook Status for Tonight');
+					 $(projectContainer).find("#title-3").text('Work Assignment');
+					 $(projectContainer).find("#title-4").text('Backlog Management Index');					
+					 services.getdefectResolutions(currentProjectID);
+					 services.getProgramStatistics(currentProjectID);
+					 services.getMonthlyTicketCount(currentProjectID);
+					 services.getResourceWorkload(currentProjectID);
+					 services.getdefectAssignment(currentProjectID);
+				 }
  }
