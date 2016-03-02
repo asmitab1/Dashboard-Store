@@ -908,7 +908,7 @@
 	  for (c in dynamicData) {
 		 dayArray.push(dynamicData[c].week); 
          effortArray.push(dynamicData[c].pdLeft);
-         idealEffortArray.push(dynamicData[c].dev);
+         idealEffortArray.push(dynamicData[c].idealpdLeft);
      }
 
      burnDownChartDataTemplate.series[0].data = idealEffortArray;
