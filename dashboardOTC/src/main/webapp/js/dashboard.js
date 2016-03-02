@@ -915,5 +915,5 @@
      burnDownChartDataTemplate.series[1].data = effortArray;
      burnDownChartDataTemplate.subtitle.text = currSprintName;
 
-     $(projectContainer).find('#burndowncontainer').highcharts($.extend(burnDownChartOptions, burnDownChartDataTemplate));
+     $(projectContainer).find('#chart-02').highcharts($.extend(burnDownChartOptions, burnDownChartDataTemplate));
  }
