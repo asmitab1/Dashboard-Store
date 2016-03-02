@@ -21,6 +21,7 @@ import com.dashboard.javabean.ProgramStatistics;
 import com.dashboard.javabean.ProjectConfig;
 import com.dashboard.javabean.ProjectRelease;
 import com.dashboard.javabean.ResourceWorkload;
+import com.dashboard.javabean.TaskAssignment;
 import com.dashboard.resourcemanager.PropertiesCache;
 import com.google.gson.Gson;
 
@@ -244,5 +245,31 @@ public class DataServiceHelper {
 
 		return effortBurndownList;
 	
+	}
+
+	public Object getTaskAssignments(String applicationID) {
+
+		Object taskAssignmentsList = null;
+		List<TaskAssignment> taskAssignmentsListFinal = new ArrayList<TaskAssignment>();
+		TaskAssignment taskAssignment = new TaskAssignment();
+		try {
+			if (applicationID != null) {
+				taskAssignmentsList = ProcessCSV.execute(
+						PropertiesCache.getInstance().getProperty(
+								"TASK_ASSIGNMENTS_FILENAME"),
+								taskAssignment);
+				for (TaskAssignment p : (List<TaskAssignment>) taskAssignmentsList) {
+					if (applicationID.equalsIgnoreCase(p.getTeam())) {
+						taskAssignmentsListFinal.add(p);
+					}
+				}
+				taskAssignmentsList = taskAssignmentsListFinal;
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return taskAssignmentsList;
 	}
 }

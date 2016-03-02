@@ -460,6 +460,24 @@
                  console.log(status);
              }
          });
+     },
+	 getTaskAssignments: function(projectID) {
+         $.ajax({
+             type: "GET",
+             url: "/dashboard/rest/services/taskAssignments?appID=" + projectID,
+             async: false,
+             dataType: "json",
+             success: function(response) {
+                 drawTaskAssignments(response);
+
+             },
+             error: function(request, status, error) {
+                 console.log(error);
+             },
+             failure: function(status) {
+                 console.log(status);
+             }
+         });
      }
  };
 
@@ -908,6 +926,7 @@
 					 $(projectContainer).find("#myProgress").hide();
 					 services.getAllReleases(currentProjectID);
 					 services.getBurnDownChartData(currentProjectID);
+					 services.getTaskAssignments(currentProjectID);
 					 //services.getAllDefectAssignments(currentProjectID);
 					 //services.getStoryAssignment(currentProjectID);
 				 } else {	
@@ -918,9 +937,37 @@
 					 $(projectContainer).find("#title-3").text('Work Assignment');
 					 $(projectContainer).find("#title-4").text('Backlog Management Index');					
 					 services.getdefectResolutions(currentProjectID);
-					 services.getProgramStatistics(currentProjectID);
+					 //services.getProgramStatistics(currentProjectID);
 					 services.getMonthlyTicketCount(currentProjectID);
 					 services.getResourceWorkload(currentProjectID);
 					 services.getdefectAssignment(currentProjectID);
 				 }
+ }
+ 
+ function drawTaskAssignments(dynamicData) {
+	 
+	 var taskTable = "<table class ='table table-condensed table-striped task-table'>";
+	 
+	
+	 
+	 taskTable += "<tr>";
+	 taskTable += "<th>Developer</th>";
+	 taskTable += "<th>Task</th>";
+	 taskTable += "<th>Effort</th>";
+	 taskTable += "<th>Progress Percentage</th>";
+	 taskTable += "</tr>";
+	 
+	 for(c in dynamicData) {
+	 taskTable += "<tr>";
+	 taskTable += "<td>"+dynamicData[c].developerName+"</td>";
+	 taskTable += "<td>"+dynamicData[c].taskName+"</td>";
+	 taskTable += "<td>"+dynamicData[c].totalPD+"</td>";
+	 taskTable += '<td><div class="progress progress-striped"><div class="progress-bar bg" style="width: '+dynamicData[c].percentageCompl +'%"> '+dynamicData[c].percentageCompl +'</div> </div></td>';
+	 taskTable += "</tr>";
+
+	 }
+	 taskTable += "</table>";
+	 
+$(projectContainer).find(".chart-03").html(taskTable);
+	 
  }

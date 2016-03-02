@@ -12,6 +12,7 @@ import org.codehaus.jackson.JsonProcessingException;
 import com.dashboard.javabean.MonthlyTicketCount;
 import com.dashboard.javabean.ProgramStatistics;
 import com.dashboard.resourcemanager.PropertiesCache;
+import com.dashboard.webservice.DataServiceHelper;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 
@@ -83,5 +84,12 @@ public class ProcessCSV {
 			CSVRows.add(row);
 		}
 		return CSVRows;
+	}
+	
+	public static void main(String[] atg){
+		
+		
+		DataServiceHelper h = new DataServiceHelper();
+		h.getTaskAssignments("DEVproject");
 	}
 }
