@@ -79,6 +79,16 @@ public class DataServices {
 		return Response.status(200).entity(output).build();
 	}
 	
+	
+	
+	@GET
+	@Path("highlights")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getHighlightsForDemand(@QueryParam("appID") String applicationID) {
+		String output = Utility.getObjetToJson(dHelper.getHighlightsForDemand(applicationID));
+		return Response.status(200).entity(output).build();
+	}
+	
 	@GET
 	@Path("burnDownChart")
 	@Produces(MediaType.APPLICATION_JSON)

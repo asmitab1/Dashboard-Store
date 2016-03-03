@@ -478,7 +478,24 @@
                  console.log(status);
              }
          });
-     }
+     },
+	 getHighlights : function(projectID) {
+		$.ajax({
+             type: "GET",
+             url: "/dashboard/rest/services/highlights?appID=" + projectID,
+             async: false,
+             dataType: "json",
+             success: function(response) {
+                 showHighlights(response);
+             },
+             error: function(request, status, error) {
+                 console.log(error);
+             },
+             failure: function(status) {
+                 console.log(status);
+             }
+         }); 
+	 }
  };
 
  $(function() {
@@ -755,6 +772,15 @@
 
  }
  
+ function showHighlights(jsonText) {
+     var defectAssignmentHTML = "";
+     $.each(jsonText, function(index, value) {
+    	 defectAssignmentHTML += "<span >" + value.analyst + " :  (<span class='story-desc'>" + value.description + "</span>) | </span>";
+     });
+     $(projectContainer).find("#story-assignment").html(defectAssignmentHTML);
+
+ }
+ 
  function pageFlipOnOff($this){
 	var $button=$this.find('button'),
 		action = $button.attr('action');		
@@ -928,7 +954,7 @@
 					 services.getBurnDownChartData(currentProjectID);
 					 services.getTaskAssignments(currentProjectID);
 					 //services.getAllDefectAssignments(currentProjectID);
-					 //services.getStoryAssignment(currentProjectID);
+					 services.getHighlights(currentProjectID);
 				 } else {	
 					$(".dev-view").hide();
 					$(".support-view").show();	

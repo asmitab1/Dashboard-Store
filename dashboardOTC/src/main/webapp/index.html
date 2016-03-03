@@ -49,14 +49,13 @@
          border-radius: 3px;
          box-shadow: 0 2px 5px -3px #000;
          margin: 0;
-         padding: 0 0 0 80px;
+         padding: 0 0 0 30px;
          font-size: 20px;
          width: 100%;
          }
          .demo3::before {
          background: linear-gradient(#2389DC, #509EDF, #509EDF, #509EDF, #509EDF, #2389DC);
          color: #fff;
-         content: "Hot Tickets";
          display: inline-block;
          left: 0;
          padding: 6px 10px;
@@ -65,12 +64,26 @@
          text-shadow: 0px 3px 8px #2a2a2a;
          font-weight: 500;
          }
+		 
+		 .demo3.dev-view::before {
+         content: "Highlights";
+         }
+		 .demo3.support-view::before {
+         content: "Hot Tickets";
+         }
+		 .demo3.dev-view::after {
+                  content: "";
+         }
+		 .demo3.support-view::after {
+                  content: "";
+         }
+		 
+		 
          *, *::before, *::after {
          box-sizing: border-box;
          }
          .demo3::after {
          background: rgba(0, 0, 0, 0) linear-gradient(#fff, rgba(255, 255, 255, 0)) repeat scroll 0 0;
-         content: "";
          display: block;
          height: 20px;
          left: 80px;
@@ -328,7 +341,11 @@
                </div>
             </div>
          </div>
-         <div class="demo3" style="position: relative; height: 40px; overflow: hidden; margin: 0 -5px 0 5px;">
+         <div class="demo3 dev-view" style="position: relative; height: 40px; overflow: hidden; margin: 0 -5px 0 5px;">
+            <marquee id="story-assignment" behavior="scroll" scrollamount="7" direction="left" width="99%" height="100%" style="margin-left: 80px; padding-top: 0px;background-color: #E4E4E4;"> 
+            </marquee>
+         </div>
+		 <div class="demo3 support-view" style="position: relative; height: 40px; overflow: hidden; margin: 0 -5px 0 5px;">
             <marquee id="story-assignment" behavior="scroll" scrollamount="7" direction="left" width="99%" height="100%" style="margin-left: 80px; padding-top: 0px;background-color: #E4E4E4;"> 
             </marquee>
          </div>

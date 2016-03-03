@@ -16,6 +16,7 @@ import com.dashboard.ProcessCSV;
 import com.dashboard.javabean.DefectAssignment;
 import com.dashboard.javabean.DefectResolution;
 import com.dashboard.javabean.DefectWorkloadDemand;
+import com.dashboard.javabean.Highlights;
 import com.dashboard.javabean.EffortBurndown;
 import com.dashboard.javabean.MonthlyTicketCount;
 import com.dashboard.javabean.ProgramStatistics;
@@ -219,6 +220,33 @@ public class DataServiceHelper {
 			}
 		}
 		return projectRelease;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public Object getHighlightsForDemand(String applicationID) {
+		Object highlightsList = null;
+		List<Highlights> highlightsListFinal = new ArrayList<Highlights>();
+		Highlights highlights = new Highlights();
+		try {
+			if (applicationID != null) {
+				highlightsList = ProcessCSV.execute(
+						PropertiesCache.getInstance().getProperty(
+								"HIGHLIGHTS_FILENAME"),
+								highlights);
+				for (Highlights p : (List<Highlights>) highlightsList) {
+					if (applicationID.equalsIgnoreCase(p.getProject())) {
+						highlightsListFinal.add(p);
+					}
+				}
+				highlightsList = highlightsListFinal;
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return highlightsList;
+	
 	}
 
 	@SuppressWarnings("unchecked")
