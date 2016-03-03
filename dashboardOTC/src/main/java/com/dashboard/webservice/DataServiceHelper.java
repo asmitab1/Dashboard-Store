@@ -15,6 +15,7 @@ import org.json.JSONObject;
 import com.dashboard.ProcessCSV;
 import com.dashboard.javabean.DefectAssignment;
 import com.dashboard.javabean.DefectResolution;
+import com.dashboard.javabean.DefectWorkloadDemand;
 import com.dashboard.javabean.EffortBurndown;
 import com.dashboard.javabean.MonthlyTicketCount;
 import com.dashboard.javabean.ProgramStatistics;
@@ -271,5 +272,32 @@ public class DataServiceHelper {
 		}
 
 		return taskAssignmentsList;
+	}
+	
+	
+	public Object getDefectWorkloadDemand(String applicationID) {
+
+		Object defectWorkloadDemandList = null;
+		List<DefectWorkloadDemand> defectWorkloadDemandListFinal = new ArrayList<DefectWorkloadDemand>();
+		DefectWorkloadDemand defectWorkloadDemand = new DefectWorkloadDemand();
+		try {
+			if (applicationID != null) {
+				defectWorkloadDemandList = ProcessCSV.execute(
+						PropertiesCache.getInstance().getProperty(
+								"TASK_ASSIGNMENTS_FILENAME"),
+								defectWorkloadDemand);
+				for (DefectWorkloadDemand p : (List<DefectWorkloadDemand>) defectWorkloadDemandList) {
+					if (applicationID.equalsIgnoreCase(p.getTeam())) {
+						defectWorkloadDemandListFinal.add(p);
+					}
+				}
+				defectWorkloadDemandList = defectWorkloadDemandListFinal;
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return defectWorkloadDemandList;
 	}
 }
