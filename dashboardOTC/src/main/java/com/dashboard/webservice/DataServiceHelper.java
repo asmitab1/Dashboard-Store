@@ -312,7 +312,7 @@ public class DataServiceHelper {
 			if (applicationID != null) {
 				defectWorkloadDemandList = ProcessCSV.execute(
 						PropertiesCache.getInstance().getProperty(
-								"TASK_ASSIGNMENTS_FILENAME"),
+								"DEFECT_WORKLOAD"),
 								defectWorkloadDemand);
 				for (DefectWorkloadDemand p : (List<DefectWorkloadDemand>) defectWorkloadDemandList) {
 					if (applicationID.equalsIgnoreCase(p.getTeam())) {

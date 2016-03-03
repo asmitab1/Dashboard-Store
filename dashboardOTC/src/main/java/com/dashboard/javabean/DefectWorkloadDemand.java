@@ -3,7 +3,7 @@ package com.dashboard.javabean;
 public class DefectWorkloadDemand {
 	 private String team;
 	 private String analyst;
-	 private String veryHigh;
+	 private int veryHigh;
 	 private int high;
 	 private int medium;
 	 private int low;
@@ -19,10 +19,10 @@ public class DefectWorkloadDemand {
 	public void setAnalyst(String analyst) {
 		this.analyst = analyst;
 	}
-	public String getVeryHigh() {
+	public int getVeryHigh() {
 		return veryHigh;
 	}
-	public void setVeryHigh(String veryHigh) {
+	public void setVeryHigh(int veryHigh) {
 		this.veryHigh = veryHigh;
 	}
 	public int getHigh() {

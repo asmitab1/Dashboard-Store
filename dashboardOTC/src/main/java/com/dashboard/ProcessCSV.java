@@ -90,6 +90,6 @@ public class ProcessCSV {
 		
 		
 		DataServiceHelper h = new DataServiceHelper();
-		h.getTaskAssignments("DEVproject");
+		h.getHighlightsForDemand("Tokenization");
 	}
 }

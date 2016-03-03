@@ -495,7 +495,26 @@
                  console.log(status);
              }
          }); 
-	 }
+	 },
+	 getDefectWorkloadDemand : function(projectID) {
+			$.ajax({
+	             type: "GET",
+	             url: "/dashboard/rest/services/defectWorkloadDemand?appID=" + projectID,
+	             async: false,
+	             dataType: "json",
+	             success: function(response) {
+	            	 populateWorkloadDemand(response);
+	             },
+	             error: function(request, status, error) {
+	                 console.log(error);
+	             },
+	             failure: function(status) {
+	                 console.log(status);
+	             }
+	         }); 
+		 }
+	 
+	 
  };
 
  $(function() {
@@ -657,6 +676,118 @@
  
 
 
+ function populateDefectAssignment(outstandingDefectData) {
+     var defectListHTML = "";
+     var urgentCount = 0;
+     var highCount = 0;
+     var mediumCount = 0;
+     var lowCount = 0;
+     var defectCount = getDefectCount(outstandingDefectData);
+     $(projectContainer).find("#outstanding-defect-count").html(defectCount);
+     $(projectContainer).find(".outstanding-defect-list-header").show();
+     $(projectContainer).find(".no-defects-msg").hide();
+     if (outstandingDefectData.length == 0) {
+         $(projectContainer).find(".outstanding-defect-list-header").hide();
+         $(projectContainer).find(".no-defects-msg").show();
+     }
+     var rowCounter = 0,
+         classNme;
+     for (var d in outstandingDefectData){
+    	 urgentCount += outstandingDefectData[d].Urgent;
+    	 highCount += outstandingDefectData[d].High;
+    	 mediumCount += outstandingDefectData[d].Medium;
+    	 lowCount += outstandingDefectData[d].Low;
+     }
+     
+     for (var d in outstandingDefectData) {
+         rowCounter++;
+         if (rowCounter % 2 == 0) {
+             classNme = "even";
+         } else {
+             classNme = "odd";
+         }
+         defectListHTML += "<li class=" + classNme + "><span class='col1'>" + outstandingDefectData[d].Analyst + "</span> <span class='col2'>" + outstandingDefectData[d].Urgent +" </span> <span class='col2'>" + outstandingDefectData[d].High +"</span> <span class='col2'>" + outstandingDefectData[d].Medium + "</span> <span class='col2'>" + outstandingDefectData[d].Low +"</span> </li>";
+
+         $(projectContainer).find(".outstanding-defect-list-header").html("<li> <span class='col1'> Support Analyst </span> <span class='col2'> Urgent("+urgentCount+")</span> <span class='col2'> High("+highCount+") </span>  <span class='col2'> Medium("+mediumCount+") </span> <span class='col2'> Low("+lowCount+") </span></li>");
+     
+     $(projectContainer).find("#outstanding_defect_list").html(defectListHTML);
+	 
+     }
+	 
+	 if (rowCounter > noOfAssignedDefectsToShow) {
+         if ($(projectContainer).find('#ticker-flag').val() == "N") {
+             $(projectContainer).find('#ticker-flag').val("Y");
+             $(projectContainer).find('.news-container').vTicker({
+                 speed: 1000,
+                 pause: 3000,
+                 animation: 'fade',
+                 mousePause: false,
+                 showItems: noOfAssignedDefectsToShow,
+                 height: 400,
+                 direction: 'up'
+             });
+         }
+     }
+ }
+ 
+ function populateWorkloadDemand(outstandingDefectData) {
+     var defectListHTML = "";
+     var veryHighCount = 0;
+     var highCount = 0;
+     var mediumCount = 0;
+     var lowCount = 0;
+     var defectCount = getDefectCount(outstandingDefectData);
+     $(projectContainer).find("#outstanding-defect-count").html(defectCount);
+     $(projectContainer).find(".outstanding-defect-list-header").show();
+     $(projectContainer).find(".no-defects-msg").hide();
+     if (outstandingDefectData.length == 0) {
+         $(projectContainer).find(".outstanding-defect-list-header").hide();
+         $(projectContainer).find(".no-defects-msg").show();
+     }
+     var rowCounter = 0,
+         classNme;
+     for (var d in outstandingDefectData){
+    	 veryHighCount += outstandingDefectData[d].veryHigh;
+    	 highCount += outstandingDefectData[d].high;
+    	 mediumCount += outstandingDefectData[d].medium;
+    	 lowCount += outstandingDefectData[d].low;
+     }
+	 
+	 defectListHTML += '<ul class="outstanding-defect-list-header"></ul>';
+     defectListHTML += " <ul id='outstanding_defect_list'>";
+     for (var d in outstandingDefectData) {
+         rowCounter++;
+         if (rowCounter % 2 == 0) {
+             classNme = "even";
+         } else {
+             classNme = "odd";
+         }
+         defectListHTML += "<li class=" + classNme + "><span class='col1'>" + outstandingDefectData[d].analyst + "</span> <span class='col2'>" + outstandingDefectData[d].veryHigh +" </span> <span class='col2'>" + outstandingDefectData[d].high +"</span> <span class='col2'>" + outstandingDefectData[d].medium + "</span> <span class='col2'>" + outstandingDefectData[d].low +"</span> </li>";
+
+	 }  
+	 
+     defectListHTML +=  "</ul>";
+     $(projectContainer).find("#chart-04").html(defectListHTML);
+	 
+	 $(projectContainer).find(".outstanding-defect-list-header").html("<li> <span class='col1'> Analyst </span> <span class='col2'> Very High("+veryHighCount+")</span> <span class='col2'> High("+highCount+") </span>  <span class='col2'> Medium("+mediumCount+") </span> <span class='col2'> Low("+lowCount+") </span></li>");
+     
+	 
+	 if (rowCounter > noOfAssignedDefectsToShow) {
+         if ($(projectContainer).find('#ticker-flag').val() == "N") {
+             $(projectContainer).find('#ticker-flag').val("Y");
+             $(projectContainer).find('.news-container').vTicker({
+                 speed: 1000,
+                 pause: 3000,
+                 animation: 'fade',
+                 mousePause: false,
+                 showItems: noOfAssignedDefectsToShow,
+                 height: 400,
+                 direction: 'up'
+             });
+         }
+     }
+ }
+ 
  function populateDefectAssignment(outstandingDefectData) {
      var defectListHTML = "";
      var urgentCount = 0;
@@ -935,8 +1066,8 @@
  
  function setupandServiceCall(){
 	 if(allProjectList[currentProjectIndex].projectType == 'dev') {
-					 $(".dev-view").show();
-					 $(".support-view").hide();
+					 $(projectContainer).find(".dev-view").show();
+					 $(projectContainer).find(".support-view").remove();
 					 $(projectContainer).find("#title-1").text('Release Milestone');
 					 $(projectContainer).find("#title-2").text('Effort Burndown Chart');
 					 $(projectContainer).find("#title-3").text('Task Assignments');
@@ -949,12 +1080,17 @@
 					 $(projectContainer).find(".variable-width-3").addClass("col-sm-6");
 					 $(projectContainer).find(".variable-width-4").removeClass("col-sm-7");
 					 $(projectContainer).find(".variable-width-4").addClass("col-sm-6");
+					 
+					 $(projectContainer).find("#chart-04").css("min-height", "327px");
+					 $(projectContainer).find("#chart-04").css("margin-top", "0px");
+	
 					 $(projectContainer).find("#myProgress").hide();
 					 services.getAllReleases(currentProjectID);
 					 services.getBurnDownChartData(currentProjectID);
 					 services.getTaskAssignments(currentProjectID);
 					 //services.getAllDefectAssignments(currentProjectID);
 					 services.getHighlights(currentProjectID);
+					 services.getDefectWorkloadDemand(currentProjectID);
 				 } else {	
 					$(".dev-view").hide();
 					$(".support-view").show();	
