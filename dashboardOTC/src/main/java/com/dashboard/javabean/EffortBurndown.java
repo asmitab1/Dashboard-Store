@@ -1,6 +1,7 @@
 package com.dashboard.javabean;
 
 public class EffortBurndown {
+	private String team;
 	private String week;
 	private int pdLeft;
 	private int idealpdLeft;
@@ -28,6 +29,18 @@ public class EffortBurndown {
 	}
 	public void setDev(int dev) {
 		this.dev = dev;
+	}
+	/**
+	 * @return the team
+	 */
+	public String getTeam() {
+		return team;
+	}
+	/**
+	 * @param team the team to set
+	 */
+	public void setTeam(String team) {
+		this.team = team;
 	}
 	
 	

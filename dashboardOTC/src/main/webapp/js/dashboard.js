@@ -947,7 +947,6 @@
  function drawTaskAssignments(dynamicData) {
 	 
 	 var taskTable = "<table class ='table table-condensed table-striped task-table'>";
-	 
 	
 	 
 	 taskTable += "<tr>";

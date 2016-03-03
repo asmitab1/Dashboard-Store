@@ -232,9 +232,9 @@ public class DataServiceHelper {
 								"EFFORT_BURNDOWN_FILENAME"),
 								effortBurndown);
 				for (EffortBurndown p : (List<EffortBurndown>) effortBurndownList) {
-					//if (applicationID.equalsIgnoreCase(p.getProject())) {
+					if (applicationID.equalsIgnoreCase(p.getTeam())) {
 						effortBurndownListFinal.add(p);
-					//}
+					}
 				}
 				effortBurndownList = effortBurndownListFinal;
 			}

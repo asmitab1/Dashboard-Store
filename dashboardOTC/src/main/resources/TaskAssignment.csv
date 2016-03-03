@@ -1,6 +1,7 @@
 team,developerName,taskName,totalPD,percentageCompl
-DEVproject,ABC,Task1,20,40
-DEVproject,ABC,Task2,30,50
-DEVproject,ABC,Task3,30,69
-DEVproject,ABC,Task4,25,67
-DEVproject,ABC,Task5,24,57
+Tokenization,Lipsita Lenka,Troubleshooting Credit Card Long running,2,30
+Tokenization,Srijeeta Sengupta,Certfication testing,3,50
+Tokenization,Naresh Saladi,Analyse consumer inputs,5,20
+Tokenization,Monalisa Mahato,Addition of dummy credit card to tokenized order,5,70
+Tokenization,Sumantha Sil,Update Config properties,3,90
+Tokenization,Himadri Hati,Troubleshooting script  deactivation,2,50
