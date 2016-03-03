@@ -736,7 +736,12 @@
      var highCount = 0;
      var mediumCount = 0;
      var lowCount = 0;
-     var defectCount = getDefectCount(outstandingDefectData);
+	 
+	 var defectCount = 0;
+	 for (var d in outstandingDefectData) {
+		 defectCount += outstandingDefectData[d].veryHigh+outstandingDefectData[d].high+outstandingDefectData[d].medium+outstandingDefectData[d].low;
+	 }
+	 
      $(projectContainer).find("#outstanding-defect-count").html(defectCount);
      $(projectContainer).find(".outstanding-defect-list-header").show();
      $(projectContainer).find(".no-defects-msg").hide();
@@ -1071,7 +1076,7 @@
 					 $(projectContainer).find("#title-1").text('Release Milestone');
 					 $(projectContainer).find("#title-2").text('Effort Burndown Chart');
 					 $(projectContainer).find("#title-3").text('Task Assignments');
-					 $(projectContainer).find("#title-4").text('Defect Assignments');
+					 $(projectContainer).find("#title-4").html('Defect Assignments  (<span id="outstanding-defect-count">0</span>)');
 					 $(projectContainer).find(".variable-width-1").removeClass("col-sm-5");
 					 $(projectContainer).find(".variable-width-1").addClass("col-sm-6");
 					 $(projectContainer).find(".variable-width-2").removeClass("col-sm-7");
