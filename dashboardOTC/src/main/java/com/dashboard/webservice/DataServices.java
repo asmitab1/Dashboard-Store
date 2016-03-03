@@ -95,4 +95,12 @@ public class DataServices {
 		return Response.status(200).entity(output).build();
 	}
 	
+	@GET
+	@Path("defectWorkloadDemand")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getDefectWorkloadDemand(@QueryParam("appID") String applicationID) {
+		String output = Utility.getObjetToJson(dHelper.getDefectWorkloadDemand(applicationID));
+		return Response.status(200).entity(output).build();
+	}
+	
 }
