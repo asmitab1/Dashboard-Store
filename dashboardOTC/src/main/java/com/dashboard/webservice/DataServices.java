@@ -113,4 +113,12 @@ public class DataServices {
 		return Response.status(200).entity(output).build();
 	}
 	
+	@GET
+	@Path("runAgingData")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getRunAgingData(@QueryParam("appID") String applicationID) {
+		String output = Utility.getObjetToJson(dHelper.getRunAgingData(applicationID));
+		return Response.status(200).entity(output).build();
+	}
+	
 }
