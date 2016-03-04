@@ -108,7 +108,12 @@ function initialize() {
 				if(allProjectList[currentProjectIndex].projectType == 'dev') {
 					services.getBurnDownChartData(currentProjectID);
 				} else {
-					services.getProgramStatistics(currentProjectID);
+					if(allProjectList[currentProjectIndex].runBookAvailable == 'no'){
+						services.getRunAgingData(currentProjectID);
+					}
+					else{
+						services.getProgramStatistics(currentProjectID);
+					}
 				}
 				
 				$(projectContainer).find("#myCarousel").carousel('cycle');
