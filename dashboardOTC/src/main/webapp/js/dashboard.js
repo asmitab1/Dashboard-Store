@@ -1302,7 +1302,7 @@
 	 taskTable += "<tr>";
 	 taskTable += "<th>Developer</th>";
 	 taskTable += "<th>Task</th>";
-	 taskTable += "<th>Effort</th>";
+	 taskTable += "<th>Effort (in PD)</th>";
 	 taskTable += "<th>Progress Percentage</th>";
 	 taskTable += "</tr>";
 	 
