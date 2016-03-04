@@ -163,10 +163,10 @@
 	         backgroundColor: 'transparent',
 	         margin: [0, 0, 0, 0],
 	         spacing: [0, 0, 0, 0],
-	         height: 200,
+	         height: 350,
 	         options3d: {
 	             enabled: true,
-	             alpha: 70,
+	             alpha: 55,
 	             beta: 0
 	         }
 	     },
@@ -180,7 +180,8 @@
 	         pie: {
 	             allowPointSelect: true,
 	             cursor: 'pointer',
-	             depth: 20,
+	             depth: 25,
+	             size: '100%',
 	             dataLabels: {
 	                 enabled: true,
 	                 distance: 5,
@@ -917,14 +918,14 @@
      var chartDataArray = [];
      var chartElement;
      var daysArray = ['0 to 30 days', '31 to 60 days', '61 to 90 days', 'Greater than 90 days'];
-     var rubnBookDataArray = [dynamicData[0].firstQuat, dynamicData[0].secondQuat, dynamicData[0].thirdQuat, dynamicData[0].fourthQuat];
+     var rubnBookDataArray = [dynamicData[0].firstQuarter, dynamicData[0].secondQuarter, dynamicData[0].thirdQuarter, dynamicData[0].fourthQuarter];
      
-     for (var i = 0; i < rubnBookData.length; i++) {
+     for (var i = 0; i < rubnBookDataArray.length; i++) {
     	 chartElement = [daysArray[i], rubnBookDataArray[i]];
     	 chartDataArray.push(chartElement);
      }
-     defectChartOptions.series[0].data = chartDataArray;
-     $(projectContainer).find('#defectSeverityChart').highcharts(defectChartOptions);
+     runBookPieChartOptions.series[0].data = chartDataArray;
+     $(projectContainer).find('#chart-02').highcharts(runBookPieChartOptions);
 
  }
  
@@ -1231,18 +1232,33 @@
 					 //services.getAllDefectAssignments(currentProjectID);
 					 services.getHighlights(currentProjectID);
 					 services.getDefectWorkloadDemand(currentProjectID);
-				 } else {	
-					$(".dev-view").hide();
-					$(".support-view").show();	
-					 $(projectContainer).find("#title-1").text('Current Major RCA');
-					 $(projectContainer).find("#title-2").text('Runbook Status for Tonight');
-					 $(projectContainer).find("#title-3").text('Work Assignment');
-					 $(projectContainer).find("#title-4").text('Backlog Management Index');					
-					 services.getdefectResolutions(currentProjectID);
-					 //services.getProgramStatistics(currentProjectID);
-					 services.getMonthlyTicketCount(currentProjectID);
-					 services.getResourceWorkload(currentProjectID);
-					 services.getdefectAssignment(currentProjectID);
+				 } else {
+					if(allProjectList[currentProjectIndex].runBookAvailable == 'no'){
+						$(".dev-view").hide();
+						$(".support-view").show();	
+						 $(projectContainer).find("#title-1").text('Current Major RCA');
+						 $(projectContainer).find("#title-2").text('Runbook Status for Tonight');
+						 $(projectContainer).find("#title-3").text('Work Assignment');
+						 $(projectContainer).find("#title-4").text('Backlog Management Index');					
+						 services.getdefectResolutions(currentProjectID);
+						 services.getRunAgingData(currentProjectID);
+						 services.getMonthlyTicketCount(currentProjectID);
+						 services.getResourceWorkload(currentProjectID);
+						 services.getdefectAssignment(currentProjectID);
+					}
+					else{
+						$(".dev-view").hide();
+						$(".support-view").show();	
+						 $(projectContainer).find("#title-1").text('Current Major RCA');
+						 $(projectContainer).find("#title-2").text('Runbook Status for Tonight');
+						 $(projectContainer).find("#title-3").text('Work Assignment');
+						 $(projectContainer).find("#title-4").text('Backlog Management Index');					
+						 services.getdefectResolutions(currentProjectID);
+						 //services.getProgramStatistics(currentProjectID);
+						 services.getMonthlyTicketCount(currentProjectID);
+						 services.getResourceWorkload(currentProjectID);
+						 services.getdefectAssignment(currentProjectID);
+					}
 				 }
  }
  
