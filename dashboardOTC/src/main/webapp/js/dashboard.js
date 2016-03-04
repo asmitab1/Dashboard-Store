@@ -153,47 +153,6 @@
 	  
 	  
 
- var defectChartOptions = {
-     colors: ['#7cb5ec', '#90ed7d', '#f7a35c', '#8085e9',
-         '#f15c80', '#e4d354', '#2b908f', '#f45b5b', '#91e8e1'
-     ],
-     chart: {
-         type: 'pie',
-         backgroundColor: 'transparent',
-         margin: [0, 0, 0, 0],
-         spacing: [0, 0, 0, 0],
-         height: 200,
-         options3d: {
-             enabled: true,
-             alpha: 70,
-             beta: 0
-         }
-     },
-     title: {
-         text: ''
-     },
-     tooltip: {
-         pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-     },
-     plotOptions: {
-         pie: {
-             allowPointSelect: true,
-             cursor: 'pointer',
-             depth: 20,
-             dataLabels: {
-                 enabled: true,
-                 distance: 5,
-                 format: "{y}"
-             },
-             showInLegend: true
-         }
-     },
-     series: [{
-         type: 'pie',
-         name: 'Browser share',
-         data: []
-     }]
- };
  
  var runBookPieChartOptions = {
 	     colors: ['#7cb5ec', '#90ed7d', '#f7a35c', '#8085e9',
@@ -554,7 +513,26 @@
 	                 console.log(status);
 	             }
 	         }); 
-		 }
+		 },
+		 getRunAgingData: function(projectID) {
+	         $.ajax({
+	             type: "GET",
+	             url: "/dashboard/rest/services/runAgingData?appID=" + projectID,
+	             async: false,
+	             dataType: "json",
+	             success: function(response) {
+	            	 runAgingData = response;
+	                 if (runAgingData)
+	                	 drawRunBookPieChartOptions(runAgingData);
+	             },
+	             error: function(request, status, error) {
+	                 console.log(error);
+	             },
+	             failure: function(status) {
+	                 console.log(status);
+	             }
+	         });
+	     },
 	 
 	 
  };
