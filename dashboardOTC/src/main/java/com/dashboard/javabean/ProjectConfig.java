@@ -14,7 +14,15 @@ public class ProjectConfig implements Serializable{
 	@Expose
 	private String projectType;
 	private ProjectRelease projectRelease;
+	@Expose
+	private String runBookAvailable;
 
+	public String getRunBookAvailable() {
+		return runBookAvailable;
+	}
+	public void setRunBookAvailable(String runBookAvailable) {
+		this.runBookAvailable = runBookAvailable;
+	}
 	/**
 	 * @return the projectName
 	 */
