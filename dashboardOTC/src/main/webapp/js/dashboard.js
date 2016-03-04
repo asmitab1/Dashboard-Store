@@ -1243,7 +1243,7 @@
 					 $(projectContainer).find("#title-1").text('Release Milestone');
 					 $(projectContainer).find("#title-2").text('Effort-Schedule Deviation');
 					 $(projectContainer).find("#title-3").text('Task Assignments');
-					 $(projectContainer).find("#title-4").html('Defect Assignments  (<span id="outstanding-defect-count">0</span>)');
+					 $(projectContainer).find("#title-4").html('UAT Defect Assignments  (<span id="outstanding-defect-count">0</span>)');
 					 $(projectContainer).find(".variable-width-1").removeClass("col-sm-5");
 					 $(projectContainer).find(".variable-width-1").addClass("col-sm-6");
 					 $(projectContainer).find(".variable-width-2").removeClass("col-sm-7");
