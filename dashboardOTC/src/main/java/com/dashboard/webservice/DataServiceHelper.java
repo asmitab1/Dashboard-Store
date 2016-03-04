@@ -165,7 +165,7 @@ public class DataServiceHelper {
 								"DEFECT_ASSIGNMENT_FILENAME"),
 								defectAssignment);
 				for (DefectAssignment p : (List<DefectAssignment>) defectAssignmentList) {
-					if (applicationID.equalsIgnoreCase(p.getProject())) {
+					if (applicationID.equalsIgnoreCase(p.getTeam())) {
 						defectAssignmentListFinal.add(p);
 					}
 				}

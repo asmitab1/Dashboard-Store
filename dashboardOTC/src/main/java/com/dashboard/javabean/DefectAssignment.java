@@ -2,34 +2,57 @@ package com.dashboard.javabean;
 
 public class DefectAssignment {
 	
-	private String project;
-	private String storyId;
-	private String storyDesc;
+	private String team;
+	private String caseID;
+	private String caseDescription;
 	private String analyst;
-	public String getProject() {
-		return project;
+	/**
+	 * @return the team
+	 */
+	public String getTeam() {
+		return team;
 	}
-	public void setProject(String project) {
-		this.project = project;
+	/**
+	 * @param team the team to set
+	 */
+	public void setTeam(String team) {
+		this.team = team;
 	}
-	public String getStoryId() {
-		return storyId;
+	/**
+	 * @return the caseID
+	 */
+	public String getCaseID() {
+		return caseID;
 	}
-	public void setStoryId(String storyId) {
-		this.storyId = storyId;
+	/**
+	 * @param caseID the caseID to set
+	 */
+	public void setCaseID(String caseID) {
+		this.caseID = caseID;
 	}
-	public String getStoryDesc() {
-		return storyDesc;
+	/**
+	 * @return the caseDescription
+	 */
+	public String getCaseDescription() {
+		return caseDescription;
 	}
-	public void setStoryDesc(String storyDesc) {
-		this.storyDesc = storyDesc;
+	/**
+	 * @param caseDescription the caseDescription to set
+	 */
+	public void setCaseDescription(String caseDescription) {
+		this.caseDescription = caseDescription;
 	}
+	/**
+	 * @return the analyst
+	 */
 	public String getAnalyst() {
 		return analyst;
 	}
+	/**
+	 * @param analyst the analyst to set
+	 */
 	public void setAnalyst(String analyst) {
 		this.analyst = analyst;
 	}
-	
 	
 }

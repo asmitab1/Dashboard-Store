@@ -1,31 +1,39 @@
 team,analyst,urgent,high,medium,low
-OTC,Bratati Dan, , , ,4
-OTC,Rajat Sharma, , , ,3
-OTC,Diyali Majumdar, , ,1,2
-OTC,Fungja Brahma, , ,6,3
-OTC,Jayita Chowdhury, , ,7,1
-OTC,Kavita Garodia, , ,9,4
-OTC,Manisha Mandal, , ,4,3
-OTC,Moulipriya Pal,2,1,4,1
-OTC,Nisha Gupta, ,1,10,5
-OTC,Rahul Kumar Gupta, , ,11,6
-OTC,Samikshya Mohapatra, , ,4,5
-OTC,Santanu Karmakar, , ,6,1
-OTC,Shubhra Roy, , ,7,6
-OTC,Udipta Thakur, , ,3,4
-OTC,Vikash Tiwari, , ,8,6
-EDW,Bratati Dan, , , ,4
-EDW,Rajat Sharma, , , ,3
-EDW,Diyali Majumdar, , ,1,2
-EDW,Fungja Brahma, , ,3,3
-EDW,Jayita Chowdhury, , ,7,1
-EDW,Kavita Garodia, , ,3,4
-EDW,Manisha Mandal, , ,4,3
-EDW,Moulipriya Pal,2,1,4,1
-EDW,Nisha Gupta, ,1,1,2
-EDW,Rahul Kumar Gupta, , ,1,1
-EDW,Samikshya Mohapatra, , ,2,5
-EDW,Santanu Karmakar, , ,3,1
-EDW,Shubhra Roy, , ,2,5
-EDW,Udipta Thakur, , ,3,4
-EDW,Vikash Tiwari, , ,5,1
+ATLAS,Bhaduri Prasundeep,,,2,
+ATLAS,Chowdhury Tridip,,,1,
+ATLAS,Kumari Ankita,,,5,
+ATLAS,Mishra Abhijit,,,3,
+ATLAS,Mohapatra Soumayashree,,,6,
+ATLAS,Parbat Sourav,,,4,
+ATLAS,Sneha Prasoon,,,4,
+EDW,Jain Saheb,,,3,
+EDW,Nayak Bibhabasu,,1,9,
+ERP-OTC,Ambast Manish,,,2,
+ERP-OTC,Brahma Fungja,,,10,
+ERP-OTC,Dutta Gourab,,,10,
+ERP-OTC,Garodia Kavita,,,15,
+ERP-OTC,Gupta Nisha,,,6,
+ERP-OTC,Gupta Rahul Kumar,,,6,
+ERP-OTC,Karmakar Santanu,,,10,
+ERP-OTC,Mandal Manisha,,,5,1
+ERP-OTC,Mazumder Diyali,,,4,
+ERP-OTC,Mohapatra Samikshya,,,3,
+ERP-OTC,Roy Shubhra,,,5,
+ERP-OTC,Swain Itishree,,,2,
+ERP-OTC,Thakur Udipta,,,4,
+ERP-OTC,Tiwary Vikash,,,7,
+Integration,Agarwal Pratiksha,,,1,
+Integration,Biswas Piyali,,,2,
+Integration,Choudhury Mitradip,,,2,
+Integration,Pattanaik Kaushik,,,2,
+NON-ATLAS,Bhusan Giri Ravi,,,2,
+NON-ATLAS,Biswal Amiya,,,1,
+NON-ATLAS,Chakraborty Sukanya,,,1,
+PDH,Boxy Banishikha,,,3,
+PDH,Datta Abhinaba,,,5,
+PDH,Guha Piyaly,,,3,
+PDH,Halder Milan,,,5,
+SOA,Khan Mohibullah,,,1,
+SOA,Mallick Sayan,,,1,
+SOA,Paul Chiranjit,,,3,
+SOA,Sinha Gaurav,,,2,

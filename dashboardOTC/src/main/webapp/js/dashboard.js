@@ -357,7 +357,7 @@
              dataType: "json",
              success: function(response) {
 				 programStatisticsResponse = response;
-				 drawProgramStatisticsChart();
+				 drawProgramStatisticsChartNew();
 
              },
              error: function(request, status, error) {
@@ -638,6 +638,105 @@
 		 chart.draw(runProgressData, { });
 	 
  }
+ 
+ function drawProgramStatisticsChartNew() {
+	 var dynamicData = programStatisticsResponse;
+	 var todayDate = new Date();
+	 var d = todayDate.getDate();
+	 var m = todayDate.getMonth() + 1;
+	 var y = todayDate.getFullYear();
+	 var totalProgressPercent = 0;
+		if(d<10) {
+		    d='0'+d;
+		} 
+
+		if(m<10) {
+		    m='0'+m;
+		} 
+
+		todayDate = y+'-'+m+'-'+d;
+	 var g = new JSGantt.GanttChart($(projectContainer).find("#chart-02").get(0), 'hour');
+
+	 	
+	 if( g.getDivId() != null ) {
+		 g.setCaptionType('Complete');  // Set to Show Caption (None,Caption,Resource,Duration,Complete)
+			//g.setQuarterColWidth(36);
+			//g.setDateTaskDisplayFormat('day dd month yyyy'); // Shown in tool tip box
+			//g.setDayMajorDateDisplayFormat('mon yyyy - Week ww') // Set format to display dates in the "Major" header of the "Day" view
+			//g.setWeekMinorDateDisplayFormat('dd mon') // Set format to display dates in the "Minor" header of the "Week" view
+			g.setShowTaskInfoLink(1); //Show link in tool tip (0/1)
+			g.setUseSort(0);
+			g.setShowRes(0);
+			g.setShowDur(0);
+			g.setShowComp(1);
+			g.setShowStartDate(0);
+			g.setShowEndDate(0); // Show/Hide the date for the last day of the week in header for daily view (1/0)
+			g.setUseSingleCell(10000); // Set the threshold at which we will only use one cell per table row (0 disables).  Helps with rendering performance for large charts.
+			g.setFormatArr('hour');
+			var i=0;
+	  for (c in dynamicData) {
+		  	
+			totalProgressPercent =  dynamicData[0].totalPercentageCalculation;
+			var progressPercent = 100;
+			var targetTimes= am_pm_to_hours(dynamicData[c].targetTime.trim());
+			targetTimes = todayDate+' '+targetTimes;
+			var actualEndTimes=am_pm_to_hours(dynamicData[c].actualEndTime.trim());
+			actualEndTimes = todayDate+' '+actualEndTimes;
+			var actualStartTimes=am_pm_to_hours(dynamicData[c].actualStartTime.trim());
+			actualStartTimes = todayDate+' '+actualStartTimes;
+			
+			var targetEnd = new Date(y +"-"+ m + "-"+ d + " "+ dynamicData[c].targetTime);
+			var actualEnd = new Date(y +"-"+ m + "-"+ d + " "+ dynamicData[c].actualEndTime);
+			var actualStart = new Date(y +"-"+ m + "-"+ d + " "+ dynamicData[c].actualStartTime); 
+			if(targetEnd > actualEnd) {
+				if(targetEnd > new Date()) {
+					progressPercent = 50;
+				} 
+			} else {
+				if(actualEnd > new Date()) {
+					progressPercent = 50;
+				}
+			}
+		
+		  g.AddTaskItem(new JSGantt.TaskItem(i++,dynamicData[c].programName,actualStartTimes,targetTimes,'gtaskblue', '', 0, '',progressPercent,0,0,0,'','','',g));
+	}
+			/*g.AddTaskItem(new JSGantt.TaskItem(11,  'Chart Object',         '2014-03-14','2014-04-14', 'gtaskyellow',   '',                 0, '',   99,   0,      0,       0,     '',      '',      '',      g));
+			g.AddTaskItem(new JSGantt.TaskItem(121, 'Constructor Proc',     '2014-05-14','2014-06-14', 'gtaskblue',    '',                 0, '', 100,    0,      0,      0,     '',      '',      '',      g));*/
+	  
+	  g.Draw();
+	 
+	 
+	 }
+	
+	  
+	  
+	  
+	  
+		 
+		 //runProgressData.addRows(dataRows);
+		 //document.getElementById("#myBar").setAttribute("style", "width: "+totalProgressPercent+"%;");
+		 $(projectContainer).find("#myBar").css('width' , totalProgressPercent+"%");
+		 $(projectContainer).find("#label").html(totalProgressPercent+"%");
+		 //var chart = new google.visualization.Gantt($(projectContainer).find("#chart-02").get(0));
+
+		// chart.draw(runProgressData, { });
+	 
+
+	 
+ }
+ 
+ function am_pm_to_hours(time) {
+     var hours = Number(time.match(/^(\d+)/)[1]);
+     var minutes = Number(time.match(/:(\d+)/)[1]);
+     var AMPM = time.match(/\s(.*)$/)[1];
+     if (AMPM == "PM" && hours < 12) hours = hours + 12;
+     if (AMPM == "AM" && hours == 12) hours = hours - 12;
+     var sHours = hours.toString();
+     var sMinutes = minutes.toString();
+     if (hours < 10) sHours = "0" + sHours;
+     if (minutes < 10) sMinutes = "0" + sMinutes;
+     return (sHours +':'+sMinutes);
+}
 
  function createDefectChartData(defectData) {
      var chartDataArray = [];
