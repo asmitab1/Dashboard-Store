@@ -365,7 +365,8 @@
              dataType: "json",
              success: function(response) {
 				 programStatisticsResponse = response;
-				 drawProgramStatisticsChartNew();
+				 //drawProgramStatisticsChartNew();
+				 runBookChart();
 
              },
              error: function(request, status, error) {
@@ -545,19 +546,21 @@
  };
 
  $(function() {
-	 google.charts.load('current', {'packages':['gantt']});
-	 google.charts.setOnLoadCallback(function() {
-		 services.getAllProjects();
+	 services.getAllProjects();
 		 	 $('body').on('click', '.toggle-button', function() {
 		$(this).toggleClass('toggle-button-selected'); 
 		pageFlipOnOff($(this));
-	});
+		});
+	 /*google.charts.load('current', {'packages':['gantt']});
+	 google.charts.setOnLoadCallback(function() {
+		 
+	*/
 	 
      releaseWidth = $("#release").width();
      pageRefreshInterval = setInterval(function() {
          refreshProject();
      }, intervalDuration);
-		 });
+		// });
      
  });
 
@@ -1333,7 +1336,7 @@
 						 $(projectContainer).find("#title-3").text('Work Assignment');
 						 $(projectContainer).find("#title-4").text('Backlog Management Index');					
 						 services.getdefectResolutions(currentProjectID);
-						 //services.getProgramStatistics(currentProjectID);
+						 services.getProgramStatistics(currentProjectID);
 						 services.getMonthlyTicketCount(currentProjectID);
 						 services.getResourceWorkload(currentProjectID);
 						 services.getdefectAssignment(currentProjectID);
@@ -1365,5 +1368,96 @@
 	 taskTable += "</table>";
 	 
 $(projectContainer).find(".chart-03").html(taskTable);
+	 
+ }
+ 
+ function runBookChart() {
+	 
+	 dynamicData = programStatisticsResponse;
+	  
+	  
+	  var dataRows = new Array();
+	  
+	  
+	  var TodayDate = new Date();
+	 var d = TodayDate.getDate();
+	 var m = TodayDate.getMonth() + 1;
+	 var y = TodayDate.getFullYear();
+	 var totalProgressPercent = 0;
+	 
+	 
+		 
+		 for (c in dynamicData) {
+			totalProgressPercent =  dynamicData[0].totalPercentageCalculation;
+			
+			
+			var actualStartTime = new Date(y +"/"+ m + "/"+ d + " "+ dynamicData[c].actualStartTime);
+			var targetTime = new Date(y +"/"+ m + "/"+ d + " "+ dynamicData[c].targetTime);
+			
+			
+			var dataObj = {"text": dynamicData[c].programName,"start_date": (d +"-"+ m + "-"+ y + " "+ actualStartTime.getHours()+":" +actualStartTime.getMinutes()), "progress":1,"id":(c+1),"end_date": (d +"-"+ m + "-"+ y + " "+ targetTime.getHours()+":" +targetTime.getMinutes())}
+			
+			dataRows.push(dataObj);
+		 }
+
+		
+		 $(projectContainer).find("#myBar").css('width' , totalProgressPercent+"%");
+		 $(projectContainer).find("#label").html(totalProgressPercent+"%");
+	 
+	
+	var demo_tasks = {"data": dataRows };
+
+	gantt.config.start_date = new Date(y, m-1, d, 01, 00);
+	//gantt.config.end_date = new Date(y, m-1, d, 24, 00);
+	gantt.config.date_grid = "%H:%i";
+	gantt.config.scale_unit = "hour";
+	gantt.config.date_scale = "%H";
+	gantt.config.details_on_create = true;
+	gantt.config.max_column_width = 20;
+	gantt.config.drag_links = false;
+	
+
+	gantt.templates.task_class = function(start, end, obj){
+		if(start > new Date()) {
+			return "future-task";
+		}	
+		else if(end > new Date() && start < new Date()) {
+			return "in-progress-task";
+		}
+		else {
+			return "completed-task";
+		}
+	}
+	
+	
+	gantt.config.columns = [
+		{name:"text",       label:"Task name",  width:"*", tree:true }
+	];
+	gantt.config.grid_width = 165;
+	gantt.config.min_column_width = 10;
+
+	
+
+	gantt.templates.progress_text = function(start, end, task){
+		return "<span>"+Math.round(task.progress*100)+ "% </span>";
+	};
+
+
+	gantt.config.lightbox.sections = [
+		{name: "description", height: 38, map_to: "text", type: "textarea", focus: true},
+		{name: "owner", height: 22, map_to: "owner", type: "select", options: [
+			{key:"0", label: ""},
+			{key:"1", label: "Mark"},
+			{key:"2", label: "John"},
+			{key:"3", label: "Rebecca"},
+			{key:"4", label: "Alex"}]},
+		{name: "time", type: "duration", map_to: "auto", time_format:["%d","%m","%Y","%h:%i"]}
+	];
+	
+	
+
+	gantt.init($(projectContainer).find("#chart-02").get(0));
+	gantt.parse(demo_tasks);
+	 
 	 
  }

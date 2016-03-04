@@ -11,13 +11,30 @@
       <link rel="stylesheet" type="text/css" href="css/dashboard.css" />
       <link rel="stylesheet" type="text/css" href="css/keen-dashboards.css" />
       <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
-	  <script type="text/javascript" src="js/charts.loader.js"></script>
+	  <!--<script type="text/javascript" src="js/charts.loader.js"></script> -->
 	  <!--<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>-->
       <script src="js/modernizr.custom.79639.js"></script>
       <script type="text/javascript" src="js/dashboard.js"></script>
       <script type="text/javascript" src="js/jquery.vticker-min.js"></script>
       <script language="javascript" src="js/jsgantt.js"></script>
+      <script src="js/dhtmlxgantt.js" type="text/javascript" charset="utf-8"></script>
+	  <link rel="stylesheet" href="css/dhtmlxgantt_meadow.css" type="text/css" media="screen" title="no title" charset="utf-8">
       <style>
+	  
+	  .gantt_task_content, .gantt_task_progress {
+	  
+	  display: none !important;
+	  
+	  }
+	  .completed-task {
+	   background-color : green;
+	  }
+	  .in-progress-task {
+	   background-color : yellow;
+	  }
+	  .future-task {
+	  background-color : gray;
+	  }
 	  #myProgress {
 		  position: relative;
 		  width: 20%;
