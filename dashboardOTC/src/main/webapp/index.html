@@ -73,7 +73,12 @@
          width: 100%;
          }
          .demo3::before {
-         background: linear-gradient(#2389DC, #509EDF, #509EDF, #509EDF, #509EDF, #2389DC);
+         background: #b5bdc8; /* Old browsers */
+		background: -moz-linear-gradient(top, #b5bdc8 0%, #828c95 36%, #28343b 100%); /* FF3.6-15 */
+		background: -webkit-linear-gradient(top, #b5bdc8 0%,#828c95 36%,#28343b 100%); /* Chrome10-25,Safari5.1-6 */
+		background: linear-gradient(to bottom, #b5bdc8 0%,#828c95 36%,#28343b 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b5bdc8', endColorstr='#28343b',GradientType=0 ); /* IE6-9 */
+         
          color: #fff;
          display: inline-block;
          left: 0;
@@ -112,13 +117,13 @@
          box-sizing: border-box;
          }
          .story-desc {
-         font-size: 18px;
+         font-size: 13px;
          }
       </style>
       <style type="text/css">
          body{
-         font-family: 'Ubuntu', serif;
-         font-size: 12px;
+         font-family: Verdana;
+         font-size: 13px;
          }
          .news-container{
          position: relative;
@@ -142,7 +147,7 @@
          height: 43px;
          }
          ul#outstanding_defect_list li, ul.defect_list_rows li{
-         font-size:16px;
+         font-size:13px;
          }
          ul#outstanding_defect_list li .col1, ul.outstanding-defect-list-header li .col1 {
          float: left;
@@ -203,7 +208,7 @@
          color: #000 !important;
          font-weight:700;
          text-shadow:none;
-         font-size:15px !important;
+         font-size:13px !important;
          }
 		 
          .chart-wrapper{
@@ -214,7 +219,7 @@
          color: black;
          text-shadow: none;
          font-weight: 500;
-         font-size: 15px;
+         font-size: 13px;
          }
         
          .highcharts-button {
@@ -242,7 +247,7 @@
          <div class="first content">
             <div class="container-fluid">
                <div class="row">
-                  <div class="col-sm-8"  style="width:100%">
+                  <div class="col-sm-8"  style="width:100%;padding-left: 0;">
                      <div class="chart-wrapper">
                         <div class="chart-title custom_title_bar chart-title-segment">
                            <div style="float:left;">
@@ -361,11 +366,11 @@
             </div>
          </div>
          <div class="demo3 dev-view" style="position: relative; height: 40px; overflow: hidden; margin: 0 -5px 0 5px;">
-            <marquee id="story-assignment" behavior="scroll" scrollamount="7" direction="left" width="99%" height="100%" style="margin-left: 80px; padding-top: 0px;background-color: #E4E4E4;"> 
+            <marquee id="story-assignment" behavior="scroll" scrollamount="7" direction="left" width="99%" height="100%" style="margin-left: 60px; padding-top: 0px;background-color: #E4E4E4;"> 
             </marquee>
          </div>
 		 <div class="demo3 support-view" style="position: relative; height: 40px; overflow: hidden; margin: 0 -5px 0 5px;">
-            <marquee id="story-assignment" behavior="scroll" scrollamount="7" direction="left" width="99%" height="100%" style="margin-left: 80px; padding-top: 0px;background-color: #E4E4E4;"> 
+            <marquee id="story-assignment" behavior="scroll" scrollamount="7" direction="left" width="99%" height="100%" style="margin-left: 60px; padding-top: 0px;background-color: #E4E4E4;"> 
             </marquee>
          </div>
 		 <div class="casourel-button-group">
