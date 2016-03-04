@@ -1070,7 +1070,7 @@
  function showDefectAssignment(jsonText) {
      var defectAssignmentHTML = "";
      $.each(jsonText, function(index, value) {
-    	 defectAssignmentHTML += "<span >" + value.analyst + " :  Defect- " + value.storyId + " (<span class='story-desc'>" + value.storyDesc + "</span>) | </span>";
+    	 defectAssignmentHTML += "<span >" + value.analyst + " :  Defect- " + value.caseID + " (<span class='story-desc'>" + value.caseDescription + "</span>) | </span>";
      });
      $(projectContainer).find("#story-assignment").html(defectAssignmentHTML);
 
