@@ -168,6 +168,9 @@
 	             enabled: true,
 	             alpha: 55,
 	             beta: 0
+	         },
+	         animation: {
+	        	 duration : 1000
 	         }
 	     },
 	     title: {
@@ -180,12 +183,15 @@
 	         pie: {
 	             allowPointSelect: true,
 	             cursor: 'pointer',
-	             depth: 25,
+	             depth: 35,
 	             size: '100%',
 	             dataLabels: {
 	                 enabled: true,
 	                 distance: 5,
 	                 format: "{y}"
+	             },
+	             animation: {
+	            	 duration: 1000
 	             },
 	             showInLegend: true
 	         }
@@ -917,16 +923,39 @@
 
      var chartDataArray = [];
      var chartElement;
+     var chartFirstElement = {};
      var daysArray = ['0 to 30 days', '31 to 60 days', '61 to 90 days', 'Greater than 90 days'];
      var rubnBookDataArray = [dynamicData[0].firstQuarter, dynamicData[0].secondQuarter, dynamicData[0].thirdQuarter, dynamicData[0].fourthQuarter];
      
+    /* chartFirstElement = {
+    		 name: daysArray[0],
+             y: rubnBookDataArray[0],
+             sliced: true,
+             selected: true,    		 	
+    };
+     
+	chartDataArray.push(chartFirstElement);*/
+    
      for (var i = 0; i < rubnBookDataArray.length; i++) {
     	 chartElement = [daysArray[i], rubnBookDataArray[i]];
     	 chartDataArray.push(chartElement);
      }
+     
      runBookPieChartOptions.series[0].data = chartDataArray;
      $(projectContainer).find('#chart-02').highcharts(runBookPieChartOptions);
-
+     var chart = $('#chart-02').highcharts();
+     $('#chart-02').highcharts().redraw();
+ }
+ 
+ function setTranslation(p, slice) {
+     p.sliced = slice;
+     if (p.sliced) {
+         p.graphic.animate(p.slicedTranslation);
+     } else {
+         p.graphic.animate({
+             translateX: 0,
+             translateY: 0});
+     }
  }
  
  function populateDefectAssignment(outstandingDefectData) {
@@ -1194,7 +1223,9 @@
      
 	  for (c in dynamicData) {
 		 dayArray.push(dynamicData[c].week); 
-         effortArray.push(dynamicData[c].pdLeft);
+		 if(dynamicData[c].pdLeft != 0){
+			 effortArray.push(dynamicData[c].pdLeft);
+		 }
          idealEffortArray.push(dynamicData[c].idealpdLeft);
      }
 
