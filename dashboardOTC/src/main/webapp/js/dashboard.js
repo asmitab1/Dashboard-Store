@@ -1112,7 +1112,7 @@
 			  completed++;
 		  }
 	  }
-
+	  releaseWidth = $("#release").width();
      var totalWidth = Math.ceil(releaseWidth * .85);
      
      var releaseName = sprintJSON.releaseName;
