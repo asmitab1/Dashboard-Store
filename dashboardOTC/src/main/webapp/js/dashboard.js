@@ -194,6 +194,48 @@
          data: []
      }]
  };
+ 
+ var runBookPieChartOptions = {
+	     colors: ['#7cb5ec', '#90ed7d', '#f7a35c', '#8085e9',
+	         '#f15c80', '#e4d354', '#2b908f', '#f45b5b', '#91e8e1'
+	     ],
+	     chart: {
+	         type: 'pie',
+	         backgroundColor: 'transparent',
+	         margin: [0, 0, 0, 0],
+	         spacing: [0, 0, 0, 0],
+	         height: 200,
+	         options3d: {
+	             enabled: true,
+	             alpha: 70,
+	             beta: 0
+	         }
+	     },
+	     title: {
+	         text: ''
+	     },
+	     tooltip: {
+	         pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+	     },
+	     plotOptions: {
+	         pie: {
+	             allowPointSelect: true,
+	             cursor: 'pointer',
+	             depth: 20,
+	             dataLabels: {
+	                 enabled: true,
+	                 distance: 5,
+	                 format: "{y}"
+	             },
+	             showInLegend: true
+	         }
+	     },
+	     series: [{
+	         type: 'pie',
+	         name: 'Browser share',
+	         data: []
+	     }]
+	 };
 
 
 
@@ -890,6 +932,22 @@
              });
          }
      }
+ }
+ 
+ function drawRunBookPieChartOptions(dynamicData) {
+
+     var chartDataArray = [];
+     var chartElement;
+     var daysArray = ['0 to 30 days', '31 to 60 days', '61 to 90 days', 'Greater than 90 days'];
+     var rubnBookDataArray = [dynamicData[0].firstQuat, dynamicData[0].secondQuat, dynamicData[0].thirdQuat, dynamicData[0].fourthQuat];
+     
+     for (var i = 0; i < rubnBookData.length; i++) {
+    	 chartElement = [daysArray[i], rubnBookDataArray[i]];
+    	 chartDataArray.push(chartElement);
+     }
+     defectChartOptions.series[0].data = chartDataArray;
+     $(projectContainer).find('#defectSeverityChart').highcharts(defectChartOptions);
+
  }
  
  function populateDefectAssignment(outstandingDefectData) {
