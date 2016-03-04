@@ -1109,7 +1109,7 @@
 		  totalCount++;
 		  if(inProgress >0){
 			  notStarted++;
-		  } else if(sprintJSON.phaseNames[ph] == sprintJSON.currentPhase) {
+		  } else if(sprintJSON.phaseNames[ph].names == sprintJSON.currentPhase) {
 			  inProgress++;
 		  }else {
 			  completed++;
@@ -1127,6 +1127,7 @@
      context = canvas.getContext('2d');
      context.clearRect(0, 0, canvas.width, canvas.height);
 
+  
      var txt = sprintJSON.endDate;
      var txtWidth = context.measureText(txt).width;
 
@@ -1136,7 +1137,6 @@
 
 
      $(parentElement).find("#myCanvas").attr('width', (totalWidth + Math.ceil(txtWidth / 2) + 20));
-
      var keyFeatures = sprintJSON.keyFeatures;
      var featureHtml = "<ul>";
      for (var feature in keyFeatures) {
@@ -1160,7 +1160,7 @@
          context.fillRect(posX, rectYstart, sprintWidth, barHeight);
          context.strokeRect(posX, rectYstart, sprintWidth, barHeight);
          context.fillStyle = "white";
-         context.fillText(sprintJSON.phaseNames[allcounter++], (posX + sprintWidth / 8), canvas.height * .5);
+         context.fillText(sprintJSON.phaseNames[allcounter++].names, (posX + sprintWidth / 8), canvas.height * .5);
          posX = posX + sprintWidth;
      }
 
@@ -1169,28 +1169,13 @@
          context.fillRect(posX, rectYstart, sprintWidth, barHeight);
          context.strokeRect(posX, rectYstart, sprintWidth, barHeight);
          context.fillStyle = "black";
-         context.fillText(sprintJSON.phaseNames[allcounter++], (posX + sprintWidth / 8), canvas.height * .5);
+         context.fillText(sprintJSON.phaseNames[allcounter++].names, (posX + sprintWidth / 8), canvas.height * .5);
          posX = posX + sprintWidth;
-     }
-
-     for (var i = 0; i < notStarted; i++) {
-         context.fillStyle = "#C0C0C0";
-         context.fillRect(posX, rectYstart, sprintWidth, barHeight);
-         context.strokeRect(posX, rectYstart, sprintWidth, barHeight);
-         context.fillStyle = "black";
-         context.fillText(sprintJSON.phaseNames[allcounter++], (posX + sprintWidth / 8), canvas.height * .5);
-         posX = posX + sprintWidth;
-     }
-
-     var imgSrc = document.getElementById("currentSprint").src;
-     var image = new Image();
-
-     image.src = imgSrc;
-     image.context = context;
-
-
-
-     context.setLineDash([5]);
+		 
+		 //draw date line for each phase end date
+		 txt = sprintJSON.phaseNames[allcounter -1].endDate;
+		 
+		 context.setLineDash([5]);
      context.beginPath();
      context.moveTo(posX, 20);
      context.lineTo(posX, rectYstart);
@@ -1208,6 +1193,68 @@
      context.font = "12px Arial";
      context.fillStyle = "black";
      context.fillText(txt, posX - Math.floor(txtWidth / 2), 15);
+     }
+
+     for (var i = 0; i < notStarted; i++) {
+		 context.setLineDash([]);
+         context.fillStyle = "#C0C0C0";
+         context.fillRect(posX, rectYstart, sprintWidth, barHeight);
+         context.strokeRect(posX, rectYstart, sprintWidth, barHeight);
+         context.fillStyle = "black";
+         context.fillText(sprintJSON.phaseNames[allcounter++].names, (posX + sprintWidth / 8), canvas.height * .5);
+         posX = posX + sprintWidth;
+		 
+		 //draw date line for each phase end date
+		 
+		 txt = sprintJSON.phaseNames[allcounter -1].endDate;
+		 
+		 context.setLineDash([5]);
+     context.beginPath();
+     context.moveTo(posX, 20);
+     context.lineTo(posX, rectYstart);
+     context.strokeStyle = "black";
+     context.stroke();
+
+
+     context.beginPath();
+     context.moveTo(posX, rectYstart + barHeight);
+     context.lineTo(posX, canvas.height - 20);
+     context.strokeStyle = "black";
+     context.stroke();
+
+
+     context.font = "12px Arial";
+     context.fillStyle = "black";
+     context.fillText(txt, posX - Math.floor(txtWidth / 2), 15);
+		 
+     }
+
+     var imgSrc = document.getElementById("currentSprint").src;
+     var image = new Image();
+
+     image.src = imgSrc;
+     image.context = context;
+
+
+/*
+     context.setLineDash([5]);
+     context.beginPath();
+     context.moveTo(posX, 20);
+     context.lineTo(posX, rectYstart);
+     context.strokeStyle = "black";
+     context.stroke();
+
+
+     context.beginPath();
+     context.moveTo(posX, rectYstart + barHeight);
+     context.lineTo(posX, canvas.height - 20);
+     context.strokeStyle = "black";
+     context.stroke();
+
+
+     context.font = "12px Arial";
+     context.fillStyle = "black";
+     context.fillText(txt, posX - Math.floor(txtWidth / 2), 15); */
 
      image.onload = function() {
          this.context.drawImage(this, indicatorShift, 0);
