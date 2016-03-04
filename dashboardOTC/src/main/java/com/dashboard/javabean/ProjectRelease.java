@@ -7,7 +7,7 @@ public class ProjectRelease{
 	private String startDate;
 	private String endDate;
 	private String[] keyFeatures;
-	private String[] phaseNames;
+	private PhaseNames[] phaseNames;
 	private String currentPhase;
 
 	
@@ -54,16 +54,11 @@ public class ProjectRelease{
 	public void setReleaseName(String releaseName) {
 		this.releaseName = releaseName;
 	}
-	/**
-	 * @return the phaseNames
-	 */
-	public String[] getPhaseNames() {
+
+	public PhaseNames[] getPhaseNames() {
 		return phaseNames;
 	}
-	/**
-	 * @param phaseNames the phaseNames to set
-	 */
-	public void setPhaseNames(String[] phaseNames) {
+	public void setPhaseNames(PhaseNames[] phaseNames) {
 		this.phaseNames = phaseNames;
 	}
 	/**
