@@ -2,10 +2,10 @@ package com.dashboard.javabean;
 
 public class RunAgingData {
 	private String team;
-	private int firstQuat;
-	private int secondQuat;
-	private int thirdQuat;
-	private int fourthQuat;
+	private int firstQuarter;
+	private int secondQuarter;
+	private int thirdQuarter;
+	private int fourthQuarter;
 	private int total;
 	public String getTeam() {
 		return team;
@@ -13,29 +13,29 @@ public class RunAgingData {
 	public void setTeam(String team) {
 		this.team = team;
 	}
-	public int getFirstQuat() {
-		return firstQuat;
+	public int getFirstQuarter() {
+		return firstQuarter;
 	}
-	public void setFirstQuat(int firstQuat) {
-		this.firstQuat = firstQuat;
+	public void setFirstQuarter(int firstQuarter) {
+		this.firstQuarter = firstQuarter;
 	}
-	public int getSecondQuat() {
-		return secondQuat;
+	public int getSecondQuarter() {
+		return secondQuarter;
 	}
-	public void setSecondQuat(int secondQuat) {
-		this.secondQuat = secondQuat;
+	public void setSecondQuarter(int secondQuarter) {
+		this.secondQuarter = secondQuarter;
 	}
-	public int getThirdQuat() {
-		return thirdQuat;
+	public int getThirdQuarter() {
+		return thirdQuarter;
 	}
-	public void setThirdQuat(int thirdQuat) {
-		this.thirdQuat = thirdQuat;
+	public void setThirdQuarter(int thirdQuarter) {
+		this.thirdQuarter = thirdQuarter;
 	}
-	public int getFourthQuat() {
-		return fourthQuat;
+	public int getFourthQuarter() {
+		return fourthQuarter;
 	}
-	public void setFourthQuat(int fourthQuat) {
-		this.fourthQuat = fourthQuat;
+	public void setFourthQuarter(int fourthQuarter) {
+		this.fourthQuarter = fourthQuarter;
 	}
 	public int getTotal() {
 		return total;
