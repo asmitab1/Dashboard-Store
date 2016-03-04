@@ -340,7 +340,7 @@ public class DataServiceHelper {
 			if (applicationID != null) {
 				runAgingDataList = ProcessCSV.execute(
 						PropertiesCache.getInstance().getProperty(
-								"DEFECT_WORKLOAD"),
+								"RUN_AGING_DATA"),
 								runAgingData);
 				for (RunAgingData p : (List<RunAgingData>) runAgingDataList) {
 					if (applicationID.equalsIgnoreCase(p.getTeam())) {
