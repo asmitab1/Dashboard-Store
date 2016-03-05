@@ -6,7 +6,7 @@
      currentProjectIndex = 0,
      currentProjectID,
      totalProjects,
-     releaseWidth = 1116,
+     releaseWidth = 670,
      allProjectList,
      allProjectReleases,
      allDefectAssignments,
