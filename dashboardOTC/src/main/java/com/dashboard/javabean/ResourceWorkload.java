@@ -7,6 +7,20 @@ public class ResourceWorkload {
 	int High;
 	int Medium;
 	int Low;
+	int urgentLag;
+	int highLag; 
+	public int getUrgentLag() {
+		return urgentLag;
+	}
+	public void setUrgentLag(int urgentLag) {
+		this.urgentLag = urgentLag;
+	}
+	public int getHighLag() {
+		return highLag;
+	}
+	public void setHighLag(int highLag) {
+		this.highLag = highLag;
+	}
 	public String getTeam() {
 		return Team;
 	}
