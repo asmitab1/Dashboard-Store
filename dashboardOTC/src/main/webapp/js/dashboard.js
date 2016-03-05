@@ -1331,12 +1331,12 @@
 						$(".dev-view").hide();
 						$(".support-view").show();	
 						 $(projectContainer).find("#title-1").text('Current Major RCA');
-						 $(projectContainer).find("#title-2").text('Runbook Status for Tonight');
+						 $(projectContainer).find("#title-2").text('Aging Analysis');
 						 $(projectContainer).find("#title-3").text('Work Assignment');
 						 $(projectContainer).find("#title-4").text('Backlog Management Index');	
 						 $(projectContainer).find("#myProgress").hide();
 						 services.getdefectResolutions(currentProjectID);
-						 services.getRunAgingData(currentProjectID);
+						 //services.getRunAgingData(currentProjectID);
 						 services.getMonthlyTicketCount(currentProjectID);
 						 services.getResourceWorkload(currentProjectID);
 						 services.getdefectAssignment(currentProjectID);
