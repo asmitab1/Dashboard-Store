@@ -6,7 +6,7 @@
      currentProjectIndex = 0,
      currentProjectID,
      totalProjects,
-     releaseWidth = 670,
+     releaseWidth = 1116,
      allProjectList,
      allProjectReleases,
      allDefectAssignments,
@@ -15,7 +15,8 @@
      currSprintName,
 	 pageRefreshInterval,
 	 programStatisticsResponse,
-	 intervalDuration = 30000;
+	 intervalDuration = 30000,
+	 refreshCount = 0;
 
  var storyProgressOptions = {
      width: 200,
@@ -566,6 +567,7 @@
 
 
  function refreshProject() {
+	 refreshCount++;
 	 if(allProjectList.length > 1) {
 		 if (!allProjectList)
 			 services.getAllProjects();
@@ -1321,9 +1323,10 @@
 	
 					 $(projectContainer).find("#myProgress").hide();
 					 services.getAllReleases(currentProjectID);
-					 services.getBurnDownChartData(currentProjectID);
+					 if(refreshCount == 0){
+						 services.getBurnDownChartData(currentProjectID);
+					 }
 					 services.getTaskAssignments(currentProjectID);
-					 //services.getAllDefectAssignments(currentProjectID);
 					 services.getHighlights(currentProjectID);
 					 services.getDefectWorkloadDemand(currentProjectID);
 				 } else {
@@ -1336,7 +1339,9 @@
 						 $(projectContainer).find("#title-4").text('Backlog Management Index');	
 						 $(projectContainer).find("#myProgress").hide();
 						 services.getdefectResolutions(currentProjectID);
-						 //services.getRunAgingData(currentProjectID);
+						 if(refreshCount == 0){
+							 services.getRunAgingData(currentProjectID);
+						 }
 						 services.getMonthlyTicketCount(currentProjectID);
 						 services.getResourceWorkload(currentProjectID);
 						 services.getdefectAssignment(currentProjectID);
@@ -1349,7 +1354,9 @@
 						 $(projectContainer).find("#title-3").text('Work Assignment');
 						 $(projectContainer).find("#title-4").text('Backlog Management Index');					
 						 services.getdefectResolutions(currentProjectID);
-						 services.getProgramStatistics(currentProjectID);
+						 if(refreshCount == 0){
+							 services.getProgramStatistics(currentProjectID);
+						 }
 						 services.getMonthlyTicketCount(currentProjectID);
 						 services.getResourceWorkload(currentProjectID);
 						 services.getdefectAssignment(currentProjectID);
@@ -1408,7 +1415,7 @@ $(projectContainer).find(".chart-03").html(taskTable);
 			var targetTime = new Date(y +"/"+ m + "/"+ d + " "+ dynamicData[c].targetTime);
 			
 			
-			var dataObj = {"text": dynamicData[c].programName,"start_date": (d +"-"+ m + "-"+ y + " "+ actualStartTime.getHours()+":" +actualStartTime.getMinutes()), "progress":1,"id":(c+1),"end_date": (d +"-"+ m + "-"+ y + " "+ targetTime.getHours()+":" +targetTime.getMinutes())}
+			var dataObj = {"text": dynamicData[c].programName + " (" +dynamicData[c].weight + ")" , "start_date": (d +"-"+ m + "-"+ y + " "+ actualStartTime.getHours()+":" +actualStartTime.getMinutes()), "progress":1,"id":(c+1),"end_date": (d +"-"+ m + "-"+ y + " "+ targetTime.getHours()+":" +targetTime.getMinutes())}
 			
 			dataRows.push(dataObj);
 		 }
@@ -1444,9 +1451,9 @@ $(projectContainer).find(".chart-03").html(taskTable);
 	
 	
 	gantt.config.columns = [
-		{name:"text",       label:"Task name",  width:"*", tree:true }
+		{name:"text",       label:"Task name (Weight)",  width:"*", tree:true }	
 	];
-	gantt.config.grid_width = 165;
+	gantt.config.grid_width = 190;
 	gantt.config.min_column_width = 10;
 
 	
