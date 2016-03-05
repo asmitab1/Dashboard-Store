@@ -835,8 +835,21 @@
          } else {
              classNme = "odd";
          }
-         defectListHTML += "<li class=" + classNme + "><span class='col1'>" + outstandingDefectData[d].Analyst + "</span> <span class='col2'>" + outstandingDefectData[d].Urgent +" </span> <span class='col2'>" + outstandingDefectData[d].High +"</span> <span class='col2'>" + outstandingDefectData[d].Medium + "</span> <span class='col2'>" + outstandingDefectData[d].Low +"</span> </li>";
-
+         
+         defectListHTML += "<li class=" + classNme + ">";
+         defectListHTML += "<span class='col1'>" + outstandingDefectData[d].Analyst + "</span>";
+         defectListHTML += "<span class='col2'>" + outstandingDefectData[d].Urgent;
+         if(outstandingDefectData[d].urgentLag != 0){
+        	 defectListHTML += "<span class='urgent'> (" + outstandingDefectData[d].urgentLag +") </span>";
+         }
+         defectListHTML += "</span>";
+         defectListHTML += "<span class='col2'>" + outstandingDefectData[d].High;
+         if(outstandingDefectData[d].highLag != 0){
+             defectListHTML += "<span class='urgent'> (" + outstandingDefectData[d].highLag +") </span>";
+         }
+         defectListHTML += "</span>";
+         defectListHTML += "<span class='col2'>" + outstandingDefectData[d].Medium + "</span>";
+         defectListHTML += "<span class='col2'>" + outstandingDefectData[d].Low +"</span> </li>";
          $(projectContainer).find(".outstanding-defect-list-header").html("<li> <span class='col1'> Support Analyst </span> <span class='col2'> Urgent("+urgentCount+")</span> <span class='col2'> High("+highCount+") </span>  <span class='col2'> Medium("+mediumCount+") </span> <span class='col2'> Low("+lowCount+") </span></li>");
      
      $(projectContainer).find("#outstanding_defect_list").html(defectListHTML);
@@ -961,7 +974,7 @@
      }
  }
  
- function populateDefectAssignment(outstandingDefectData) {
+ /*function populateDefectAssignment(outstandingDefectData) {
      var defectListHTML = "";
      var urgentCount = 0;
      var highCount = 0;
@@ -1013,7 +1026,7 @@
              });
          }
      }
- }
+ }*/
  
  
  function populatedefectDetails(defectDetails){
@@ -1115,7 +1128,7 @@
 			  completed++;
 		  }
 	  }
-	  releaseWidth = $("#release").width();
+	 // releaseWidth = $("#release").width();
      var totalWidth = Math.ceil(releaseWidth * .85);
      
      var releaseName = sprintJSON.releaseName;
