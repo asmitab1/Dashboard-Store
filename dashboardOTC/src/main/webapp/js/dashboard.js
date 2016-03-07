@@ -1321,7 +1321,7 @@
 					 $(projectContainer).find(".dev-view").show();
 					 $(projectContainer).find(".support-view").remove();
 					 $(projectContainer).find("#title-1").text('Release Milestone');
-					 $(projectContainer).find("#title-2").text('Effort-Schedule Deviation');
+					 $(projectContainer).find("#title-2").text('Schedule-Effort Monitoring');
 					 $(projectContainer).find("#title-3").text('Task Assignments');
 					 $(projectContainer).find("#title-4").html('UAT Defect Assignments  (<span id="outstanding-defect-count">0</span>)');
 					 $(projectContainer).find(".variable-width-1").removeClass("col-sm-5");
