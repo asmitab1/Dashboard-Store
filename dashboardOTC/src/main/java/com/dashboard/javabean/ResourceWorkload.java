@@ -9,6 +9,21 @@ public class ResourceWorkload {
 	int Low;
 	int urgentLag;
 	int highLag; 
+	int mediumLag;
+	int lowLag;
+	
+	public int getMediumLag() {
+		return mediumLag;
+	}
+	public void setMediumLag(int mediumLag) {
+		this.mediumLag = mediumLag;
+	}
+	public int getLowLag() {
+		return lowLag;
+	}
+	public void setLowLag(int lowLag) {
+		this.lowLag = lowLag;
+	}
 	public int getUrgentLag() {
 		return urgentLag;
 	}
