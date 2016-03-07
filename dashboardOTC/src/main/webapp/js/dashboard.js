@@ -6,7 +6,7 @@
      currentProjectIndex = 0,
      currentProjectID,
      totalProjects,
-     releaseWidth = 670,
+     releaseWidth = 650,
      allProjectList,
      allProjectReleases,
      allDefectAssignments,
@@ -1189,6 +1189,7 @@
 		 
 		 //draw date line for each phase end date
 		 txt = sprintJSON.phaseNames[allcounter -1].endDate;
+		 txtWidth = context.measureText(txt).width;
 		 
 		 context.setLineDash([5]);
      context.beginPath();
@@ -1207,7 +1208,7 @@
 
      context.font = "12px Arial";
      context.fillStyle = "black";
-     context.fillText(txt, posX - Math.floor(txtWidth / 2), 15);
+     context.fillText(txt, posX - Math.floor(txtWidth / 2) + 5, 15);
      }
 
      for (var i = 0; i < notStarted; i++) {
@@ -1222,6 +1223,7 @@
 		 //draw date line for each phase end date
 		 
 		 txt = sprintJSON.phaseNames[allcounter -1].endDate;
+		 txtWidth = context.measureText(txt).width;
 		 
 		 context.setLineDash([5]);
      context.beginPath();
