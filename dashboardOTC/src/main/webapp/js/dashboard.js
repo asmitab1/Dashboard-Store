@@ -98,7 +98,7 @@
          },
          marginTop: 60,
          marginRight: 150,
-         height: 340,
+         height: 400,
          width: 720
      },
      colors: ['#82D5FF', '#74FF74', '#3D06D2'],
@@ -238,7 +238,7 @@
 
  var monthlyTicketDataTemplate = {
 	legend: {
-	   layout: 'vertical',
+	   layout: 'horizontal',
 	   verticalAlign: 'bottom',
 	   borderWidth: 0
 	},
