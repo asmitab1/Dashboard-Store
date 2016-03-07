@@ -1318,7 +1318,7 @@
 					 $(projectContainer).find(".variable-width-4").removeClass("col-sm-7");
 					 $(projectContainer).find(".variable-width-4").addClass("col-sm-6");
 					 
-					 $(projectContainer).find("#chart-04").css("min-height", "327px");
+					 $(projectContainer).find("#chart-04").css("min-height", "370px");
 					 $(projectContainer).find("#chart-04").css("margin-top", "0px");
 	
 					 $(projectContainer).find("#myProgress").hide();
