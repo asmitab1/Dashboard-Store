@@ -1211,7 +1211,19 @@
          context.fillRect(posX, rectYstart, sprintWidth, barHeight);
          context.strokeRect(posX, rectYstart, sprintWidth, barHeight);
          context.fillStyle = "black";
-         context.fillText(sprintJSON.phaseNames[allcounter++].names, (posX + sprintWidth / 8), canvas.height * .5);
+		 
+		 var phaseName = sprintJSON.phaseNames[allcounter++].names;
+         var textStartPos;
+         
+         txtWidth = context.measureText(phaseName).width;
+         
+         if(sprintWidth > txtWidth) {
+        	textStartPos = posX + (sprintWidth -txtWidth)/2
+         } else {
+        	 textStartPos = posX;
+         }
+		 
+         context.fillText(phaseName, textStartPos, canvas.height * .5);
          posX = posX + sprintWidth;
 		 
 		 //draw date line for each phase end date
@@ -1244,7 +1256,19 @@
          context.fillRect(posX, rectYstart, sprintWidth, barHeight);
          context.strokeRect(posX, rectYstart, sprintWidth, barHeight);
          context.fillStyle = "black";
-         context.fillText(sprintJSON.phaseNames[allcounter++].names, (posX + sprintWidth / 8), canvas.height * .5);
+		 
+		 var phaseName = sprintJSON.phaseNames[allcounter++].names;
+         var textStartPos;
+         
+         txtWidth = context.measureText(phaseName).width;
+         
+         if(sprintWidth > txtWidth) {
+        	textStartPos = posX + (sprintWidth -txtWidth)/2
+         } else {
+        	 textStartPos = posX;
+         }
+		 
+         context.fillText(phaseName, textStartPos, canvas.height * .5);
          posX = posX + sprintWidth;
 		 
 		 //draw date line for each phase end date
