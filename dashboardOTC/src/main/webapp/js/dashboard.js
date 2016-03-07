@@ -855,8 +855,16 @@
              defectListHTML += "<span class='urgent'> (" + outstandingDefectData[d].highLag +") </span>";
          }
          defectListHTML += "</span>";
-         defectListHTML += "<span class='col2'>" + outstandingDefectData[d].Medium + "</span>";
-         defectListHTML += "<span class='col2'>" + outstandingDefectData[d].Low +"</span> </li>";
+         defectListHTML += "<span class='col2'>" + outstandingDefectData[d].Medium;
+         if(outstandingDefectData[d].mediumLag != 0){
+             defectListHTML += "<span class='urgent'> (" + outstandingDefectData[d].mediumLag +") </span>";
+         }
+         defectListHTML += "</span>";
+         defectListHTML += "<span class='col2'>" + outstandingDefectData[d].Low;
+         if(outstandingDefectData[d].lowLag != 0){
+             defectListHTML += "<span class='urgent'> (" + outstandingDefectData[d].lowLag +") </span>";
+         }
+         defectListHTML += "</span> </li>";
          $(projectContainer).find(".outstanding-defect-list-header").html("<li> <span class='col1'> Support Analyst </span> <span class='col2'> Urgent("+urgentCount+")</span> <span class='col2'> High("+highCount+") </span>  <span class='col2'> Medium("+mediumCount+") </span> <span class='col2'> Low("+lowCount+") </span></li>");
      
      $(projectContainer).find("#outstanding_defect_list").html(defectListHTML);
