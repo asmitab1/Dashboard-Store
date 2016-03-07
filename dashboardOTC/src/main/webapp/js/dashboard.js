@@ -237,6 +237,11 @@
  } ;
 
  var monthlyTicketDataTemplate = {
+	legend: {
+	   layout: 'vertical',
+	   verticalAlign: 'bottom',
+	   borderWidth: 0
+	},
      series: [{
          name: 'Open at month-end',
          data: [5, 2],
