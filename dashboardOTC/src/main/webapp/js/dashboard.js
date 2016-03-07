@@ -1510,7 +1510,7 @@ $(projectContainer).find(".chart-03").html(taskTable);
 	
 	
 	gantt.config.columns = [
-		{name:"text",       label:"Program Name (% Completed)",  width:"*", tree:true }	
+		{name:"text",       label:"Program (% Completed)",  width:"*", tree:true }	
 	];
 	gantt.config.grid_width = 190;
 	gantt.config.min_column_width = 10;
